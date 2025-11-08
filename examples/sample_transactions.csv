@@ -1,0 +1,31 @@
+transaction_id,amount,currency,date,merchant,category,description
+TX001,450.00,GBP,2025-01-15,Amazon UK,Business,Office supplies purchase - printer paper and ink
+TX002,89.99,USD,2025-01-16,Apple Store,Personal,iPhone case purchase
+TX003,1250.00,GBP,2025-01-17,British Airways,Travel,Business flight to New York
+TX004,325.50,EUR,2025-01-18,Hotel Luxury,Accommodation,Hotel stay - 2 nights
+TX005,2500.00,GBP,2025-01-19,Unknown Merchant,Unknown,Large transfer - suspicious timing
+TX006,275.00,GBP,2025-01-20,John Lewis,Shopping,Office furniture
+TX007,3500.00,USD,2025-01-20,Cryptocurrency Exchange,Investment,Bitcoin purchase - unusual amount
+TX008,450.75,GBP,2025-01-21,Shell Petrol,Transport,Fuel for company vehicle
+TX009,180.00,GBP,2025-01-22,Tesco,Groceries,Office kitchen supplies
+TX010,5000.00,GBP,2025-01-22,Offshore Account XYZ,Unknown,Suspicious overseas transfer
+TX011,890.00,GBP,2025-01-23,Dell UK,Technology,Laptop purchase for employee
+TX012,125.00,USD,2025-01-24,Microsoft,Software,Office 365 subscription
+TX013,4200.00,GBP,2025-01-25,Rolex Boutique,Luxury,High-value luxury purchase - potential fraud
+TX014,320.00,EUR,2025-01-26,Restaurant Le Gourmet,Dining,Client dinner meeting
+TX015,750.00,GBP,2025-01-27,Currys PC World,Electronics,Office equipment - monitor
+TX016,2100.00,GBP,2025-01-28,Unknown Online Retailer,Unknown,Large online purchase - verify legitimacy
+TX017,280.00,GBP,2025-01-29,Vodafone Business,Utilities,Monthly mobile phone bill
+TX018,6500.00,USD,2025-01-29,Casino Royal,Gambling,Unusually large gambling transaction
+TX019,425.00,GBP,2025-01-30,Ryman Stationery,Business,Office stationery bulk order
+TX020,950.00,GBP,2025-01-31,Harvey Nichols,Retail,Potential personal expense on business card
+TX021,350.00,GBP,2025-02-01,Staples,Business,Office supplies monthly order
+TX022,1500.00,GBP,2025-02-02,IT Solutions Ltd,Services,IT support and maintenance
+TX023,8900.00,GBP,2025-02-03,Suspicious Vendor ABC,Unknown,Very large transaction to unknown vendor
+TX024,420.00,EUR,2025-02-04,Conference Center Berlin,Events,Conference registration fee
+TX025,290.00,GBP,2025-02-05,BP Fuel,Transport,Company vehicle fuel
+TX026,3200.00,GBP,2025-02-06,Jewellery Store,Luxury,High-value purchase - requires verification
+TX027,265.00,GBP,2025-02-07,Amazon Web Services,Cloud Services,Monthly AWS hosting costs
+TX028,1100.00,USD,2025-02-08,LinkedIn Premium,Marketing,Annual premium subscription
+TX029,550.00,GBP,2025-02-09,Office Depot,Business,Bulk office supplies
+TX030,15000.00,GBP,2025-02-10,Wire Transfer - Tax Haven,Unknown,CRITICAL - Large transfer to tax haven
