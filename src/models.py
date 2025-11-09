@@ -330,6 +330,9 @@ class CSVResult(BaseModel):
         """
         Calculate data completeness reward per REQ-009.
 
+        REQ-009: +0.25 for each required column (4 columns total = 1.0)
+        Total reward is 1.0 only if all 4 columns are present.
+
         Returns:
             Reward score (0.0 to 1.0)
         """
@@ -342,7 +345,7 @@ class CSVResult(BaseModel):
         reward = 0.0
         for col in required_columns:
             if col in self.columns_included:
-                reward += 0.2
+                reward += 0.25  # REQ-009: 4 columns * 0.25 = 1.0
         return min(reward, 1.0)  # Cap at 1.0
 
 
