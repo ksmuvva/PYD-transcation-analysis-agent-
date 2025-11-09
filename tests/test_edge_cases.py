@@ -18,11 +18,9 @@ import pytest
 import pandas as pd
 import tempfile
 import os
-from datetime import datetime, timedelta
-from decimal import Decimal
-import math
+from datetime import datetime
 
-from src.models import Transaction, Currency, FraudRiskLevel
+from src.models import Transaction, Currency
 from src.config import AgentConfig, LLMConfig, MCTSConfig
 from src.agent import AgentDependencies, filter_transactions_above_threshold
 from src.csv_processor import CSVProcessor
@@ -58,7 +56,13 @@ class TestEmptyData:
             results={}
         )
 
-        result = filter_transactions_above_threshold(deps)
+        # Create mock RunContext
+        class MockRunContext:
+            def __init__(self, deps):
+                self.deps = deps
+
+        mock_ctx = MockRunContext(deps)
+        result = filter_transactions_above_threshold(mock_ctx)
         assert result.filtered_count == 0
         assert result.total_amount == 0.0
 
@@ -75,7 +79,7 @@ class TestEmptyData:
             os.unlink(temp_path)
 
     def test_csv_with_headers_only(self):
-        """Test CSV with headers but no data"""
+        """Test CSV with headers but no data should be rejected"""
         content = "transaction_id,amount,currency,date,merchant,category,description\n"
 
         with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as f:
@@ -83,8 +87,8 @@ class TestEmptyData:
             temp_path = f.name
 
         try:
-            df = CSVProcessor.load_csv(temp_path)
-            assert len(df) == 0
+            with pytest.raises(ValueError, match="empty"):
+                df = CSVProcessor.load_csv(temp_path)
         finally:
             os.unlink(temp_path)
 
@@ -341,7 +345,13 @@ class TestBoundaryConditions:
             results={}
         )
 
-        result = filter_transactions_above_threshold(deps)
+        # Create mock RunContext
+        class MockRunContext:
+            def __init__(self, deps):
+                self.deps = deps
+
+        mock_ctx = MockRunContext(deps)
+        result = filter_transactions_above_threshold(mock_ctx)
         # Depends on if threshold is > or >=
         # Most likely > (above threshold means strictly greater)
         assert result.filtered_count in [0, 1]
@@ -543,18 +553,19 @@ class TestMissingData:
             pass
 
     def test_empty_string_merchant(self):
-        """Test empty string as merchant"""
-        transaction = Transaction(
-            transaction_id='TX001',
-            amount=100.0,
-            currency=Currency.GBP,
-            date=datetime.now(),
-            merchant='',  # Empty
-            category='Test',
-            description='Test'
-        )
+        """Test empty string as merchant should be rejected"""
+        from pydantic import ValidationError
 
-        assert transaction.merchant == ''
+        with pytest.raises(ValidationError):
+            transaction = Transaction(
+                transaction_id='TX001',
+                amount=100.0,
+                currency=Currency.GBP,
+                date=datetime.now(),
+                merchant='',  # Empty - should be rejected
+                category='Test',
+                description='Test'
+            )
 
 
 # ============================================================================
@@ -601,7 +612,6 @@ class TestLargeDatasets:
 
     def test_memory_efficiency_large_dataset(self):
         """Test memory efficiency with large dataset"""
-        import sys
 
         # Create large dataset
         rows = []

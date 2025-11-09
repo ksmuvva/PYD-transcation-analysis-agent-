@@ -334,7 +334,7 @@ def main():
     dataset_num += 1
 
     print(f"\n✓ Successfully generated 25 synthetic datasets in {output_dir}")
-    print(f"✓ Each dataset includes CSV file and ground truth JSON")
+    print("✓ Each dataset includes CSV file and ground truth JSON")
 
 
 if __name__ == "__main__":

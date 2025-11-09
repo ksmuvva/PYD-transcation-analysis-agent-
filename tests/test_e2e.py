@@ -13,16 +13,13 @@ This module tests:
 import pytest
 import os
 import tempfile
-import shutil
 import pandas as pd
 from pathlib import Path
-from datetime import datetime
 from dotenv import load_dotenv
 
-from src.models import Currency, FraudRiskLevel
+from src.models import Currency
 from src.config import AgentConfig, LLMConfig, MCTSConfig
 from src.csv_processor import CSVProcessor
-from src.agent import run_analysis
 
 # Load environment variables
 load_dotenv()
@@ -341,7 +338,6 @@ class TestPerformanceE2E:
 
     def test_large_dataset_memory_usage(self, temp_dir):
         """Test memory usage with larger dataset"""
-        import sys
 
         # Generate 1000 transactions
         data = {

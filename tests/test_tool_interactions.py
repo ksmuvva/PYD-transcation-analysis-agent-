@@ -12,17 +12,11 @@ This module tests:
 
 import pytest
 import pandas as pd
-import os
-from datetime import datetime
-from dataclasses import dataclass
 from unittest.mock import MagicMock, AsyncMock
 
 from src.models import (
-    Transaction,
     Currency,
-    FraudRiskLevel,
     TransactionFilterResult,
-    ClassificationResult,
     FraudDetectionResult,
 )
 from src.agent import (
@@ -31,7 +25,7 @@ from src.agent import (
     classify_single_transaction_mcts,
     detect_fraud_single_transaction_mcts,
 )
-from src.config import AgentConfig, LLMConfig, MCTSConfig, ConfigManager
+from src.config import AgentConfig, LLMConfig, MCTSConfig
 from src.mcts_engine import MCTSEngine
 
 
@@ -152,6 +146,16 @@ def agent_deps(comprehensive_dataframe, agent_config, mock_mcts_engine):
     )
 
 
+@pytest.fixture
+def mock_ctx(agent_deps):
+    """Create a mock RunContext for tool testing"""
+    class MockRunContext:
+        def __init__(self, deps):
+            self.deps = deps
+
+    return MockRunContext(agent_deps)
+
+
 # ============================================================================
 # SEQUENTIAL TOOL EXECUTION TESTS
 # ============================================================================
@@ -159,59 +163,57 @@ def agent_deps(comprehensive_dataframe, agent_config, mock_mcts_engine):
 class TestSequentialToolExecution:
     """Test sequential execution of tools in the pipeline"""
 
-    def test_filter_then_classify_pipeline(self, agent_deps):
+    def test_filter_then_classify_pipeline(self, mock_ctx):
         """Test that filtering happens before classification"""
         # Step 1: Filter transactions
-        filter_result = filter_transactions_above_threshold(agent_deps)
+        filter_result = filter_transactions_above_threshold(mock_ctx)
 
         assert isinstance(filter_result, TransactionFilterResult)
-        assert 'filtered_transactions' in agent_deps.results
-        assert 'filter_result' in agent_deps.results
+        assert 'filtered_df' in mock_ctx.deps.results
 
         # Verify filtered DataFrame is available for next tool
-        filtered_df = agent_deps.results['filtered_transactions']
+        filtered_df = mock_ctx.deps.results['filtered_df']
         assert isinstance(filtered_df, pd.DataFrame)
         assert len(filtered_df) == filter_result.filtered_count
 
-    def test_filter_then_fraud_detection_pipeline(self, agent_deps):
+    def test_filter_then_fraud_detection_pipeline(self, mock_ctx):
         """Test filtering followed by fraud detection"""
         # Step 1: Filter
-        filter_result = filter_transactions_above_threshold(agent_deps)
+        filter_result = filter_transactions_above_threshold(mock_ctx)
 
         # Step 2: Access filtered data for fraud detection
-        filtered_df = agent_deps.results['filtered_transactions']
+        filtered_df = mock_ctx.deps.results['filtered_df']
 
         assert len(filtered_df) > 0
         # Each filtered transaction can now be checked for fraud
         for _, row in filtered_df.iterrows():
             assert row['transaction_id'] is not None
 
-    def test_complete_pipeline_sequence(self, agent_deps):
+    def test_complete_pipeline_sequence(self, mock_ctx):
         """Test complete pipeline: Filter -> Classify -> Fraud Detect"""
         # Step 1: Filter
-        filter_result = filter_transactions_above_threshold(agent_deps)
-        assert 'filtered_transactions' in agent_deps.results
+        filter_result = filter_transactions_above_threshold(mock_ctx)
+        assert 'filtered_df' in mock_ctx.deps.results
 
         # Step 2: Store classification results
-        agent_deps.results['classifications'] = []
+        mock_ctx.deps.results['classifications'] = []
 
         # Step 3: Store fraud results
-        agent_deps.results['fraud_detections'] = []
+        mock_ctx.deps.results['fraud_detections'] = []
 
         # Verify all result keys exist
-        assert 'filtered_transactions' in agent_deps.results
-        assert 'filter_result' in agent_deps.results
-        assert 'classifications' in agent_deps.results
-        assert 'fraud_detections' in agent_deps.results
+        assert 'filtered_df' in mock_ctx.deps.results
+        assert 'classifications' in mock_ctx.deps.results
+        assert 'fraud_detections' in mock_ctx.deps.results
 
-    def test_tool_execution_order_matters(self, agent_deps):
+    def test_tool_execution_order_matters(self, mock_ctx):
         """Test that executing tools out of order causes issues"""
         # Trying to access filtered_transactions before filtering should fail
-        assert 'filtered_transactions' not in agent_deps.results
+        assert 'filtered_df' not in mock_ctx.deps.results
 
         # After filtering, it should exist
-        filter_result = filter_transactions_above_threshold(agent_deps)
-        assert 'filtered_transactions' in agent_deps.results
+        filter_result = filter_transactions_above_threshold(mock_ctx)
+        assert 'filtered_df' in mock_ctx.deps.results
 
 
 # ============================================================================
@@ -221,63 +223,61 @@ class TestSequentialToolExecution:
 class TestStateSharing:
     """Test state sharing between tools via AgentDependencies"""
 
-    def test_results_dictionary_shared(self, agent_deps):
+    def test_results_dictionary_shared(self, mock_ctx):
         """Test that results dictionary is shared across tool calls"""
         # Tool 1 stores a result
-        filter_result = filter_transactions_above_threshold(agent_deps)
-        agent_deps.results['custom_data'] = 'test_value'
+        filter_result = filter_transactions_above_threshold(mock_ctx)
+        mock_ctx.deps.results['custom_data'] = 'test_value'
 
         # Tool 2 can access Tool 1's results
-        assert 'filter_result' in agent_deps.results
-        assert 'custom_data' in agent_deps.results
-        assert agent_deps.results['custom_data'] == 'test_value'
+        assert 'custom_data' in mock_ctx.deps.results
+        assert mock_ctx.deps.results['custom_data'] == 'test_value'
 
-    def test_dataframe_reference_shared(self, agent_deps):
+    def test_dataframe_reference_shared(self, mock_ctx):
         """Test that DataFrame reference is shared"""
-        original_df = agent_deps.df
+        original_df = mock_ctx.deps.df
 
         # Filter modifies or creates new filtered DataFrame
-        filter_result = filter_transactions_above_threshold(agent_deps)
+        filter_result = filter_transactions_above_threshold(mock_ctx)
 
         # Original DataFrame should still be accessible
-        assert agent_deps.df is original_df
+        assert mock_ctx.deps.df is original_df
         # But filtered version is in results
-        assert 'filtered_transactions' in agent_deps.results
+        assert 'filtered_df' in mock_ctx.deps.results
 
-    def test_config_shared_across_tools(self, agent_deps):
+    def test_config_shared_across_tools(self, mock_ctx):
         """Test that configuration is shared across all tools"""
         # All tools should see same config
-        assert agent_deps.config.threshold_amount == 250.0
-        assert agent_deps.config.base_currency == Currency.GBP
+        assert mock_ctx.deps.config.threshold_amount == 250.0
+        assert mock_ctx.deps.config.base_currency == Currency.GBP
 
         # Modifying config affects all subsequent tool calls
-        agent_deps.config.threshold_amount = 500.0
+        mock_ctx.deps.config.threshold_amount = 500.0
 
-        filter_result = filter_transactions_above_threshold(agent_deps)
+        filter_result = filter_transactions_above_threshold(mock_ctx)
         # Should use new threshold
         # (actual behavior depends on implementation)
 
-    def test_mcts_engine_shared(self, agent_deps):
+    def test_mcts_engine_shared(self, mock_ctx):
         """Test that MCTS engine is shared across classification and fraud detection"""
         # Both classify and fraud detect use same engine
-        engine = agent_deps.mcts_engine
+        engine = mock_ctx.deps.mcts_engine
 
         assert engine is not None
         assert hasattr(engine, 'search')
 
     @pytest.mark.asyncio
-    async def test_classification_results_accumulation(self, agent_deps):
+    async def test_classification_results_accumulation(self, mock_ctx):
         """Test that classification results accumulate in shared state"""
-        agent_deps.results['classifications'] = []
+        mock_ctx.deps.results['classifications'] = []
 
         # Simulate multiple classifications
-        from src.agent import classify_single_transaction_mcts
 
         ctx = MagicMock()
         ctx.deps = agent_deps
 
         # Configure mock for classification
-        agent_deps.mcts_engine.search = AsyncMock(return_value=MagicMock(
+        mock_ctx.deps.mcts_engine.search = AsyncMock(return_value=MagicMock(
             state={
                 'primary_classification': 'Business',
                 'confidence': 0.85,
@@ -287,26 +287,25 @@ class TestStateSharing:
         ))
 
         result1 = await classify_single_transaction_mcts(ctx, transaction_id='TX002')
-        agent_deps.results['classifications'].append(result1)
+        mock_ctx.deps.results['classifications'].append(result1)
 
         result2 = await classify_single_transaction_mcts(ctx, transaction_id='TX005')
-        agent_deps.results['classifications'].append(result2)
+        mock_ctx.deps.results['classifications'].append(result2)
 
         # Both results should be stored
-        assert len(agent_deps.results['classifications']) == 2
+        assert len(mock_ctx.deps.results['classifications']) == 2
 
     @pytest.mark.asyncio
-    async def test_fraud_results_accumulation(self, agent_deps):
+    async def test_fraud_results_accumulation(self, mock_ctx):
         """Test that fraud detection results accumulate"""
-        agent_deps.results['fraud_detections'] = []
+        mock_ctx.deps.results['fraud_detections'] = []
 
-        from src.agent import detect_fraud_single_transaction_mcts
 
         ctx = MagicMock()
         ctx.deps = agent_deps
 
         # Configure mock for fraud detection
-        agent_deps.mcts_engine.search = AsyncMock(return_value=MagicMock(
+        mock_ctx.deps.mcts_engine.search = AsyncMock(return_value=MagicMock(
             state={
                 'risk_level': 'LOW',
                 'confidence': 0.90,
@@ -317,12 +316,12 @@ class TestStateSharing:
         ))
 
         result1 = await detect_fraud_single_transaction_mcts(ctx, transaction_id='TX002')
-        agent_deps.results['fraud_detections'].append(result1)
+        mock_ctx.deps.results['fraud_detections'].append(result1)
 
         result2 = await detect_fraud_single_transaction_mcts(ctx, transaction_id='TX005')
-        agent_deps.results['fraud_detections'].append(result2)
+        mock_ctx.deps.results['fraud_detections'].append(result2)
 
-        assert len(agent_deps.results['fraud_detections']) == 2
+        assert len(mock_ctx.deps.results['fraud_detections']) == 2
 
 
 # ============================================================================
@@ -332,12 +331,12 @@ class TestStateSharing:
 class TestDataFlow:
     """Test data flow from one tool to another"""
 
-    def test_filter_output_feeds_classification(self, agent_deps):
+    def test_filter_output_feeds_classification(self, mock_ctx):
         """Test that filter output is used by classification"""
         # Filter creates filtered_transactions
-        filter_result = filter_transactions_above_threshold(agent_deps)
+        filter_result = filter_transactions_above_threshold(mock_ctx)
 
-        filtered_df = agent_deps.results['filtered_transactions']
+        filtered_df = mock_ctx.deps.results['filtered_df']
 
         # Classification should iterate over filtered transactions
         for _, row in filtered_df.iterrows():
@@ -347,11 +346,11 @@ class TestDataFlow:
 
         assert len(filtered_df) == filter_result.filtered_count
 
-    def test_filter_output_feeds_fraud_detection(self, agent_deps):
+    def test_filter_output_feeds_fraud_detection(self, mock_ctx):
         """Test that filter output is used by fraud detection"""
-        filter_result = filter_transactions_above_threshold(agent_deps)
+        filter_result = filter_transactions_above_threshold(mock_ctx)
 
-        filtered_df = agent_deps.results['filtered_transactions']
+        filtered_df = mock_ctx.deps.results['filtered_df']
 
         # Fraud detection should iterate over filtered transactions
         for _, row in filtered_df.iterrows():
@@ -360,23 +359,22 @@ class TestDataFlow:
             assert transaction_id is not None
 
     @pytest.mark.asyncio
-    async def test_classification_and_fraud_on_same_transactions(self, agent_deps):
+    async def test_classification_and_fraud_on_same_transactions(self, mock_ctx):
         """Test that both classification and fraud detection work on same filtered set"""
         # Filter first
-        filter_result = filter_transactions_above_threshold(agent_deps)
-        filtered_df = agent_deps.results['filtered_transactions']
+        filter_result = filter_transactions_above_threshold(mock_ctx)
+        filtered_df = mock_ctx.deps.results['filtered_df']
 
         # Initialize result storage
-        agent_deps.results['classifications'] = {}
-        agent_deps.results['fraud_detections'] = {}
+        mock_ctx.deps.results['classifications'] = {}
+        mock_ctx.deps.results['fraud_detections'] = {}
 
-        from src.agent import classify_single_transaction_mcts, detect_fraud_single_transaction_mcts
 
         ctx = MagicMock()
         ctx.deps = agent_deps
 
         # Configure mocks
-        agent_deps.mcts_engine.search = AsyncMock(return_value=MagicMock(
+        mock_ctx.deps.mcts_engine.search = AsyncMock(return_value=MagicMock(
             state={
                 'primary_classification': 'Business',
                 'confidence': 0.85,
@@ -391,10 +389,10 @@ class TestDataFlow:
 
             # Classify
             classification = await classify_single_transaction_mcts(ctx, transaction_id=tx_id)
-            agent_deps.results['classifications'][tx_id] = classification
+            mock_ctx.deps.results['classifications'][tx_id] = classification
 
             # Reconfigure mock for fraud
-            agent_deps.mcts_engine.search = AsyncMock(return_value=MagicMock(
+            mock_ctx.deps.mcts_engine.search = AsyncMock(return_value=MagicMock(
                 state={
                     'risk_level': 'LOW',
                     'confidence': 0.90,
@@ -406,31 +404,31 @@ class TestDataFlow:
 
             # Fraud detect
             fraud = await detect_fraud_single_transaction_mcts(ctx, transaction_id=tx_id)
-            agent_deps.results['fraud_detections'][tx_id] = fraud
+            mock_ctx.deps.results['fraud_detections'][tx_id] = fraud
 
             # Same transaction should have both results
-            assert tx_id in agent_deps.results['classifications']
-            assert tx_id in agent_deps.results['fraud_detections']
+            assert tx_id in mock_ctx.deps.results['classifications']
+            assert tx_id in mock_ctx.deps.results['fraud_detections']
 
-    def test_transaction_count_consistency(self, agent_deps):
+    def test_transaction_count_consistency(self, mock_ctx):
         """Test that transaction count is consistent across tools"""
-        filter_result = filter_transactions_above_threshold(agent_deps)
+        filter_result = filter_transactions_above_threshold(mock_ctx)
 
         filtered_count = filter_result.filtered_count
-        filtered_df = agent_deps.results['filtered_transactions']
+        filtered_df = mock_ctx.deps.results['filtered_df']
 
         # DataFrame length should match filter count
         assert len(filtered_df) == filtered_count
 
-    def test_currency_conversion_flows_through_pipeline(self, agent_deps):
+    def test_currency_conversion_flows_through_pipeline(self, mock_ctx):
         """Test that currency conversion is consistent throughout pipeline"""
         # Filter uses currency conversion
-        filter_result = filter_transactions_above_threshold(agent_deps)
+        filter_result = filter_transactions_above_threshold(mock_ctx)
 
         assert filter_result.currency == Currency.GBP
 
         # Filtered transactions should include amount_gbp
-        filtered_df = agent_deps.results['filtered_transactions']
+        filtered_df = mock_ctx.deps.results['filtered_df']
 
         if 'amount_gbp' in filtered_df.columns:
             # All GBP amounts should be present
@@ -444,21 +442,21 @@ class TestDataFlow:
 class TestErrorPropagation:
     """Test error propagation between tools"""
 
-    def test_filter_error_stops_pipeline(self, agent_deps):
+    def test_filter_error_stops_pipeline(self, mock_ctx):
         """Test that error in filter stops subsequent tools"""
         # Corrupt the DataFrame to cause error
-        agent_deps.df = pd.DataFrame()  # Empty DataFrame
+        mock_ctx.deps.df = pd.DataFrame()  # Empty DataFrame
 
-        filter_result = filter_transactions_above_threshold(agent_deps)
+        filter_result = filter_transactions_above_threshold(mock_ctx)
 
         # Should get 0 filtered transactions
         assert filter_result.filtered_count == 0
 
         # Pipeline should handle this gracefully
-        filtered_df = agent_deps.results.get('filtered_transactions', pd.DataFrame())
+        filtered_df = mock_ctx.deps.results.get('filtered_df', pd.DataFrame())
         assert len(filtered_df) == 0
 
-    def test_missing_transaction_id_handling(self, agent_deps):
+    def test_missing_transaction_id_handling(self, mock_ctx):
         """Test handling of missing transaction IDs"""
         # Create DataFrame with missing transaction_id
         bad_df = pd.DataFrame({
@@ -470,22 +468,21 @@ class TestErrorPropagation:
             'description': ['Test']
         })
 
-        agent_deps.df = bad_df
+        mock_ctx.deps.df = bad_df
 
         # Should handle missing transaction_id
         with pytest.raises(KeyError) or True:
-            filter_result = filter_transactions_above_threshold(agent_deps)
+            filter_result = filter_transactions_above_threshold(mock_ctx)
 
     @pytest.mark.asyncio
-    async def test_classification_error_doesnt_affect_fraud(self, agent_deps):
+    async def test_classification_error_doesnt_affect_fraud(self, mock_ctx):
         """Test that classification error doesn't prevent fraud detection"""
-        from src.agent import detect_fraud_single_transaction_mcts
 
         ctx = MagicMock()
         ctx.deps = agent_deps
 
         # Even if classification fails, fraud detection should work independently
-        agent_deps.mcts_engine.search = AsyncMock(return_value=MagicMock(
+        mock_ctx.deps.mcts_engine.search = AsyncMock(return_value=MagicMock(
             state={
                 'risk_level': 'LOW',
                 'confidence': 0.90,
@@ -507,25 +504,24 @@ class TestErrorPropagation:
 class TestProcessingOrder:
     """Test that tools process in correct order"""
 
-    def test_filter_must_precede_classification(self, agent_deps):
+    def test_filter_must_precede_classification(self, mock_ctx):
         """Test that attempting to classify before filtering is handled"""
         # Before filtering, no filtered_transactions
-        assert 'filtered_transactions' not in agent_deps.results
+        assert 'filtered_df' not in mock_ctx.deps.results
 
         # Classification would need to check for this
         # (In actual implementation, pipeline ensures correct order)
 
-    def test_filter_must_precede_fraud_detection(self, agent_deps):
+    def test_filter_must_precede_fraud_detection(self, mock_ctx):
         """Test that attempting fraud detection before filtering is handled"""
-        assert 'filtered_transactions' not in agent_deps.results
+        assert 'filtered_df' not in mock_ctx.deps.results
 
         # Fraud detection would need filtered list
         # Pipeline ensures correct order
 
     @pytest.mark.asyncio
-    async def test_classification_and_fraud_can_run_parallel_per_transaction(self, agent_deps):
+    async def test_classification_and_fraud_can_run_parallel_per_transaction(self, mock_ctx):
         """Test that for same transaction, classification and fraud can theoretically run in parallel"""
-        from src.agent import classify_single_transaction_mcts, detect_fraud_single_transaction_mcts
 
         ctx = MagicMock()
         ctx.deps = agent_deps
@@ -555,10 +551,10 @@ class TestProcessingOrder:
 
         # Both can be called on same transaction
         # (actual parallelization is implementation detail)
-        agent_deps.mcts_engine.search = AsyncMock(side_effect=mock_classify)
+        mock_ctx.deps.mcts_engine.search = AsyncMock(side_effect=mock_classify)
         result1 = await classify_single_transaction_mcts(ctx, transaction_id='TX002')
 
-        agent_deps.mcts_engine.search = AsyncMock(side_effect=mock_fraud)
+        mock_ctx.deps.mcts_engine.search = AsyncMock(side_effect=mock_fraud)
         result2 = await detect_fraud_single_transaction_mcts(ctx, transaction_id='TX002')
 
         assert result1 is not None
@@ -573,17 +569,16 @@ class TestResultsMerging:
     """Test merging results from multiple tools"""
 
     @pytest.mark.asyncio
-    async def test_merge_filter_classification_fraud_results(self, agent_deps):
+    async def test_merge_filter_classification_fraud_results(self, mock_ctx):
         """Test merging results from all three main tools"""
         # Filter
-        filter_result = filter_transactions_above_threshold(agent_deps)
-        filtered_df = agent_deps.results['filtered_transactions']
+        filter_result = filter_transactions_above_threshold(mock_ctx)
+        filtered_df = mock_ctx.deps.results['filtered_df']
 
         # Initialize result containers
-        agent_deps.results['classifications'] = {}
-        agent_deps.results['fraud_detections'] = {}
+        mock_ctx.deps.results['classifications'] = {}
+        mock_ctx.deps.results['fraud_detections'] = {}
 
-        from src.agent import classify_single_transaction_mcts, detect_fraud_single_transaction_mcts
 
         ctx = MagicMock()
         ctx.deps = agent_deps
@@ -592,7 +587,7 @@ class TestResultsMerging:
             tx_id = filtered_df.iloc[0]['transaction_id']
 
             # Classify
-            agent_deps.mcts_engine.search = AsyncMock(return_value=MagicMock(
+            mock_ctx.deps.mcts_engine.search = AsyncMock(return_value=MagicMock(
                 state={
                     'primary_classification': 'Business',
                     'confidence': 0.85,
@@ -601,10 +596,10 @@ class TestResultsMerging:
                 }
             ))
             classification = await classify_single_transaction_mcts(ctx, transaction_id=tx_id)
-            agent_deps.results['classifications'][tx_id] = classification
+            mock_ctx.deps.results['classifications'][tx_id] = classification
 
             # Fraud
-            agent_deps.mcts_engine.search = AsyncMock(return_value=MagicMock(
+            mock_ctx.deps.mcts_engine.search = AsyncMock(return_value=MagicMock(
                 state={
                     'risk_level': 'LOW',
                     'confidence': 0.90,
@@ -614,11 +609,11 @@ class TestResultsMerging:
                 }
             ))
             fraud = await detect_fraud_single_transaction_mcts(ctx, transaction_id=tx_id)
-            agent_deps.results['fraud_detections'][tx_id] = fraud
+            mock_ctx.deps.results['fraud_detections'][tx_id] = fraud
 
             # All results should be available for merging
-            assert tx_id in agent_deps.results['classifications']
-            assert tx_id in agent_deps.results['fraud_detections']
+            assert tx_id in mock_ctx.deps.results['classifications']
+            assert tx_id in mock_ctx.deps.results['fraud_detections']
 
             # Create merged result for this transaction
             merged = {

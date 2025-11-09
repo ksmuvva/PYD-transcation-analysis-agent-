@@ -13,9 +13,7 @@ This module tests:
 import pytest
 from datetime import datetime
 
-from src.models import Transaction, Currency, FraudRiskLevel
-from src.config import MCTSConfig
-from src.mcts_engine import MCTSEngine
+from src.models import Transaction, Currency
 
 
 # ============================================================================
