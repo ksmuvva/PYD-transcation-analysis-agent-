@@ -9,13 +9,11 @@ from typing import Optional
 
 import typer
 from rich.console import Console
-from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.table import Table
 
 from src.agent import run_analysis
-from src.config import AgentConfig, ConfigManager
+from src.config import ConfigManager
 from src.csv_processor import CSVProcessor
-from src.models import ProcessingReport
 from src.telemetry import initialize_telemetry, LogfireConfig
 
 app = typer.Typer(
@@ -123,7 +121,7 @@ def analyze(
 
         # Step 2: Load configuration
         if verbose:
-            console.print(f"[yellow]Loading configuration...[/yellow]")
+            console.print("[yellow]Loading configuration...[/yellow]")
             console.print(f"  Provider: {llm_provider}")
             console.print(f"  Model: {model}")
             console.print(f"  Threshold: {threshold} {currency}")
@@ -274,7 +272,7 @@ def validate(
             for col in df.columns:
                 console.print(f"  • {col}")
 
-            console.print(f"\n[bold green]✓ CSV file is valid![/bold green]")
+            console.print("\n[bold green]✓ CSV file is valid![/bold green]")
 
     except Exception as e:
         console.print(f"\n[red]Validation failed: {e}[/red]")

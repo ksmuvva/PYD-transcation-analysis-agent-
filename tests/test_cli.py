@@ -13,13 +13,10 @@ This module tests:
 import pytest
 import os
 import tempfile
-import shutil
-from pathlib import Path
 from typer.testing import CliRunner
 import pandas as pd
 
 from src.cli import app
-from src.models import Currency, FraudRiskLevel
 
 
 # Test fixtures

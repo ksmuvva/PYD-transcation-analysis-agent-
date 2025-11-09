@@ -16,11 +16,10 @@ import pandas as pd
 from datetime import datetime
 from dotenv import load_dotenv
 
-from src.models import Transaction, Currency, FraudRiskLevel
+from src.models import Transaction, Currency
 from src.config import AgentConfig, LLMConfig, MCTSConfig, ConfigManager
 from src.mcts_engine import MCTSEngine
 from src.agent import AgentDependencies, run_analysis
-from src.csv_processor import CSVProcessor
 
 # Load environment variables
 load_dotenv()
@@ -140,7 +139,6 @@ class TestRealMCTSEngine:
     async def test_mcts_engine_initialization_with_real_llm(self, llm_config, mcts_config):
         """Test initializing MCTS engine with real LLM function"""
         # Create a real LLM function wrapper
-        from pydantic_ai import Agent
 
         async def llm_function(prompt: str, response_type: str = "json"):
             # This would call real LLM in actual implementation
@@ -189,7 +187,6 @@ class TestRealClassification:
         """Test real classification of business transaction"""
         # This is a full integration test that makes real API calls
         # Create MCTS engine with real LLM
-        from pydantic_ai import Agent
 
         async def llm_function(prompt: str, response_type: str = "json"):
             # Simplified LLM call for testing
@@ -270,7 +267,6 @@ class TestFullPipelineIntegration:
         self, sample_transactions_df, agent_config, llm_config, mcts_config, tmp_path
     ):
         """Test complete pipeline on small dataset with real Claude"""
-        import tempfile
 
         # Save sample data to CSV
         csv_path = tmp_path / "test_transactions.csv"

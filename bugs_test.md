@@ -237,6 +237,49 @@ Add check for empty DataFrame before applying conversion.
 **Status:** ✅ FIXED
 **Fix Applied:** Updated tests/test_tools.py to import CSVProcessor class and use CSVProcessor.convert_to_gbp()
 
+### BUG-003: MCTSEngine initialization uses wrong parameter name
+**Status:** ✅ FIXED
+**Fix Applied:** Created wrapper function that converts LLM client to callable function
+
+### BUG-004: Tool functions expect RunContext but tests call them directly
+**Status:** ✅ FIXED
+**Fix Applied:** Created mock_ctx fixtures that wrap AgentDependencies in MockRunContext class
+
+### BUG-005: Test code has stale references to agent_deps
+**Status:** ✅ FIXED
+**Fix Applied:**
+- Added mock_ctx fixture to test_tool_interactions.py
+- Replaced all agent_deps references with mock_ctx
+- Fixed recursive fixture dependency
+- Updated result key assertions from 'filtered_transactions' to 'filtered_df'
+
+### BUG-007: CSVProcessor.add_gbp_column fails on empty DataFrames
+**Status:** ✅ FIXED
+**Fix Applied:** Added check for empty DataFrame before applying conversion in CSVProcessor.add_gbp_column()
+
+### BUG-008: Zero threshold parameter handling (NEW)
+**Status:** ✅ FIXED
+**Component:** src/agent.py:110
+**Description:** When threshold=0.0 is explicitly passed, it was treated as falsy
+**Fix Applied:** Changed to `threshold if threshold is not None else config.threshold_amount`
+
+### BUG-009: None/NaN transaction_id validation (NEW)
+**Status:** ✅ FIXED
+**Component:** src/csv_processor.py
+**Description:** None/NaN transaction_ids were being converted to string "None"
+**Fix Applied:** Added validation to reject None/NaN transaction_ids
+
+---
+
+## LATEST TEST EXECUTION (2025-11-09)
+
+**Test Results:**
+- ✅ 164 tests PASSING (94% pass rate excluding CLI tests)
+- ❌ 8 tests FAILING (tool interaction tests needing transaction_data parameter)
+- ⏭️ 9 tests SKIPPED (integration tests requiring API)
+
+**Progress:** Fixed 33 test failures from previous run
+
 ---
 
 ## TEST EXECUTION SUMMARY

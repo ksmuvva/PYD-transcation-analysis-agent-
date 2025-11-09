@@ -106,7 +106,7 @@ class LogfireTelemetry:
             if self.config.send_to_logfire:
                 print(f"   View traces at: https://logfire.pydantic.dev/{self.config.project_name}\n")
             else:
-                print(f"   Traces will only be logged to console\n")
+                print("   Traces will only be logged to console\n")
 
         except Exception as e:
             print(f"⚠️  Warning: Could not initialize Logfire: {e}")

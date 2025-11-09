@@ -107,8 +107,8 @@ def filter_transactions_above_threshold(
     Returns:
         TransactionFilterResult with filtered statistics
     """
-    threshold = threshold or ctx.deps.config.threshold_amount
-    currency = currency or ctx.deps.config.base_currency.value
+    threshold = threshold if threshold is not None else ctx.deps.config.threshold_amount
+    currency = currency if currency is not None else ctx.deps.config.base_currency.value
 
     df = ctx.deps.df
 
@@ -313,7 +313,8 @@ def run_analysis(
             if progress_callback:
                 progress_callback("Filtering transactions...")
 
-            filter_result = filter_transactions_above_threshold(
+            # Filter transactions above threshold
+            filter_transactions_above_threshold(
                 RunContext(deps=deps, retry=0, tool_name="filter_transactions_above_threshold")
             )
 

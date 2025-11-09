@@ -5,7 +5,6 @@ Handles CSV loading, validation, and enhanced CSV generation.
 """
 
 from pathlib import Path
-from typing import Any
 
 import pandas as pd
 from pydantic import ValidationError
@@ -149,6 +148,10 @@ class CSVProcessor:
 
         for idx, row in df.iterrows():
             try:
+                # Validate transaction_id is not None/NaN
+                if pd.isna(row["transaction_id"]) or row["transaction_id"] is None:
+                    raise ValueError("transaction_id cannot be None or NaN")
+
                 transaction = Transaction(
                     transaction_id=str(row["transaction_id"]),
                     amount=float(row["amount"]),
@@ -191,6 +194,11 @@ class CSVProcessor:
             DataFrame with added amount_gbp column
         """
         df = df.copy()
+
+        # Handle empty DataFrame
+        if len(df) == 0:
+            df["amount_gbp"] = pd.Series([], dtype=float)
+            return df
 
         df["amount_gbp"] = df.apply(
             lambda row: CSVProcessor.convert_to_gbp(
