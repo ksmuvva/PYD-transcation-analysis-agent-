@@ -16,21 +16,21 @@
 
 ### Prerequisites
 - Python 3.10 or higher
-- Poetry (recommended) or pip
+- UV (recommended) or pip
 - Valid API key for OpenAI or Anthropic
 
-### Install with Poetry (Recommended)
+### Install with UV (Recommended)
 
 ```bash
 # Clone the repository
 git clone <repository-url>
 cd financial-transaction-agent
 
-# Install dependencies
-poetry install
+# Install UV if not already installed
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Activate virtual environment
-poetry shell
+# Install dependencies and create virtual environment
+uv sync
 ```
 
 ### Install with pip
@@ -85,7 +85,7 @@ TX002,1250.00,GBP,2025-01-17,British Airways,Travel,Flight to NYC
 ### 3. Run Analysis
 
 ```bash
-python -m src.cli analyze examples/sample_transactions.csv \
+uv run python -m src.cli analyze examples/sample_transactions.csv \
   --model o1-mini \
   --output results.csv
 ```
@@ -99,7 +99,7 @@ python -m src.cli analyze examples/sample_transactions.csv \
 #### OpenAI (Recommended for Cost)
 
 ```bash
-python -m src.cli analyze data.csv \
+uv run python -m src.cli analyze data.csv \
   --llm-provider openai \
   --model o1-mini \
   --api-key $OPENAI_API_KEY
@@ -114,7 +114,7 @@ python -m src.cli analyze data.csv \
 #### Anthropic Claude
 
 ```bash
-python -m src.cli analyze data.csv \
+uv run python -m src.cli analyze data.csv \
   --llm-provider anthropic \
   --model claude-3-5-sonnet-20241022 \
   --api-key $ANTHROPIC_API_KEY
@@ -130,7 +130,7 @@ python -m src.cli analyze data.csv \
 Adjust MCTS reasoning depth:
 
 ```bash
-python -m src.cli analyze data.csv \
+uv run python -m src.cli analyze data.csv \
   --model o1-mini \
   --mcts-iterations 200  # Default: 100
 ```
@@ -145,7 +145,7 @@ python -m src.cli analyze data.csv \
 Filter transactions above a specific amount:
 
 ```bash
-python -m src.cli analyze data.csv \
+uv run python -m src.cli analyze data.csv \
   --model o1-mini \
   --threshold 500.0 \
   --currency USD
@@ -158,7 +158,7 @@ python -m src.cli analyze data.csv \
 ### Example 1: Basic Analysis
 
 ```bash
-python -m src.cli analyze transactions.csv --model o1-mini
+uv run python -m src.cli analyze transactions.csv --model o1-mini
 ```
 
 Output:
@@ -168,7 +168,7 @@ Output:
 ### Example 2: Custom Threshold and Output Path
 
 ```bash
-python -m src.cli analyze transactions.csv \
+uv run python -m src.cli analyze transactions.csv \
   --model o1-mini \
   --threshold 1000 \
   --currency GBP \
@@ -178,7 +178,7 @@ python -m src.cli analyze transactions.csv \
 ### Example 3: High Accuracy Mode
 
 ```bash
-python -m src.cli analyze transactions.csv \
+uv run python -m src.cli analyze transactions.csv \
   --model o1 \
   --mcts-iterations 300 \
   --verbose
@@ -188,16 +188,16 @@ python -m src.cli analyze transactions.csv \
 
 ```bash
 # Validate CSV format
-python -m src.cli validate transactions.csv
+uv run python -m src.cli validate transactions.csv
 
 # If valid, run analysis
-python -m src.cli analyze transactions.csv --model o1-mini
+uv run python -m src.cli analyze transactions.csv --model o1-mini
 ```
 
 ### Example 5: List Available Models
 
 ```bash
-python -m src.cli models
+uv run python -m src.cli models
 ```
 
 ---
@@ -295,7 +295,7 @@ The output CSV includes these additional columns:
 echo $OPENAI_API_KEY
 
 # Or use inline
-python -m src.cli analyze data.csv --model o1-mini --api-key sk-your-key
+uv run python -m src.cli analyze data.csv --model o1-mini --api-key sk-your-key
 ```
 
 ### Issue: "Model 'gpt-4' is not a reasoning model"
@@ -307,10 +307,10 @@ Only reasoning models are supported. Use:
 
 ```bash
 # Correct
-python -m src.cli analyze data.csv --model o1-mini
+uv run python -m src.cli analyze data.csv --model o1-mini
 
 # Incorrect
-python -m src.cli analyze data.csv --model gpt-4
+uv run python -m src.cli analyze data.csv --model gpt-4
 ```
 
 ### Issue: "CSV validation errors: Missing required columns"
@@ -320,10 +320,10 @@ Ensure your CSV has all required columns:
 
 ```bash
 # Validate first
-python -m src.cli validate data.csv
+uv run python -m src.cli validate data.csv
 
 # Fix missing columns, then retry
-python -m src.cli analyze data.csv --model o1-mini
+uv run python -m src.cli analyze data.csv --model o1-mini
 ```
 
 ### Issue: "No transactions above threshold"
@@ -333,10 +333,10 @@ Lower the threshold or check your currency conversion:
 
 ```bash
 # Lower threshold
-python -m src.cli analyze data.csv --model o1-mini --threshold 50
+uv run python -m src.cli analyze data.csv --model o1-mini --threshold 50
 
 # Or change currency
-python -m src.cli analyze data.csv --model o1-mini --currency USD
+uv run python -m src.cli analyze data.csv --model o1-mini --currency USD
 ```
 
 ### Issue: Processing is very slow
@@ -348,7 +348,7 @@ python -m src.cli analyze data.csv --model o1-mini --currency USD
 
 ```bash
 # Faster processing
-python -m src.cli analyze data.csv \
+uv run python -m src.cli analyze data.csv \
   --model o1-mini \
   --mcts-iterations 50
 ```

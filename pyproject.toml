@@ -1,41 +1,46 @@
-[tool.poetry]
+[project]
 name = "financial-transaction-agent"
 version = "1.0.0"
 description = "AI-powered financial transaction analysis agent with MCTS reasoning"
-authors = ["Your Name <you@example.com>"]
+authors = [
+    {name = "Your Name", email = "you@example.com"}
+]
 readme = "README.md"
-packages = [{include = "src"}]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "pydantic-ai>=1.12.0",
+    "pydantic>=2.0",
+    "pandas>=2.0",
+    "typer>=0.9",
+    "rich>=13.0",
+    "python-dotenv>=1.0",
+    "openai>=1.0",
+    "anthropic>=0.70",
+    "pyyaml>=6.0",
+    "logfire>=4.14",
+]
 
-[tool.poetry.dependencies]
-python = ">=3.10,<3.13"
-pydantic-ai = "^1.12.0"
-pydantic = "^2.0"
-pandas = "^2.0"
-typer = "^0.9"
-rich = "^13.0"
-python-dotenv = "^1.0"
-openai = "^1.0"
-anthropic = "^0.70"
-pyyaml = "^6.0"
-# Pydantic Logfire for telemetry, tracing, and observability
-logfire = "^4.14"
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.23",
+    "black>=24.0",
+    "ruff>=0.1",
+    "mypy>=1.8",
+    "pandas-stubs>=2.0",
+    "types-pyyaml>=6.0",
+    "griffe>=1.14.0",
+]
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^7.0"
-pytest-asyncio = "^0.23"
-black = "^24.0"
-ruff = "^0.1"
-mypy = "^1.8"
-pandas-stubs = "^2.0"
-types-pyyaml = "^6.0"
-griffe = "^1.14.0"
-
-[tool.poetry.scripts]
+[project.scripts]
 financial-agent = "src.cli:app"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
 
 [tool.black]
 line-length = 100

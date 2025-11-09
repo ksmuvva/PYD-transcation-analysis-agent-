@@ -656,12 +656,13 @@ Best Node → Final Classification/Fraud Decision
 
 ### 4.1 Core Dependencies
 ```toml
-[tool.poetry.dependencies]
-python = "^3.10"
-pydantic-ai = "^0.0.14"  # Latest version
-pydantic = "^2.0"
-pandas = "^2.0"
-typer = "^0.9"
+[project]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "pydantic-ai>=1.12.0",
+    "pydantic>=2.0",
+    "pandas>=2.0",
+    "typer>=0.9"
 rich = "^13.0"  # Beautiful CLI output
 python-dotenv = "^1.0"  # Environment variable management
 
@@ -700,7 +701,7 @@ financial-transaction-agent/
 │   ├── DESIGN.md
 │   └── USER_GUIDE.md
 ├── pyproject.toml
-├── poetry.lock
+├── uv.lock
 ├── README.md
 └── .env.example
 ```

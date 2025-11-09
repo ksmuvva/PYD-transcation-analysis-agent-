@@ -20,13 +20,13 @@ An AI-powered financial transaction analysis agent built with **Pydantic AI** th
 
 ```bash
 # Install dependencies
-poetry install
+uv sync
 
 # Set up your API key
 export OPENAI_API_KEY="your-key-here"
 
 # Run analysis
-python -m src.cli analyze \
+uv run python -m src.cli analyze \
   --csv-file transactions.csv \
   --llm-provider openai \
   --model o1-mini \
@@ -62,14 +62,14 @@ This agent includes comprehensive telemetry powered by **Pydantic Logfire**:
 Logfire telemetry is enabled by default. The agent automatically traces all operations:
 
 ```bash
-poetry run financial-agent analyze examples/sample_transactions.csv --model o1-mini
+uv run financial-agent analyze examples/sample_transactions.csv --model o1-mini
 
 # Traces are automatically logged to console and sent to Logfire
 ```
 
 To disable telemetry:
 ```bash
-poetry run financial-agent analyze examples/sample_transactions.csv --model o1-mini --no-telemetry
+uv run financial-agent analyze examples/sample_transactions.csv --model o1-mini --no-telemetry
 ```
 
 ### View Your Traces
