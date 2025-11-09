@@ -397,16 +397,26 @@ def run_analysis(
                         f"Analyzed fraud for {len(fraud_detections)}/{len(filtered_df)} transactions"
                     )
 
-        # Step 4: Generate enhanced CSV
+        # Step 4: Generate enhanced CSV (REQ-009)
         with telemetry.span("generate_enhanced_csv"):
             if progress_callback:
                 progress_callback("Generating enhanced CSV...")
 
-            CSVProcessor.save_enhanced_csv(
+            csv_result = CSVProcessor.save_enhanced_csv(
                 filtered_df,
                 classifications,
                 fraud_detections,
                 output_path,
+            )
+
+            # Log CSV completeness reward (REQ-009)
+            completeness_reward = csv_result.calculate_completeness_reward()
+            telemetry.log_info(
+                "CSV generation completed",
+                file_path=csv_result.file_path,
+                row_count=csv_result.row_count,
+                columns_included=len(csv_result.columns_included),
+                completeness_reward=completeness_reward,
             )
 
         # Create processing report

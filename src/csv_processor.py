@@ -215,9 +215,13 @@ class CSVProcessor:
         classifications: list[ClassificationResult],
         fraud_detections: list[FraudDetectionResult],
         output_path: Path,
-    ) -> None:
+    ) -> "CSVResult":
         """
-        Generate and save enhanced CSV with analysis results.
+        Generate and save enhanced CSV with analysis results (REQ-009).
+
+        Implements REQ-009: Data completeness reward based on required columns.
+        Required columns: classification, fraud_risk, confidence, mcts_explanation
+        Reward: +0.2 per column, 1.0 only if all 4 present and correctly formatted.
 
         Args:
             original_df: Original DataFrame
@@ -225,9 +229,14 @@ class CSVProcessor:
             fraud_detections: List of fraud detection results
             output_path: Path to save enhanced CSV
 
+        Returns:
+            CSVResult with completeness reward calculation
+
         Raises:
             ValueError: If results don't match transactions
         """
+        from src.models import CSVResult
+
         # Create enhanced DataFrame
         enhanced_df = original_df.copy()
 
@@ -238,7 +247,7 @@ class CSVProcessor:
         # Add enhanced columns
         enhanced_df["above_250_gbp"] = True  # All filtered transactions are above threshold
 
-        # Add classification columns
+        # REQ-009: Add classification column (required column 1)
         enhanced_df["classification"] = enhanced_df["transaction_id"].map(
             lambda tid: classification_map.get(str(tid), ClassificationResult(
                 transaction_id=str(tid),
@@ -259,7 +268,7 @@ class CSVProcessor:
             )).confidence
         )
 
-        # Add fraud detection columns
+        # REQ-009: Add fraud_risk column (required column 2)
         enhanced_df["fraud_risk"] = enhanced_df["transaction_id"].map(
             lambda tid: fraud_map.get(str(tid), FraudDetectionResult(
                 transaction_id=str(tid),
@@ -268,6 +277,26 @@ class CSVProcessor:
                 mcts_iterations=0,
                 reasoning="Not analyzed"
             )).risk_level
+        )
+
+        # REQ-009: Add confidence column (required column 3) - combined confidence score
+        enhanced_df["confidence"] = enhanced_df["transaction_id"].map(
+            lambda tid: (
+                classification_map.get(str(tid), ClassificationResult(
+                    transaction_id=str(tid),
+                    primary_classification="Unknown",
+                    confidence=0.0,
+                    mcts_iterations=0,
+                    reasoning_trace="Not classified"
+                )).confidence * 0.5 +
+                fraud_map.get(str(tid), FraudDetectionResult(
+                    transaction_id=str(tid),
+                    risk_level="LOW",
+                    confidence=0.0,
+                    mcts_iterations=0,
+                    reasoning="Not analyzed"
+                )).confidence * 0.5
+            )
         )
 
         enhanced_df["fraud_confidence"] = enhanced_df["transaction_id"].map(
@@ -309,6 +338,92 @@ class CSVProcessor:
             )
         )
 
+        # REQ-009: Add mcts_explanation column (required column 4)
+        mcts_explanations = {}
+        enhanced_df["mcts_explanation"] = enhanced_df["transaction_id"].map(
+            lambda tid: _generate_mcts_explanation(
+                tid, classification_map.get(str(tid)), fraud_map.get(str(tid)), mcts_explanations
+            )
+        )
+
         # Save to CSV
         output_path.parent.mkdir(parents=True, exist_ok=True)
         enhanced_df.to_csv(output_path, index=False)
+
+        # REQ-009: Create CSVResult with completeness reward
+        result = CSVResult(
+            file_path=str(output_path),
+            row_count=len(enhanced_df),
+            columns_included=list(enhanced_df.columns),
+            mcts_explanations=mcts_explanations,
+        )
+
+        # Calculate and log completeness reward
+        completeness_reward = result.calculate_completeness_reward()
+        print(f"✅ CSV completeness reward: {completeness_reward:.2f} (REQ-009)")
+
+        return result
+
+
+def _generate_mcts_explanation(
+    transaction_id: str,
+    classification: ClassificationResult | None,
+    fraud: FraudDetectionResult | None,
+    mcts_explanations_dict: dict[str, str],
+) -> str:
+    """
+    Generate MCTS explanation for a transaction (REQ-009).
+
+    Args:
+        transaction_id: Transaction ID
+        classification: Classification result
+        fraud: Fraud detection result
+        mcts_explanations_dict: Dictionary to store explanations
+
+    Returns:
+        MCTS explanation string
+    """
+    if classification is None or fraud is None:
+        explanation = "No MCTS analysis performed"
+    else:
+        # Build comprehensive MCTS explanation
+        parts = []
+
+        # Classification explanation
+        if hasattr(classification, 'mcts_metadata'):
+            meta = classification.mcts_metadata
+            parts.append(
+                f"Classification: {classification.category} "
+                f"(confidence: {classification.confidence:.2f}, "
+                f"visits: {meta.root_node_visits}, "
+                f"path: {' → '.join(meta.best_action_path[:3]) if meta.best_action_path else 'N/A'})"
+            )
+        else:
+            parts.append(
+                f"Classification: {classification.primary_classification} "
+                f"(confidence: {classification.confidence:.2f}, "
+                f"iterations: {classification.mcts_iterations})"
+            )
+
+        # Fraud detection explanation
+        if hasattr(fraud, 'mcts_metadata'):
+            meta = fraud.mcts_metadata
+            parts.append(
+                f"Fraud: {fraud.risk_level} "
+                f"(confidence: {fraud.confidence:.2f}, "
+                f"visits: {meta.root_node_visits}, "
+                f"path: {' → '.join(meta.best_action_path[:3]) if meta.best_action_path else 'N/A'})"
+            )
+        else:
+            parts.append(
+                f"Fraud: {fraud.risk_level} "
+                f"(confidence: {fraud.confidence:.2f}, "
+                f"iterations: {fraud.mcts_iterations})"
+            )
+
+        explanation = " | ".join(parts)
+
+    # Store in dictionary for CSVResult
+    mcts_explanations_dict[str(transaction_id)] = explanation
+
+    return explanation
