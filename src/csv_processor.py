@@ -188,6 +188,11 @@ class CSVProcessor:
         """
         df = df.copy()
 
+        # Handle empty DataFrame
+        if len(df) == 0:
+            df["amount_gbp"] = []
+            return df
+
         df["amount_gbp"] = df.apply(
             lambda row: CSVProcessor.convert_to_gbp(
                 row["amount"], Currency(row["currency"])
@@ -232,7 +237,7 @@ class CSVProcessor:
                 transaction_id=str(tid),
                 primary_classification="Unknown",
                 confidence=0.0,
-                mcts_iterations=0,
+                mcts_iterations=1,
                 reasoning_trace="Not classified"
             )).primary_classification
         )
@@ -242,7 +247,7 @@ class CSVProcessor:
                 transaction_id=str(tid),
                 primary_classification="Unknown",
                 confidence=0.0,
-                mcts_iterations=0,
+                mcts_iterations=1,
                 reasoning_trace="Not classified"
             )).confidence
         )
@@ -253,7 +258,7 @@ class CSVProcessor:
                 transaction_id=str(tid),
                 risk_level="LOW",
                 confidence=0.0,
-                mcts_iterations=0,
+                mcts_iterations=1,
                 reasoning="Not analyzed"
             )).risk_level
         )
@@ -263,7 +268,7 @@ class CSVProcessor:
                 transaction_id=str(tid),
                 risk_level="LOW",
                 confidence=0.0,
-                mcts_iterations=0,
+                mcts_iterations=1,
                 reasoning="Not analyzed"
             )).confidence
         )
@@ -273,7 +278,7 @@ class CSVProcessor:
                 transaction_id=str(tid),
                 risk_level="LOW",
                 confidence=0.0,
-                mcts_iterations=0,
+                mcts_iterations=1,
                 reasoning="Not analyzed"
             )).reasoning
         )
@@ -284,14 +289,14 @@ class CSVProcessor:
                     transaction_id=str(tid),
                     primary_classification="Unknown",
                     confidence=0.0,
-                    mcts_iterations=0,
+                    mcts_iterations=1,
                     reasoning_trace="Not classified"
                 )).mcts_iterations
                 + fraud_map.get(str(tid), FraudDetectionResult(
                     transaction_id=str(tid),
                     risk_level="LOW",
                     confidence=0.0,
-                    mcts_iterations=0,
+                    mcts_iterations=1,
                     reasoning="Not analyzed"
                 )).mcts_iterations
             )

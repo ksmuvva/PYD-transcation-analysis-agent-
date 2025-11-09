@@ -1,0 +1,2 @@
+transaction_id,amount,currency,date,merchant,description,amount_gbp,above_250_gbp,classification,classification_confidence,fraud_risk,fraud_confidence,fraud_reasoning,mcts_iterations
+TXN001003,1341.87,GBP,2025-08-23,Unknown Inc,online service - duplicate charge,1341.87,True,Business Expense,0.5,LOW,0.5,Unable to parse LLM response,6

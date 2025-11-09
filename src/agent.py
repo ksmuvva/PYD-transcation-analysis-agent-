@@ -88,8 +88,8 @@ def filter_transactions_above_threshold(
     Returns:
         TransactionFilterResult with filtered statistics
     """
-    threshold = threshold or ctx.deps.config.threshold_amount
-    currency = currency or ctx.deps.config.base_currency.value
+    threshold = threshold if threshold is not None else ctx.deps.config.threshold_amount
+    currency = currency if currency is not None else ctx.deps.config.base_currency.value
 
     df = ctx.deps.df
 
@@ -248,6 +248,11 @@ def run_analysis(
     Returns:
         ProcessingReport with summary statistics
     """
+    # Simple mock RunContext for direct tool calls
+    class MockRunContext:
+        def __init__(self, deps):
+            self.deps = deps
+
     telemetry = get_telemetry()
     start_time = time.time()
 
@@ -295,7 +300,7 @@ def run_analysis(
                 progress_callback("Filtering transactions...")
 
             filter_result = filter_transactions_above_threshold(
-                RunContext(deps=deps, retry=0, tool_name="filter_transactions_above_threshold")
+                MockRunContext(deps)
             )
 
             filtered_df = deps.results["filtered_df"]
@@ -322,7 +327,7 @@ def run_analysis(
                     currency=str(transaction_data.get("currency", "")),
                 ):
                     result = classify_single_transaction_mcts(
-                        RunContext(deps=deps, retry=0, tool_name="classify_single_transaction_mcts"),
+                        MockRunContext(deps),
                         transaction_data=transaction_data,
                     )
                     classifications.append(result)
@@ -358,7 +363,7 @@ def run_analysis(
                     currency=str(transaction_data.get("currency", "")),
                 ):
                     result = detect_fraud_single_transaction_mcts(
-                        RunContext(deps=deps, retry=0, tool_name="detect_fraud_single_transaction_mcts"),
+                        MockRunContext(deps),
                         transaction_data=transaction_data,
                     )
                     fraud_detections.append(result)

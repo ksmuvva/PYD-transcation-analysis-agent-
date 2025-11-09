@@ -119,7 +119,7 @@ class TestMCTSNode:
     def test_ucb1_score_unvisited_node(self):
         """Test that unvisited nodes return infinity for UCB1"""
         node = MCTSNode(state={}, parent=None)
-        score = node.ucb1_score()
+        score = node.ucb1_score(exploration_constant=1.414)
 
         assert score == float('inf')
 
@@ -133,7 +133,7 @@ class TestMCTSNode:
         child.visits = 5
         child.value = 3.0
 
-        score = child.ucb1_score()
+        score = child.ucb1_score(1.414)
 
         # UCB1 = value/visits + C * sqrt(ln(parent_visits) / visits)
         # = 3.0/5 + 1.414 * sqrt(ln(10) / 5)
@@ -150,8 +150,8 @@ class TestMCTSNode:
         child.visits = 5
         child.value = 3.0
 
-        score1 = child.ucb1_score(c=1.0)
-        score2 = child.ucb1_score(c=2.0)
+        score1 = child.ucb1_score(exploration_constant=1.0)
+        score2 = child.ucb1_score(exploration_constant=2.0)
 
         # Higher exploration constant should give higher score
         assert score2 > score1
@@ -169,8 +169,8 @@ class TestMCTSNode:
         child2.visits = 10
         child2.value = 5.0
 
-        score1 = child1.ucb1_score()
-        score2 = child2.ucb1_score()
+        score1 = child1.ucb1_score(1.414)
+        score2 = child2.ucb1_score(1.414)
 
         # Child2 (less visited) should have higher UCB1 score
         assert score2 > score1
@@ -190,8 +190,8 @@ class TestMCTSNode:
         child2.visits = 10
         child2.value = 5.0
 
-        score1 = child1.ucb1_score()
-        score2 = child2.ucb1_score()
+        score1 = child1.ucb1_score(1.414)
+        score2 = child2.ucb1_score(1.414)
 
         # Both should have reasonable scores (exploration bonus matters)
         assert score1 > 0
@@ -215,7 +215,7 @@ class TestMCTSNode:
         child3.value = 30.0
 
         # Find child with highest UCB1 score
-        best_child = max(parent.children, key=lambda c: c.ucb1_score())
+        best_child = max(parent.children, key=lambda c: c.ucb1_score(1.414))
 
         assert best_child in parent.children
 
@@ -287,8 +287,8 @@ class TestMCTSTreeTraversal:
         unvisited_child.visits = 0
 
         # Unvisited child should have infinite UCB1 score
-        assert unvisited_child.ucb1_score() == float('inf')
-        assert visited_child.ucb1_score() < float('inf')
+        assert unvisited_child.ucb1_score(1.414) == float('inf')
+        assert visited_child.ucb1_score(1.414) < float('inf')
 
     def test_select_best_child_among_visited(self):
         """Test selecting best child when all are visited"""
@@ -300,10 +300,10 @@ class TestMCTSTreeTraversal:
             child = MCTSNode(state={'id': i}, parent=parent)
             child.visits = 10 + i * 5
             child.value = 5.0 + i * 2
-            children_scores.append((child, child.ucb1_score()))
+            children_scores.append((child, child.ucb1_score(1.414)))
 
         # Best child should be one with highest UCB1
-        best_child = max(parent.children, key=lambda c: c.ucb1_score())
+        best_child = max(parent.children, key=lambda c: c.ucb1_score(1.414))
         assert best_child in parent.children
 
     def test_tree_depth_limiting(self):
@@ -735,7 +735,7 @@ class TestMCTSPerformance:
         child.visits = 5
         child.value = 3.0
 
-        score = child.ucb1_score(c=0.0)
+        score = child.ucb1_score(exploration_constant=0.0)
 
         # With c=0, UCB1 is just value/visits (pure exploitation)
         expected = 3.0 / 5
@@ -750,8 +750,8 @@ class TestMCTSPerformance:
         child.visits = 5
         child.value = 3.0
 
-        score_low = child.ucb1_score(c=1.0)
-        score_high = child.ucb1_score(c=10.0)
+        score_low = child.ucb1_score(exploration_constant=1.0)
+        score_high = child.ucb1_score(exploration_constant=10.0)
 
         # Higher c should give much higher score (more exploration)
         assert score_high > score_low
