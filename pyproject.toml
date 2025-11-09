@@ -26,6 +26,7 @@ ruff = "^0.1"
 mypy = "^1.8"
 pandas-stubs = "^2.0"
 types-pyyaml = "^6.0"
+griffe = "^1.14.0"
 
 [tool.poetry.scripts]
 financial-agent = "src.cli:app"

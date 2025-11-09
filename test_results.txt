@@ -1,0 +1,185 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.14, pytest-7.4.4, pluggy-1.6.0 -- /root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/bin/python
+cachedir: .pytest_cache
+rootdir: /home/user/PYD-transcation-analysis-agent-
+configfile: pyproject.toml
+plugins: anyio-4.11.0, asyncio-0.23.8
+asyncio: mode=Mode.AUTO
+collecting ... collected 6 items / 8 errors
+
+==================================== ERRORS ====================================
+______________________ ERROR collecting tests/test_cli.py ______________________
+ImportError while importing test module '/home/user/PYD-transcation-analysis-agent-/tests/test_cli.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_cli.py:22: in <module>
+    from src.cli import app
+src/cli.py:15: in <module>
+    from src.agent import run_analysis
+src/agent.py:20: in <module>
+    from src.config import AgentConfig, ConfigManager
+src/config.py:12: in <module>
+    from pydantic_ai.models import Model, OpenAIModel
+E   ImportError: cannot import name 'OpenAIModel' from 'pydantic_ai.models' (/root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/pydantic_ai/models/__init__.py)
+______________________ ERROR collecting tests/test_e2e.py ______________________
+ImportError while importing test module '/home/user/PYD-transcation-analysis-agent-/tests/test_e2e.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_e2e.py:23: in <module>
+    from src.config import AgentConfig, LLMConfig, MCTSConfig
+src/config.py:12: in <module>
+    from pydantic_ai.models import Model, OpenAIModel
+E   ImportError: cannot import name 'OpenAIModel' from 'pydantic_ai.models' (/root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/pydantic_ai/models/__init__.py)
+__________________ ERROR collecting tests/test_edge_cases.py ___________________
+ImportError while importing test module '/home/user/PYD-transcation-analysis-agent-/tests/test_edge_cases.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_edge_cases.py:26: in <module>
+    from src.config import AgentConfig, LLMConfig, MCTSConfig
+src/config.py:12: in <module>
+    from pydantic_ai.models import Model, OpenAIModel
+E   ImportError: cannot import name 'OpenAIModel' from 'pydantic_ai.models' (/root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/pydantic_ai/models/__init__.py)
+__________________ ERROR collecting tests/test_integration.py __________________
+ImportError while importing test module '/home/user/PYD-transcation-analysis-agent-/tests/test_integration.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_integration.py:20: in <module>
+    from src.config import AgentConfig, LLMConfig, MCTSConfig, ConfigManager
+src/config.py:12: in <module>
+    from pydantic_ai.models import Model, OpenAIModel
+E   ImportError: cannot import name 'OpenAIModel' from 'pydantic_ai.models' (/root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/pydantic_ai/models/__init__.py)
+_____________________ ERROR collecting tests/test_mcts.py ______________________
+ImportError while importing test module '/home/user/PYD-transcation-analysis-agent-/tests/test_mcts.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_mcts.py:20: in <module>
+    from src.mcts_engine import MCTSNode, MCTSEngine
+src/mcts_engine.py:12: in <module>
+    from src.config import MCTSConfig
+src/config.py:12: in <module>
+    from pydantic_ai.models import Model, OpenAIModel
+E   ImportError: cannot import name 'OpenAIModel' from 'pydantic_ai.models' (/root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/pydantic_ai/models/__init__.py)
+____________________ ERROR collecting tests/test_prompts.py ____________________
+ImportError while importing test module '/home/user/PYD-transcation-analysis-agent-/tests/test_prompts.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_prompts.py:18: in <module>
+    from src.config import MCTSConfig
+src/config.py:12: in <module>
+    from pydantic_ai.models import Model, OpenAIModel
+E   ImportError: cannot import name 'OpenAIModel' from 'pydantic_ai.models' (/root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/pydantic_ai/models/__init__.py)
+_______________ ERROR collecting tests/test_tool_interactions.py _______________
+ImportError while importing test module '/home/user/PYD-transcation-analysis-agent-/tests/test_tool_interactions.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_tool_interactions.py:27: in <module>
+    from src.agent import (
+src/agent.py:20: in <module>
+    from src.config import AgentConfig, ConfigManager
+src/config.py:12: in <module>
+    from pydantic_ai.models import Model, OpenAIModel
+E   ImportError: cannot import name 'OpenAIModel' from 'pydantic_ai.models' (/root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/pydantic_ai/models/__init__.py)
+_____________________ ERROR collecting tests/test_tools.py _____________________
+ImportError while importing test module '/home/user/PYD-transcation-analysis-agent-/tests/test_tools.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_tools.py:29: in <module>
+    from src.agent import AgentDependencies, filter_transactions_above_threshold
+src/agent.py:20: in <module>
+    from src.config import AgentConfig, ConfigManager
+src/config.py:12: in <module>
+    from pydantic_ai.models import Model, OpenAIModel
+E   ImportError: cannot import name 'OpenAIModel' from 'pydantic_ai.models' (/root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/pydantic_ai/models/__init__.py)
+=============================== warnings summary ===============================
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/typer/completion.py:122
+  /root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/typer/completion.py:122: DeprecationWarning: 'BaseCommand' is deprecated and will be removed in Click 9.0. Use 'Command' instead.
+    cli: click.BaseCommand,
+
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/__init__.py:2
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/__init__.py:2
+  /root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/__init__.py:2: DeprecationWarning: The `assert_git_repo` function is deprecated and will become unavailable in the next major version.
+    from griffe import *
+
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/__init__.py:2
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/__init__.py:2
+  /root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/__init__.py:2: DeprecationWarning: The `get_latest_tag` function is deprecated and will become unavailable in the next major version.
+    from griffe import *
+
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/__init__.py:2
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/__init__.py:2
+  /root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/__init__.py:2: DeprecationWarning: The `get_repo_root` function is deprecated and will become unavailable in the next major version.
+    from griffe import *
+
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/__init__.py:2
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/__init__.py:2
+  /root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/__init__.py:2: DeprecationWarning: The `tmp_worktree` function is deprecated and will become unavailable in the next major version.
+    from griffe import *
+
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/enumerations.py:1
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/enumerations.py:1
+  /root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/enumerations.py:1: DeprecationWarning: The `assert_git_repo` function is deprecated and will become unavailable in the next major version.
+    from griffe import *
+
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/enumerations.py:1
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/enumerations.py:1
+  /root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/enumerations.py:1: DeprecationWarning: The `get_latest_tag` function is deprecated and will become unavailable in the next major version.
+    from griffe import *
+
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/enumerations.py:1
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/enumerations.py:1
+  /root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/enumerations.py:1: DeprecationWarning: The `get_repo_root` function is deprecated and will become unavailable in the next major version.
+    from griffe import *
+
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/enumerations.py:1
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/enumerations.py:1
+  /root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/enumerations.py:1: DeprecationWarning: The `tmp_worktree` function is deprecated and will become unavailable in the next major version.
+    from griffe import *
+
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/models.py:1
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/models.py:1
+  /root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/models.py:1: DeprecationWarning: The `assert_git_repo` function is deprecated and will become unavailable in the next major version.
+    from griffe import *
+
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/models.py:1
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/models.py:1
+  /root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/models.py:1: DeprecationWarning: The `get_latest_tag` function is deprecated and will become unavailable in the next major version.
+    from griffe import *
+
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/models.py:1
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/models.py:1
+  /root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/models.py:1: DeprecationWarning: The `get_repo_root` function is deprecated and will become unavailable in the next major version.
+    from griffe import *
+
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/models.py:1
+../../../root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/models.py:1
+  /root/.cache/pypoetry/virtualenvs/financial-transaction-agent-scAFtcDL-py3.11/lib/python3.11/site-packages/_griffe/models.py:1: DeprecationWarning: The `tmp_worktree` function is deprecated and will become unavailable in the next major version.
+    from griffe import *
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/test_cli.py
+ERROR tests/test_e2e.py
+ERROR tests/test_edge_cases.py
+ERROR tests/test_integration.py
+ERROR tests/test_mcts.py
+ERROR tests/test_prompts.py
+ERROR tests/test_tool_interactions.py
+ERROR tests/test_tools.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 8 errors during collection !!!!!!!!!!!!!!!!!!!!
+======================== 25 warnings, 8 errors in 2.91s ========================

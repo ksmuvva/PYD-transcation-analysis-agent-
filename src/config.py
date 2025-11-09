@@ -9,7 +9,8 @@ from dataclasses import dataclass
 from typing import Any
 
 from dotenv import load_dotenv
-from pydantic_ai.models import Model, OpenAIModel
+from pydantic_ai.models import Model
+from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.models.anthropic import AnthropicModel
 
 from src.models import Currency
