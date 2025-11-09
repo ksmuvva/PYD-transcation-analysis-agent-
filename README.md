@@ -11,6 +11,7 @@ An AI-powered financial transaction analysis agent built with **Pydantic AI** th
   2. Classify transactions using MCTS reasoning
   3. Detect fraudulent transactions using MCTS reasoning
   4. Generate enhanced CSV with analysis results
+- **Full Observability**: Integrated Pydantic Logfire telemetry for comprehensive tracing and evaluation
 - **CLI Interface**: User-friendly command-line interface with progress tracking
 - **Type-Safe**: Built with Pydantic AI for complete type safety
 - **Explainable AI**: Detailed reasoning traces for all decisions
@@ -44,8 +45,50 @@ The agent produces an enhanced CSV with additional columns:
 - `fraud_reasoning`: MCTS reasoning explanation
 - `mcts_iterations`: Number of MCTS iterations performed
 
+## Pydantic Logfire Observability
+
+This agent includes comprehensive telemetry powered by **Pydantic Logfire**:
+
+### What Gets Tracked
+
+- ✅ **All LLM Calls**: Prompts, responses, tokens, latency, costs
+- ✅ **Agent Operations**: Tool calls, reasoning steps, dependencies
+- ✅ **MCTS Details**: Iterations, node exploration, convergence patterns
+- ✅ **Transaction Analysis**: Classification results, fraud detection, confidence scores
+- ✅ **Performance Metrics**: Processing time, token usage, error rates
+
+### Quick Start with Logfire
+
+Logfire telemetry is enabled by default. The agent automatically traces all operations:
+
+```bash
+poetry run financial-agent analyze examples/sample_transactions.csv --model o1-mini
+
+# Traces are automatically logged to console and sent to Logfire
+```
+
+To disable telemetry:
+```bash
+poetry run financial-agent analyze examples/sample_transactions.csv --model o1-mini --no-telemetry
+```
+
+### View Your Traces
+
+Visit [https://logfire.pydantic.dev](https://logfire.pydantic.dev) to:
+- Explore detailed traces of every agent run
+- Analyze MCTS search behavior and convergence
+- Track token usage, costs, and performance metrics
+- Debug classification and fraud detection decisions
+- Monitor real-time agent performance
+- Export trace data for offline analysis
+
+### Configuration
+
+Set `LOGFIRE_TOKEN` in your `.env` file to send traces to the Logfire platform. Without a token, traces will only be logged to the console.
+
 ## Documentation
 
+- [User Guide](docs/USER_GUIDE.md) - How to use the agent
 - [Requirements Specification](REQUIREMENTS.md) - Detailed requirements
 - [System Design](DESIGN.md) - Architecture and component design
 - [Implementation TODO](TODO.md) - Development roadmap
@@ -53,6 +96,7 @@ The agent produces an enhanced CSV with additional columns:
 ## Technology Stack
 
 - **Pydantic AI**: Agent orchestration and tool management
+- **Pydantic Logfire**: Observability, tracing, and telemetry
 - **MCTS Engine**: Custom Monte Carlo Tree Search implementation
 - **Pandas**: CSV data processing
 - **Typer + Rich**: Beautiful CLI interface

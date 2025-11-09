@@ -10,6 +10,7 @@ from dataclasses import dataclass, field
 from typing import Any, Callable
 
 from src.config import MCTSConfig
+from src.telemetry import get_telemetry
 
 
 @dataclass
@@ -89,30 +90,69 @@ class MCTSEngine:
         Returns:
             Best result with hypothesis, confidence, and reasoning
         """
-        self.root = MCTSNode(state=initial_state)
+        telemetry = get_telemetry()
 
-        # Run MCTS iterations
-        for _ in range(self.config.iterations):
-            # 1. Selection: Traverse tree using UCB1
-            node = self._select(self.root)
+        with telemetry.span(
+            f"mcts_search_{objective}",
+            objective=objective,
+            max_iterations=self.config.iterations,
+            exploration_constant=self.config.exploration_constant,
+        ):
+            self.root = MCTSNode(state=initial_state)
 
-            # 2. Expansion: Generate new hypotheses if needed
-            if node.visits > 0 and not node.children:
-                node = self._expand(node, objective)
+            # Run MCTS iterations
+            for iteration in range(self.config.iterations):
+                # 1. Selection: Traverse tree using UCB1
+                node = self._select(self.root)
 
-            # 3. Simulation: Evaluate hypothesis using LLM
-            reward = self._simulate(node, objective)
+                # 2. Expansion: Generate new hypotheses if needed
+                if node.visits > 0 and not node.children:
+                    node = self._expand(node, objective)
 
-            # 4. Backpropagation: Update values up the tree
-            self._backpropagate(node, reward)
+                # 3. Simulation: Evaluate hypothesis using LLM
+                reward = self._simulate(node, objective)
 
-        # Return best result
-        if not self.root.children:
-            # No expansion happened, use root
-            return self._extract_result(self.root, objective)
+                # 4. Backpropagation: Update values up the tree
+                self._backpropagate(node, reward)
 
-        best_child = max(self.root.children, key=lambda n: n.visits)
-        return self._extract_result(best_child, objective)
+                # Record iteration metrics
+                best_hypothesis = node.state.get("hypothesis", "unknown")
+                telemetry.record_mcts_iteration(
+                    iteration=iteration,
+                    node_visits=node.visits,
+                    node_value=node.value,
+                    best_hypothesis=best_hypothesis,
+                    confidence=reward,
+                    objective=objective,
+                )
+
+            # Return best result
+            if not self.root.children:
+                # No expansion happened, use root
+                result = self._extract_result(self.root, objective)
+            else:
+                best_child = max(self.root.children, key=lambda n: n.visits)
+                result = self._extract_result(best_child, objective)
+
+            # Log final search metrics
+            telemetry.log_info(
+                "MCTS search completed",
+                objective=objective,
+                total_nodes=self._count_nodes(self.root),
+                root_visits=self.root.visits,
+                best_confidence=result.get("confidence", 0.0),
+                classification=result.get("classification", "unknown") if objective == "classify" else None,
+                risk_level=result.get("risk_level", "unknown") if objective == "detect_fraud" else None,
+            )
+
+            return result
+
+    def _count_nodes(self, node: MCTSNode) -> int:
+        """Count total nodes in the tree."""
+        count = 1
+        for child in node.children:
+            count += self._count_nodes(child)
+        return count
 
     def _select(self, node: MCTSNode) -> MCTSNode:
         """

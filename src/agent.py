@@ -27,6 +27,7 @@ from src.models import (
     ProcessingReport,
     TransactionFilterResult,
 )
+from src.telemetry import get_telemetry
 
 
 @dataclass
@@ -247,118 +248,176 @@ def run_analysis(
     Returns:
         ProcessingReport with summary statistics
     """
+    telemetry = get_telemetry()
     start_time = time.time()
 
-    # Create LLM client
-    llm_client = ConfigManager.create_llm_client(config.llm)
-
-    # Create MCTS engine with LLM function
-    def llm_function(prompt: str) -> str:
-        """Wrapper to call LLM synchronously."""
-        # For Pydantic AI, we'll use the model's run method
-        # This is a simplified synchronous wrapper
-        try:
-            # Create a simple agent just for LLM calls
-            simple_agent = Agent(llm_client)
-            result = simple_agent.run_sync(prompt)
-            return result.data
-        except Exception as e:
-            return f"Error: {str(e)}"
-
-    mcts_engine = MCTSEngine(config.mcts, llm_function)
-
-    # Create dependencies
-    deps = AgentDependencies(
-        df=df,
-        config=config,
-        mcts_engine=mcts_engine,
-        llm_client=llm_client,
-        start_time=start_time,
-    )
-
-    # Step 1: Filter transactions
-    if progress_callback:
-        progress_callback("Filtering transactions...")
-
-    filter_result = filter_transactions_above_threshold(
-        RunContext(deps=deps, retry=0, tool_name="filter_transactions_above_threshold")
-    )
-
-    filtered_df = deps.results["filtered_df"]
-
-    if len(filtered_df) == 0:
-        raise ValueError(
-            f"No transactions above threshold {config.threshold_amount} {config.base_currency.value}"
-        )
-
-    # Step 2: Classify transactions
-    if progress_callback:
-        progress_callback(f"Classifying {len(filtered_df)} transactions...")
-
-    classifications = []
-    for idx, row in filtered_df.iterrows():
-        transaction_data = row.to_dict()
-
-        result = classify_single_transaction_mcts(
-            RunContext(deps=deps, retry=0, tool_name="classify_single_transaction_mcts"),
-            transaction_data=transaction_data,
-        )
-        classifications.append(result)
-
-        if progress_callback:
-            progress_callback(
-                f"Classified {len(classifications)}/{len(filtered_df)} transactions"
-            )
-
-    # Step 3: Detect fraud
-    if progress_callback:
-        progress_callback(f"Detecting fraud for {len(filtered_df)} transactions...")
-
-    fraud_detections = []
-    for idx, row in filtered_df.iterrows():
-        transaction_data = row.to_dict()
-
-        result = detect_fraud_single_transaction_mcts(
-            RunContext(deps=deps, retry=0, tool_name="detect_fraud_single_transaction_mcts"),
-            transaction_data=transaction_data,
-        )
-        fraud_detections.append(result)
-
-        if progress_callback:
-            progress_callback(
-                f"Analyzed fraud for {len(fraud_detections)}/{len(filtered_df)} transactions"
-            )
-
-    # Step 4: Generate enhanced CSV
-    if progress_callback:
-        progress_callback("Generating enhanced CSV...")
-
-    CSVProcessor.save_enhanced_csv(
-        filtered_df,
-        classifications,
-        fraud_detections,
-        output_path,
-    )
-
-    # Create processing report
-    high_risk_count = sum(
-        1 for f in fraud_detections if f.risk_level in [FraudRiskLevel.HIGH, FraudRiskLevel.CRITICAL]
-    )
-    critical_risk_count = sum(
-        1 for f in fraud_detections if f.risk_level == FraudRiskLevel.CRITICAL
-    )
-
-    processing_time = time.time() - start_time
-
-    report = ProcessingReport(
-        total_transactions_analyzed=len(filtered_df),
-        transactions_above_threshold=len(filtered_df),
-        high_risk_transactions=high_risk_count,
-        critical_risk_transactions=critical_risk_count,
-        processing_time_seconds=processing_time,
+    # Create top-level span for entire analysis
+    with telemetry.span(
+        "transaction_analysis_pipeline",
+        total_transactions=len(df),
+        threshold=config.threshold_amount,
+        currency=config.base_currency.value,
         llm_provider=config.llm.provider,
-        model_used=config.llm.model,
-        mcts_iterations_total=len(filtered_df) * config.mcts.iterations * 2,  # classify + fraud
-    )
+        llm_model=config.llm.model,
+        mcts_iterations=config.mcts.iterations,
+    ):
 
-    return report
+        # Create LLM client
+        llm_client = ConfigManager.create_llm_client(config.llm)
+
+        # Create MCTS engine with LLM function
+        def llm_function(prompt: str) -> str:
+            """Wrapper to call LLM synchronously."""
+            # For Pydantic AI, we'll use the model's run method
+            # This is a simplified synchronous wrapper
+            try:
+                # Create a simple agent just for LLM calls
+                simple_agent = Agent(llm_client)
+                result = simple_agent.run_sync(prompt)
+                return result.data
+            except Exception as e:
+                return f"Error: {str(e)}"
+
+        mcts_engine = MCTSEngine(config.mcts, llm_function)
+
+        # Create dependencies
+        deps = AgentDependencies(
+            df=df,
+            config=config,
+            mcts_engine=mcts_engine,
+            llm_client=llm_client,
+            start_time=start_time,
+        )
+
+        # Step 1: Filter transactions
+        with telemetry.span("filter_transactions", threshold=config.threshold_amount):
+            if progress_callback:
+                progress_callback("Filtering transactions...")
+
+            filter_result = filter_transactions_above_threshold(
+                RunContext(deps=deps, retry=0, tool_name="filter_transactions_above_threshold")
+            )
+
+            filtered_df = deps.results["filtered_df"]
+
+            if len(filtered_df) == 0:
+                raise ValueError(
+                    f"No transactions above threshold {config.threshold_amount} {config.base_currency.value}"
+                )
+
+        # Step 2: Classify transactions
+        with telemetry.span("classify_all_transactions", count=len(filtered_df)):
+            if progress_callback:
+                progress_callback(f"Classifying {len(filtered_df)} transactions...")
+
+            classifications = []
+            for idx, row in filtered_df.iterrows():
+                transaction_data = row.to_dict()
+
+                # Create span for individual transaction classification
+                with telemetry.span(
+                    "classify_transaction",
+                    transaction_id=str(idx),
+                    amount=float(transaction_data.get("amount", 0)),
+                    currency=str(transaction_data.get("currency", "")),
+                ):
+                    result = classify_single_transaction_mcts(
+                        RunContext(deps=deps, retry=0, tool_name="classify_single_transaction_mcts"),
+                        transaction_data=transaction_data,
+                    )
+                    classifications.append(result)
+
+                    # Record classification result
+                    telemetry.record_transaction_analysis(
+                        transaction_id=str(idx),
+                        amount=float(transaction_data.get("amount", 0)),
+                        currency=str(transaction_data.get("currency", "")),
+                        classification=result.primary_classification,
+                        confidence=result.confidence,
+                    )
+
+                if progress_callback:
+                    progress_callback(
+                        f"Classified {len(classifications)}/{len(filtered_df)} transactions"
+                    )
+
+        # Step 3: Detect fraud
+        with telemetry.span("detect_fraud_all_transactions", count=len(filtered_df)):
+            if progress_callback:
+                progress_callback(f"Detecting fraud for {len(filtered_df)} transactions...")
+
+            fraud_detections = []
+            for idx, row in filtered_df.iterrows():
+                transaction_data = row.to_dict()
+
+                # Create span for individual fraud detection
+                with telemetry.span(
+                    "detect_fraud_transaction",
+                    transaction_id=str(idx),
+                    amount=float(transaction_data.get("amount", 0)),
+                    currency=str(transaction_data.get("currency", "")),
+                ):
+                    result = detect_fraud_single_transaction_mcts(
+                        RunContext(deps=deps, retry=0, tool_name="detect_fraud_single_transaction_mcts"),
+                        transaction_data=transaction_data,
+                    )
+                    fraud_detections.append(result)
+
+                    # Record fraud detection result
+                    telemetry.record_transaction_analysis(
+                        transaction_id=str(idx),
+                        amount=float(transaction_data.get("amount", 0)),
+                        currency=str(transaction_data.get("currency", "")),
+                        fraud_risk=result.risk_level.value,
+                        confidence=result.confidence,
+                    )
+
+                if progress_callback:
+                    progress_callback(
+                        f"Analyzed fraud for {len(fraud_detections)}/{len(filtered_df)} transactions"
+                    )
+
+        # Step 4: Generate enhanced CSV
+        with telemetry.span("generate_enhanced_csv"):
+            if progress_callback:
+                progress_callback("Generating enhanced CSV...")
+
+            CSVProcessor.save_enhanced_csv(
+                filtered_df,
+                classifications,
+                fraud_detections,
+                output_path,
+            )
+
+        # Create processing report
+        high_risk_count = sum(
+            1 for f in fraud_detections if f.risk_level in [FraudRiskLevel.HIGH, FraudRiskLevel.CRITICAL]
+        )
+        critical_risk_count = sum(
+            1 for f in fraud_detections if f.risk_level == FraudRiskLevel.CRITICAL
+        )
+
+        processing_time = time.time() - start_time
+
+        report = ProcessingReport(
+            total_transactions_analyzed=len(filtered_df),
+            transactions_above_threshold=len(filtered_df),
+            high_risk_transactions=high_risk_count,
+            critical_risk_transactions=critical_risk_count,
+            processing_time_seconds=processing_time,
+            llm_provider=config.llm.provider,
+            model_used=config.llm.model,
+            mcts_iterations_total=len(filtered_df) * config.mcts.iterations * 2,  # classify + fraud
+        )
+
+        # Record final pipeline metrics
+        telemetry.record_pipeline_metrics(
+            total_transactions=len(df),
+            transactions_analyzed=len(filtered_df),
+            high_risk_count=high_risk_count,
+            critical_risk_count=critical_risk_count,
+            processing_time_seconds=processing_time,
+            model_used=config.llm.model,
+        )
+
+        return report
