@@ -1,0 +1,16 @@
+transaction_id,amount,currency,date,merchant,description
+TXN023000,376.69,GBP,2025-10-25,Unknown Vendor,car rental - first time purchase
+TXN023001,691.02,EUR,2025-09-25,Unknown Inc,taxi - unusual amount
+TXN023002,209.71,GBP,2025-09-15,New Merchant,taxi - first time purchase
+TXN023003,29.78,GBP,2025-09-29,Local Store,car rental - routine purchase
+TXN023004,1020.22,USD,2025-11-04,Offshore Vendor,airline - unusual amount
+TXN023005,1593.93,GBP,2025-09-27,Offshore Vendor,airline - rapid succession
+TXN023006,407.95,USD,2025-10-26,International Store,airline - first time purchase
+TXN023007,1078.91,USD,2025-11-08,Unknown Inc,hotel - rapid succession
+TXN023008,305.37,EUR,2025-10-08,International Store,travel agency - unusual location
+TXN023009,838.37,GBP,2025-09-28,Offshore Vendor,airline - unusual amount
+TXN023010,278.34,EUR,2025-11-07,Unknown Vendor,car rental - unusual location
+TXN023011,40.57,EUR,2025-09-13,Amazon,airline - monthly subscription
+TXN023012,467.97,GBP,2025-10-01,New Merchant,travel agency - unusual location
+TXN023013,1834.63,GBP,2025-10-29,Suspicious Store XYZ,airline - unusual amount
+TXN023014,322.78,USD,2025-10-26,New Merchant,taxi - late night transaction

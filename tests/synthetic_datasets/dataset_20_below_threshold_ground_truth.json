@@ -1,0 +1,72 @@
+[
+  {
+    "transaction_id": "TXN020000",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 41.18,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN020001",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 19.36,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN020002",
+    "ground_truth_category": "Subscription",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 18.37,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN020003",
+    "ground_truth_category": "Subscription",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 51.26,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN020004",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 16.73,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN020005",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 33.49,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN020006",
+    "ground_truth_category": "Healthcare",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 34.48,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN020007",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 19.51,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN020008",
+    "ground_truth_category": "Investment",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 96.82,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN020009",
+    "ground_truth_category": "Subscription",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 24.19,
+    "ground_truth_above_threshold": false
+  }
+]

@@ -155,10 +155,10 @@ class ConfigManager:
                 api_key=config.api_key,
             )
         elif config.provider.lower() == "anthropic":
-            return AnthropicModel(
-                config.model,
-                api_key=config.api_key,
-            )
+            # Set API key in environment for AnthropicModel
+            # (new pydantic-ai API reads from environment)
+            os.environ['ANTHROPIC_API_KEY'] = config.api_key
+            return AnthropicModel(config.model)
         else:
             raise ValueError(f"Unsupported provider: {config.provider}")
 

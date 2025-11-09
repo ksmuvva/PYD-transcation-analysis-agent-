@@ -1,0 +1,11 @@
+transaction_id,amount,currency,date,merchant,description
+TXN020000,41.18,GBP,2025-11-08,Amazon,taxi - routine purchase
+TXN020001,19.36,GBP,2025-10-29,Local Store,professional services - monthly subscription
+TXN020002,18.37,GBP,2025-10-26,Amazon,magazine - routine purchase
+TXN020003,51.26,GBP,2025-10-11,Local Store,magazine - monthly subscription
+TXN020004,16.73,GBP,2025-10-21,Walmart,clothing - monthly subscription
+TXN020005,33.49,GBP,2025-10-26,Walmart,professional services - routine purchase
+TXN020006,34.48,GBP,2025-10-10,Target,pharmacy - regular shopping
+TXN020007,19.51,GBP,2025-11-02,Pharmacy,restaurant - routine purchase
+TXN020008,96.82,GBP,2025-10-25,Amazon,mutual fund - monthly subscription
+TXN020009,24.19,GBP,2025-10-25,Target,streaming service - routine purchase

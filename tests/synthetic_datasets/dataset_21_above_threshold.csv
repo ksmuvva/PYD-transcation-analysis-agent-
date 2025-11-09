@@ -1,0 +1,11 @@
+transaction_id,amount,currency,date,merchant,description
+TXN021000,363.85,GBP,2025-10-17,Fake Merchant 123,water - multiple failed attempts
+TXN021001,874.06,GBP,2025-10-27,Unknown Inc,magazine - rapid succession
+TXN021002,474.9,GBP,2025-10-27,New Merchant,taxi - late night transaction
+TXN021003,881.26,GBP,2025-10-14,Unknown Vendor,stock purchase - unusual location
+TXN021004,707.63,GBP,2025-11-02,International Store,streaming service - late night transaction
+TXN021005,866.51,GBP,2025-11-08,Unknown Vendor,phone bill - late night transaction
+TXN021006,946.89,GBP,2025-11-05,Offshore Vendor,restaurant - unusual amount
+TXN021007,420.97,GBP,2025-10-27,Scam Corp,tuition - unusual country
+TXN021008,753.09,GBP,2025-10-31,Unknown Vendor,gym membership - unusual location
+TXN021009,568.11,GBP,2025-10-11,Suspicious Store XYZ,mutual fund - unusual amount

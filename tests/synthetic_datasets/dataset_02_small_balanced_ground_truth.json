@@ -1,0 +1,37 @@
+[
+  {
+    "transaction_id": "TXN002000",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 33.61,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN002001",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 78.21,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN002002",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 175.67,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN002003",
+    "ground_truth_category": "Subscription",
+    "ground_truth_fraud_level": "HIGH",
+    "ground_truth_gbp_amount": 1482.49,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN002004",
+    "ground_truth_category": "Utilities",
+    "ground_truth_fraud_level": "CRITICAL",
+    "ground_truth_gbp_amount": 7290.11,
+    "ground_truth_above_threshold": true
+  }
+]

@@ -1,0 +1,11 @@
+transaction_id,amount,currency,date,merchant,description
+TXN024000,856.32,EUR,2025-11-05,Suspicious Store XYZ,phone bill - rapid succession
+TXN024001,91.25,GBP,2025-11-04,Target,taxi - monthly subscription
+TXN024002,49.32,GBP,2025-11-08,Target,mutual fund - routine purchase
+TXN024003,346.73,JPY,2025-11-03,New Merchant,grocery - first time purchase
+TXN024004,80.19,JPY,2025-11-04,Local Store,books - routine purchase
+TXN024005,451.12,USD,2025-11-05,New Merchant,stock purchase - unusual location
+TXN024006,88.66,CAD,2025-11-04,Pharmacy,pharmacy - routine purchase
+TXN024007,406.12,CAD,2025-11-03,International Store,software subscription - late night transaction
+TXN024008,470.83,JPY,2025-11-08,New Merchant,crypto exchange - unusual location
+TXN024009,190.32,USD,2025-11-02,Walmart,hotel - routine purchase

@@ -1,0 +1,21 @@
+transaction_id,amount,currency,date,merchant,description
+TXN019000,391.42,GBP,2025-09-06,Unknown Vendor,grocery - late night transaction
+TXN019001,1080.26,USD,2025-10-23,Unknown Inc,medical equipment - rapid succession
+TXN019002,2133.52,EUR,2025-10-30,Fake Merchant 123,car rental - stolen card pattern
+TXN019003,190.25,JPY,2025-11-01,Local Store,magazine - monthly subscription
+TXN019004,5218.22,CAD,2025-08-11,Unknown Overseas,online course - unusual country
+TXN019005,25.01,AUD,2025-09-30,Walmart,internet - routine purchase
+TXN019006,142.75,GBP,2025-09-30,Walmart,online course - routine purchase
+TXN019007,5626.97,USD,2025-10-25,Unknown Overseas,entertainment - stolen card pattern
+TXN019008,144.5,EUR,2025-11-07,Amazon,travel agency - routine purchase
+TXN019009,1057.8,JPY,2025-10-18,Unknown Inc,hospital - rapid succession
+TXN019010,907.97,CAD,2025-09-15,Suspicious Store XYZ,marketing - rapid succession
+TXN019011,6086.26,AUD,2025-09-11,Fake Merchant 123,pharmacy - multiple failed attempts
+TXN019012,882.67,GBP,2025-10-19,Suspicious Store XYZ,airline - duplicate charge
+TXN019013,173.15,USD,2025-11-03,Amazon,streaming service - routine purchase
+TXN019014,1880.34,EUR,2025-09-20,Suspicious Store XYZ,crypto exchange - unusual amount
+TXN019015,274.48,JPY,2025-09-28,New Merchant,books - first time purchase
+TXN019016,1253.06,CAD,2025-10-24,Suspicious Store XYZ,restaurant - unusual amount
+TXN019017,9015.93,AUD,2025-10-31,Scam Corp,professional services - multiple failed attempts
+TXN019018,4951.35,GBP,2025-11-07,Scam Corp,entertainment - unusual country
+TXN019019,6733.53,USD,2025-09-22,Scam Corp,gym membership - stolen card pattern

@@ -1,0 +1,6 @@
+transaction_id,amount,currency,date,merchant,description
+TXN002000,39.54,EUR,2025-09-26,Target,office supplies - routine purchase
+TXN002001,78.21,GBP,2025-09-21,Target,entertainment - monthly subscription
+TXN002002,337.83,AUD,2025-11-03,Unknown Vendor,airline - first time purchase
+TXN002003,1744.11,EUR,2025-08-30,Unknown Inc,gym membership - rapid succession
+TXN002004,7290.11,GBP,2025-10-31,Scam Corp,water - stolen card pattern

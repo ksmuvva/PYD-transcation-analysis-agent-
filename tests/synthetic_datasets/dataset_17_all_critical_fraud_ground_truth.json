@@ -1,0 +1,72 @@
+[
+  {
+    "transaction_id": "TXN017000",
+    "ground_truth_category": "Utilities",
+    "ground_truth_fraud_level": "CRITICAL",
+    "ground_truth_gbp_amount": 5732.67,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN017001",
+    "ground_truth_category": "Education",
+    "ground_truth_fraud_level": "CRITICAL",
+    "ground_truth_gbp_amount": 9939.89,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN017002",
+    "ground_truth_category": "Subscription",
+    "ground_truth_fraud_level": "CRITICAL",
+    "ground_truth_gbp_amount": 2379.92,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN017003",
+    "ground_truth_category": "Investment",
+    "ground_truth_fraud_level": "CRITICAL",
+    "ground_truth_gbp_amount": 4094.35,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN017004",
+    "ground_truth_category": "Investment",
+    "ground_truth_fraud_level": "CRITICAL",
+    "ground_truth_gbp_amount": 4345.53,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN017005",
+    "ground_truth_category": "Utilities",
+    "ground_truth_fraud_level": "CRITICAL",
+    "ground_truth_gbp_amount": 4791.93,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN017006",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "CRITICAL",
+    "ground_truth_gbp_amount": 36.81,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN017007",
+    "ground_truth_category": "Education",
+    "ground_truth_fraud_level": "CRITICAL",
+    "ground_truth_gbp_amount": 44.71,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN017008",
+    "ground_truth_category": "Utilities",
+    "ground_truth_fraud_level": "CRITICAL",
+    "ground_truth_gbp_amount": 3841.61,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN017009",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "CRITICAL",
+    "ground_truth_gbp_amount": 7009.44,
+    "ground_truth_above_threshold": true
+  }
+]

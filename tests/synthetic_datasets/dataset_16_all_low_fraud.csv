@@ -1,0 +1,11 @@
+transaction_id,amount,currency,date,merchant,description
+TXN016000,118.82,GBP,2025-11-05,Target,entertainment - monthly subscription
+TXN016001,166.3,GBP,2025-10-22,Amazon,clothing - monthly subscription
+TXN016002,51.52,GBP,2025-10-22,Local Store,restaurant - routine purchase
+TXN016003,176.21,GBP,2025-10-30,Amazon,entertainment - regular shopping
+TXN016004,173.82,GBP,2025-10-28,Amazon,grocery - regular shopping
+TXN016005,164.26,GBP,2025-10-15,Walmart,pharmacy - monthly subscription
+TXN016006,76.62,GBP,2025-10-17,Pharmacy,clothing - monthly subscription
+TXN016007,127.07,GBP,2025-11-03,Walmart,grocery - routine purchase
+TXN016008,76.65,GBP,2025-10-21,Target,pharmacy - monthly subscription
+TXN016009,71.49,GBP,2025-11-03,Target,pharmacy - regular shopping

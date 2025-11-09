@@ -1,0 +1,107 @@
+[
+  {
+    "transaction_id": "TXN023000",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 376.69,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN023001",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "HIGH",
+    "ground_truth_gbp_amount": 587.37,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN023002",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 209.71,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN023003",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 29.78,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN023004",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "HIGH",
+    "ground_truth_gbp_amount": 805.97,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN023005",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "HIGH",
+    "ground_truth_gbp_amount": 1593.93,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN023006",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 322.28,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN023007",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "HIGH",
+    "ground_truth_gbp_amount": 852.34,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN023008",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 259.56,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN023009",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "HIGH",
+    "ground_truth_gbp_amount": 838.37,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN023010",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 236.59,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN023011",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 34.48,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN023012",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 467.97,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN023013",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "HIGH",
+    "ground_truth_gbp_amount": 1834.63,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN023014",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 255.0,
+    "ground_truth_above_threshold": true
+  }
+]

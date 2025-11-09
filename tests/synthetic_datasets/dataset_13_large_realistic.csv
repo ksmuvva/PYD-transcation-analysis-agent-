@@ -1,0 +1,51 @@
+transaction_id,amount,currency,date,merchant,description
+TXN013000,146.05,GBP,2025-08-31,Local Store,mutual fund - routine purchase
+TXN013001,69.96,GBP,2025-07-29,Target,online service - monthly subscription
+TXN013002,64.36,USD,2024-12-12,Amazon,mutual fund - monthly subscription
+TXN013003,179.0,JPY,2025-05-04,Local Store,internet - regular shopping
+TXN013004,185.62,EUR,2025-02-27,Pharmacy,airline - regular shopping
+TXN013005,113.64,USD,2025-01-04,Target,university - routine purchase
+TXN013006,124.5,JPY,2025-06-05,Local Store,pharmacy - routine purchase
+TXN013007,199.65,CAD,2025-05-12,Target,hospital - monthly subscription
+TXN013008,107.49,EUR,2025-04-15,Walmart,restaurant - routine purchase
+TXN013009,157.92,USD,2025-10-05,Target,mutual fund - regular shopping
+TXN013010,190.28,JPY,2024-11-26,Target,office supplies - regular shopping
+TXN013011,133.42,EUR,2025-04-19,Walmart,airline - routine purchase
+TXN013012,32.37,CAD,2025-04-24,Target,travel agency - monthly subscription
+TXN013013,9331.83,AUD,2025-06-15,Scam Corp,streaming service - stolen card pattern
+TXN013014,469.6,USD,2025-03-22,International Store,car rental - unusual location
+TXN013015,287.11,CAD,2025-01-31,International Store,clinic - unusual location
+TXN013016,160.49,USD,2025-09-07,Walmart,hospital - regular shopping
+TXN013017,162.7,JPY,2025-05-04,Pharmacy,hospital - routine purchase
+TXN013018,88.05,CAD,2025-03-08,Local Store,grocery - monthly subscription
+TXN013019,1174.96,GBP,2024-12-15,Unknown Inc,car rental - duplicate charge
+TXN013020,376.34,AUD,2025-01-30,Unknown Vendor,taxi - first time purchase
+TXN013021,291.24,USD,2025-02-16,Unknown Vendor,software subscription - first time purchase
+TXN013022,1768.9,EUR,2025-02-16,Offshore Vendor,medical equipment - unusual amount
+TXN013023,27.75,CAD,2024-12-29,Walmart,taxi - monthly subscription
+TXN013024,181.38,AUD,2024-12-24,Target,airline - monthly subscription
+TXN013025,60.28,CAD,2024-12-15,Walmart,consulting - monthly subscription
+TXN013026,65.04,CAD,2024-12-22,Target,software subscription - regular shopping
+TXN013027,21.38,AUD,2025-10-02,Local Store,tuition - regular shopping
+TXN013028,69.39,USD,2025-01-02,Target,mutual fund - monthly subscription
+TXN013029,116.71,CAD,2025-05-03,Target,tuition - routine purchase
+TXN013030,28.39,USD,2025-07-05,Target,pharmacy - regular shopping
+TXN013031,187.41,EUR,2025-08-19,Target,online course - routine purchase
+TXN013032,9032.61,JPY,2025-03-14,Scam Corp,stock purchase - stolen card pattern
+TXN013033,120.84,USD,2025-07-08,Amazon,books - routine purchase
+TXN013034,99.41,AUD,2024-12-09,Pharmacy,stock purchase - routine purchase
+TXN013035,79.5,AUD,2025-06-26,Local Store,university - regular shopping
+TXN013036,78.88,USD,2025-01-25,Target,tuition - routine purchase
+TXN013037,404.12,CAD,2025-06-18,Unknown Vendor,stock purchase - unusual location
+TXN013038,188.4,CAD,2025-05-19,Walmart,tuition - routine purchase
+TXN013039,73.28,AUD,2025-08-30,Local Store,consulting - monthly subscription
+TXN013040,72.31,USD,2025-02-18,Pharmacy,hotel - regular shopping
+TXN013041,4690.99,CAD,2025-06-08,Unknown Overseas,tuition - unusual country
+TXN013042,72.94,EUR,2025-10-31,Amazon,internet - regular shopping
+TXN013043,158.75,AUD,2025-06-26,Pharmacy,software subscription - monthly subscription
+TXN013044,129.51,CAD,2025-08-13,Pharmacy,software subscription - regular shopping
+TXN013045,46.25,GBP,2024-11-15,Local Store,online service - regular shopping
+TXN013046,105.35,JPY,2025-07-27,Pharmacy,airline - regular shopping
+TXN013047,199.64,EUR,2025-01-25,Local Store,travel agency - monthly subscription
+TXN013048,1013.49,CAD,2025-03-18,Offshore Vendor,medical equipment - duplicate charge
+TXN013049,116.04,EUR,2025-07-05,Walmart,mutual fund - regular shopping

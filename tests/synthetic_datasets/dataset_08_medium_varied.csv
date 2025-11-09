@@ -1,0 +1,21 @@
+transaction_id,amount,currency,date,merchant,description
+TXN008000,424.44,AUD,2025-08-03,Unknown Vendor,books - late night transaction
+TXN008001,286.07,EUR,2025-11-08,International Store,books - late night transaction
+TXN008002,107.12,USD,2025-05-20,Walmart,stock purchase - monthly subscription
+TXN008003,300.56,CAD,2025-05-30,Unknown Vendor,internet - late night transaction
+TXN008004,569.32,GBP,2025-10-02,Offshore Vendor,streaming service - duplicate charge
+TXN008005,46.94,CAD,2025-05-31,Local Store,mutual fund - regular shopping
+TXN008006,179.61,GBP,2025-05-16,Amazon,gym membership - regular shopping
+TXN008007,1196.82,CAD,2025-05-14,Unknown Inc,airline - unusual amount
+TXN008008,110.92,AUD,2025-07-13,Pharmacy,mutual fund - monthly subscription
+TXN008009,449.17,JPY,2025-07-02,New Merchant,stock purchase - first time purchase
+TXN008010,62.69,AUD,2025-09-06,Pharmacy,crypto exchange - regular shopping
+TXN008011,64.29,AUD,2025-10-20,Target,magazine - regular shopping
+TXN008012,141.85,JPY,2025-09-10,Walmart,clothing - routine purchase
+TXN008013,21.83,JPY,2025-07-12,Local Store,university - regular shopping
+TXN008014,153.16,EUR,2025-08-10,Local Store,online course - monthly subscription
+TXN008015,15.51,JPY,2025-07-20,Target,crypto exchange - monthly subscription
+TXN008016,494.22,USD,2025-07-12,New Merchant,tuition - unusual location
+TXN008017,174.7,USD,2025-07-22,Walmart,professional services - routine purchase
+TXN008018,74.13,EUR,2025-07-15,Local Store,tuition - regular shopping
+TXN008019,1623.54,GBP,2025-07-11,Suspicious Store XYZ,water - rapid succession
