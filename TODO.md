@@ -10,7 +10,7 @@
 - [ ] Set up `.env.example` file
 
 ### 1.2 Dependency Management
-- [ ] Initialize Poetry (`poetry init`)
+- [ ] Initialize UV project (`uv init`)
 - [ ] Add core dependencies:
   - [ ] `pydantic-ai` (latest)
   - [ ] `pydantic ^2.0`
@@ -28,7 +28,7 @@
   - [ ] `ruff` (linting)
   - [ ] `mypy` (type checking)
 - [ ] Create `pyproject.toml` with proper configuration
-- [ ] Run `poetry install`
+- [ ] Run `uv sync`
 
 ### 1.3 Configuration Files
 - [ ] Create `.env.example` with template API keys
@@ -614,7 +614,7 @@
 - [ ] Test CLI commands after installation
 
 ### 12.2 Distribution
-- [ ] Build package: `poetry build`
+- [ ] Build package: `uv build`
 - [ ] Test package installation from wheel
 - [ ] Prepare for PyPI upload (if applicable)
 
