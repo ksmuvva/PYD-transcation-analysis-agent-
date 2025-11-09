@@ -123,8 +123,7 @@ class TestBasicE2EWorkflow:
         assert len(transactions) == 5
 
         # Add GBP column for filtering
-        from src.csv_processor import add_gbp_column
-        df_with_gbp = add_gbp_column(df)
+        df_with_gbp = CSVProcessor.add_gbp_column(df)
         assert 'amount_gbp' in df_with_gbp.columns
 
         # Filter above threshold
@@ -272,8 +271,7 @@ class TestRealWorldScenarios:
         loaded_df = CSVProcessor.load_csv(csv_path)
 
         # Add GBP conversion
-        from src.csv_processor import add_gbp_column
-        df_with_gbp = add_gbp_column(loaded_df)
+        df_with_gbp = CSVProcessor.add_gbp_column(loaded_df)
 
         # Verify all currencies converted
         assert df_with_gbp['amount_gbp'].notna().all()

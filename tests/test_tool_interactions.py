@@ -15,6 +15,7 @@ import pandas as pd
 import os
 from datetime import datetime
 from dataclasses import dataclass
+from unittest.mock import MagicMock, AsyncMock
 
 from src.models import (
     Transaction,

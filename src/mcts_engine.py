@@ -32,7 +32,12 @@ class MCTSNode:
     visits: int = 0
     value: float = 0.0
 
-    def ucb1_score(self, exploration_constant: float) -> float:
+    def __post_init__(self):
+        """Add this node to parent's children if parent is provided."""
+        if self.parent is not None:
+            self.parent.children.append(self)
+
+    def ucb1_score(self, exploration_constant: float = 1.414, c: float | None = None) -> float:
         """
         Calculate Upper Confidence Bound (UCB1) score.
 
@@ -41,11 +46,16 @@ class MCTSNode:
         Formula: value/visits + C * sqrt(ln(parent_visits) / visits)
 
         Args:
-            exploration_constant: Exploration parameter (typically √2)
+            exploration_constant: Exploration parameter (default √2 ≈ 1.414)
+            c: Alias for exploration_constant (for convenience)
 
         Returns:
             UCB1 score (infinity for unvisited nodes)
         """
+        # Allow 'c' as an alias for exploration_constant
+        if c is not None:
+            exploration_constant = c
+
         if self.visits == 0:
             return float("inf")
 
@@ -182,10 +192,10 @@ class MCTSEngine:
         hypotheses = self._generate_hypotheses(node.state, objective)
 
         # Create child nodes for each hypothesis
+        # Note: __post_init__ automatically adds children to parent.children
         for hypothesis in hypotheses:
             child_state = {**node.state, "hypothesis": hypothesis}
-            child = MCTSNode(state=child_state, parent=node)
-            node.children.append(child)
+            MCTSNode(state=child_state, parent=node)
 
         return node.children[0] if node.children else node
 
