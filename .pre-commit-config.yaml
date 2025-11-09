@@ -1,0 +1,51 @@
+# Pre-commit hooks configuration (REQ-EVAL-028)
+#
+# Install: pre-commit install
+# Run manually: pre-commit run --all-files
+
+repos:
+  # Standard code quality hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-json
+      - id: check-merge-conflict
+
+  # Python formatting
+  - repo: https://github.com/psf/black
+    rev: 24.1.1
+    hooks:
+      - id: black
+        args: [--line-length=100]
+
+  # Python linting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.15
+    hooks:
+      - id: ruff
+        args: [--fix]
+
+  # REQ-EVAL-028: Quick evaluation check (10 random cases, <60s)
+  - repo: local
+    hooks:
+      - id: quick-eval
+        name: Quick Evaluation (10 cases)
+        entry: python evals/runner.py --subset=10 --output=/tmp/pre-commit-eval.json
+        language: system
+        pass_filenames: false
+        always_run: true
+        verbose: true
+
+  # REQ-EVAL-003: Prevent LLM-as-judge violations
+  - repo: local
+    hooks:
+      - id: no-llm-judge
+        name: Prevent LLM-as-judge
+        entry: python evals/linter.py
+        language: system
+        files: ^evals/.*\.py$
+        pass_filenames: true

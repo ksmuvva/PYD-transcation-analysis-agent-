@@ -1,0 +1,152 @@
+# CI workflow for full evaluation on PRs (REQ-EVAL-029)
+
+name: Evaluation CI
+
+on:
+  pull_request:
+    branches: [main, master]
+  push:
+    branches: [main, master]
+
+env:
+  EVAL_RANDOM_SEED: 42
+
+jobs:
+  full-evaluation:
+    name: Full Evaluation Suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full history for baseline comparison
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install -e ".[dev]"
+
+      - name: Load baseline metrics
+        id: baseline
+        run: |
+          if [ -f "evals/baselines/main_branch_metrics.json" ]; then
+            echo "baseline_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "baseline_exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run full evaluation
+        id: eval
+        run: |
+          python evals/runner.py \
+            --output=evaluation_report.json \
+            --seed=$EVAL_RANDOM_SEED
+
+      - name: Upload evaluation report
+        uses: actions/upload-artifact@v4
+        with:
+          name: evaluation-report
+          path: evaluation_report.json
+
+      - name: Check evaluation thresholds
+        run: |
+          python evals/ci_checker.py evaluation_report.json
+
+      - name: Generate compliance export
+        run: |
+          python -c "
+          import json
+          from evals.models import EvaluationReport
+          from evals.compliance import export_metrics_for_compliance
+
+          with open('evaluation_report.json') as f:
+              report_dict = json.load(f)
+
+          # Note: Need to reconstruct EvaluationReport from dict
+          # This is simplified - full implementation would deserialize properly
+          print('Compliance export would be generated here')
+          "
+
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = JSON.parse(fs.readFileSync('evaluation_report.json', 'utf8'));
+
+            const comment = `## Evaluation Results
+
+            **Overall Accuracy:** ${(report.overall_accuracy * 100).toFixed(2)}%
+            **MCTS Efficiency:** ${(report.mcts_efficiency * 100).toFixed(2)}%
+            **Cost per Transaction:** $${report.cost_per_transaction.toFixed(4)}
+            **Fraud FPR:** ${(report.fraud_fpr * 100).toFixed(2)}%
+
+            **All Metrics Passed:** ${report.all_metrics_passed ? '✅ YES' : '❌ NO'}
+
+            <details>
+            <summary>Tool Results</summary>
+
+            ${Object.entries(report.tool_results).map(([tool, result]) => `
+            ### ${tool}
+            - Cases: ${result.total_cases}
+            - Accuracy: ${(result.accuracy * 100).toFixed(2)}%
+            - Passed: ${result.passed_count} / Failed: ${result.failed_count}
+            `).join('\n')}
+
+            </details>
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+  update-baseline:
+    name: Update Baseline (main branch only)
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: full-evaluation
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Run evaluation
+        run: |
+          python evals/runner.py \
+            --output=evaluation_report.json \
+            --no-baseline \
+            --seed=$EVAL_RANDOM_SEED
+
+      - name: Extract metrics for baseline
+        run: |
+          python evals/baseline_updater.py evaluation_report.json
+
+      - name: Commit baseline update
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add evals/baselines/main_branch_metrics.json
+          git commit -m "chore: Update evaluation baseline [skip ci]" || echo "No changes"
+          git push || echo "No changes to push"
