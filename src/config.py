@@ -39,21 +39,153 @@ class LLMConfig:
 
 
 @dataclass
-class MCTSConfig:
+class ToolMCTSConfig:
     """
-    MCTS reasoning engine configuration.
+    Tool-specific MCTS configuration.
 
     Attributes:
-        iterations: Number of MCTS iterations per search
-        exploration_constant: UCB1 exploration constant (√2 is common)
-        max_depth: Maximum tree depth
-        simulation_budget: Number of simulations per node
+        max_depth: Maximum tree depth for this tool
+        iterations: Number of MCTS iterations
+        reward_scale: Reward scaling factor (0.0-1.0)
+        exploration_constant: UCB1 exploration constant (0.1-2.0)
+    """
+    max_depth: int
+    iterations: int
+    reward_scale: float = 1.0
+    exploration_constant: float = 1.414  # sqrt(2)
+
+
+@dataclass
+class MCTSConfig:
+    """
+    MCTS reasoning engine configuration with tool-specific settings.
+
+    Implements REQ-001 to REQ-005: Tool-specific MCTS parameters including:
+    - UCB1 exploration constants (configurable 0.1-2.0)
+    - Max tree depths per tool
+    - Iteration budgets per tool
+    - Reward scaling factors per tool
+    - Early termination settings
+
+    Attributes:
+        # Tool 1: Filter Transactions (conversion sub-routine)
+        filter_max_depth: Max depth for filtering (REQ-002: 30 nodes)
+        filter_iterations: Iteration budget (REQ-005: 100 iterations)
+        filter_reward_scale: Conversion reward scaling (REQ-004)
+        filter_exploration_constant: UCB1 exploration for filtering (REQ-001)
+
+        # Tool 2: Classify Transactions
+        classification_max_depth: Max depth for classification (REQ-002: 50 nodes)
+        classification_iterations: Iteration budget (REQ-005: 500 iterations)
+        classification_reward_scale: Classification reward scaling (REQ-004)
+        classification_exploration_constant: UCB1 exploration (REQ-001)
+
+        # Tool 3: Detect Fraudulent Transactions
+        fraud_max_depth: Max depth for fraud detection (REQ-002: 75 nodes)
+        fraud_iterations: Iteration budget (REQ-005: 1000 iterations)
+        fraud_reward_scale: Fraud reward scaling (REQ-004)
+        fraud_exploration_constant: UCB1 exploration (REQ-001)
+
+        # Tool 4: Generate Enhanced CSV (explanation logic)
+        explanation_max_depth: Max depth for explanations (REQ-002: 20 nodes)
+        explanation_iterations: Iteration budget (REQ-005: 200 iterations)
+        explanation_reward_scale: Explanation reward scaling (REQ-004)
+        explanation_exploration_constant: UCB1 exploration (REQ-001)
+
+        # Early termination settings (REQ-005)
+        early_termination_enabled: Enable convergence detection
+        convergence_std_threshold: Std dev threshold for convergence (default 0.01)
+        convergence_window: Consecutive iterations for convergence check (default 50)
+
+        # Simulation policy settings (REQ-003)
+        simulation_timeout_ms: Max time per simulation in milliseconds (default 10ms)
     """
 
+    # Tool 1: Filter Transactions (conversion sub-routine)
+    filter_max_depth: int = 30
+    filter_iterations: int = 100
+    filter_reward_scale: float = 1.0
+    filter_exploration_constant: float = 1.414
+
+    # Tool 2: Classify Transactions
+    classification_max_depth: int = 50
+    classification_iterations: int = 500
+    classification_reward_scale: float = 1.0
+    classification_exploration_constant: float = 1.414
+
+    # Tool 3: Detect Fraudulent Transactions
+    fraud_max_depth: int = 75
+    fraud_iterations: int = 1000
+    fraud_reward_scale: float = 1.0
+    fraud_exploration_constant: float = 1.414
+
+    # Tool 4: Generate Enhanced CSV (explanation logic)
+    explanation_max_depth: int = 20
+    explanation_iterations: int = 200
+    explanation_reward_scale: float = 1.0
+    explanation_exploration_constant: float = 1.414
+
+    # Early termination settings (REQ-005)
+    early_termination_enabled: bool = True
+    convergence_std_threshold: float = 0.01
+    convergence_window: int = 50
+
+    # Simulation policy settings (REQ-003)
+    simulation_timeout_ms: int = 10
+
+    # Legacy compatibility
     iterations: int = 100
-    exploration_constant: float = 1.414  # sqrt(2)
+    exploration_constant: float = 1.414
     max_depth: int = 5
     simulation_budget: int = 10
+
+    def get_tool_config(self, tool_name: str) -> ToolMCTSConfig:
+        """
+        Get tool-specific MCTS configuration.
+
+        Args:
+            tool_name: One of "filter", "classify", "fraud", "explanation"
+
+        Returns:
+            ToolMCTSConfig for the specified tool
+
+        Raises:
+            ValueError: If tool_name is invalid
+        """
+        configs = {
+            "filter": ToolMCTSConfig(
+                max_depth=self.filter_max_depth,
+                iterations=self.filter_iterations,
+                reward_scale=self.filter_reward_scale,
+                exploration_constant=self.filter_exploration_constant,
+            ),
+            "classify": ToolMCTSConfig(
+                max_depth=self.classification_max_depth,
+                iterations=self.classification_iterations,
+                reward_scale=self.classification_reward_scale,
+                exploration_constant=self.classification_exploration_constant,
+            ),
+            "fraud": ToolMCTSConfig(
+                max_depth=self.fraud_max_depth,
+                iterations=self.fraud_iterations,
+                reward_scale=self.fraud_reward_scale,
+                exploration_constant=self.fraud_exploration_constant,
+            ),
+            "explanation": ToolMCTSConfig(
+                max_depth=self.explanation_max_depth,
+                iterations=self.explanation_iterations,
+                reward_scale=self.explanation_reward_scale,
+                exploration_constant=self.explanation_exploration_constant,
+            ),
+        }
+
+        if tool_name not in configs:
+            raise ValueError(
+                f"Invalid tool name: {tool_name}. "
+                f"Must be one of: {list(configs.keys())}"
+            )
+
+        return configs[tool_name]
 
 
 @dataclass
