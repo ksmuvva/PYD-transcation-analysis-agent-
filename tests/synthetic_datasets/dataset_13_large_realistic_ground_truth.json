@@ -1,0 +1,352 @@
+[
+  {
+    "transaction_id": "TXN013000",
+    "ground_truth_category": "Investment",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 146.05,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013001",
+    "ground_truth_category": "Subscription",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 69.96,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013002",
+    "ground_truth_category": "Investment",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 50.84,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013003",
+    "ground_truth_category": "Utilities",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 0.93,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013004",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 157.78,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013005",
+    "ground_truth_category": "Education",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 89.78,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013006",
+    "ground_truth_category": "Healthcare",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 0.65,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013007",
+    "ground_truth_category": "Healthcare",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 115.8,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013008",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 91.37,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013009",
+    "ground_truth_category": "Investment",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 124.76,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013010",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 0.99,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013011",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 113.41,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013012",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 18.77,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013013",
+    "ground_truth_category": "Subscription",
+    "ground_truth_fraud_level": "CRITICAL",
+    "ground_truth_gbp_amount": 4852.55,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN013014",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 370.98,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN013015",
+    "ground_truth_category": "Healthcare",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 166.52,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013016",
+    "ground_truth_category": "Healthcare",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 126.79,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013017",
+    "ground_truth_category": "Healthcare",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 0.85,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013018",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 51.07,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013019",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "HIGH",
+    "ground_truth_gbp_amount": 1174.96,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN013020",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 195.7,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013021",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 230.08,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013022",
+    "ground_truth_category": "Healthcare",
+    "ground_truth_fraud_level": "HIGH",
+    "ground_truth_gbp_amount": 1503.57,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN013023",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 16.09,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013024",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 94.32,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013025",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 34.96,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013026",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 37.72,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013027",
+    "ground_truth_category": "Education",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 11.12,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013028",
+    "ground_truth_category": "Investment",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 54.82,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013029",
+    "ground_truth_category": "Education",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 67.69,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013030",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 22.43,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013031",
+    "ground_truth_category": "Education",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 159.3,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013032",
+    "ground_truth_category": "Investment",
+    "ground_truth_fraud_level": "CRITICAL",
+    "ground_truth_gbp_amount": 46.97,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013033",
+    "ground_truth_category": "Education",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 95.46,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013034",
+    "ground_truth_category": "Investment",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 51.69,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013035",
+    "ground_truth_category": "Education",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 41.34,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013036",
+    "ground_truth_category": "Education",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 62.32,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013037",
+    "ground_truth_category": "Investment",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 234.39,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013038",
+    "ground_truth_category": "Education",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 109.27,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013039",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 38.11,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013040",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 57.12,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013041",
+    "ground_truth_category": "Education",
+    "ground_truth_fraud_level": "CRITICAL",
+    "ground_truth_gbp_amount": 2720.77,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN013042",
+    "ground_truth_category": "Utilities",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 62.0,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013043",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 82.55,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013044",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 75.12,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013045",
+    "ground_truth_category": "Subscription",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 46.25,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013046",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 0.55,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013047",
+    "ground_truth_category": "Travel",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 169.69,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN013048",
+    "ground_truth_category": "Healthcare",
+    "ground_truth_fraud_level": "HIGH",
+    "ground_truth_gbp_amount": 587.82,
+    "ground_truth_above_threshold": true
+  },
+  {
+    "transaction_id": "TXN013049",
+    "ground_truth_category": "Investment",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 98.63,
+    "ground_truth_above_threshold": false
+  }
+]

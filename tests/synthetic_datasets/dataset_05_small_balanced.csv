@@ -1,0 +1,6 @@
+transaction_id,amount,currency,date,merchant,description
+TXN005000,123.32,JPY,2025-08-13,Local Store,marketing - regular shopping
+TXN005001,57.77,CAD,2025-09-10,Pharmacy,grocery - routine purchase
+TXN005002,425.26,CAD,2025-08-13,New Merchant,airline - first time purchase
+TXN005003,737.24,JPY,2025-10-02,Suspicious Store XYZ,magazine - duplicate charge
+TXN005004,6061.45,USD,2025-09-05,Fake Merchant 123,internet - unusual country

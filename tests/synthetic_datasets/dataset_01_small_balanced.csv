@@ -1,0 +1,6 @@
+transaction_id,amount,currency,date,merchant,description
+TXN001000,14.75,GBP,2025-08-19,Target,software subscription - routine purchase
+TXN001001,29.47,AUD,2025-10-22,Pharmacy,pharmacy - routine purchase
+TXN001002,208.94,GBP,2025-09-15,Unknown Vendor,taxi - unusual location
+TXN001003,1341.87,GBP,2025-08-23,Unknown Inc,online service - duplicate charge
+TXN001004,6714.13,JPY,2025-10-11,Fake Merchant 123,phone bill - stolen card pattern

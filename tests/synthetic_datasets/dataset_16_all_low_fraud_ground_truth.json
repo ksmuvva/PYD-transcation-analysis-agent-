@@ -1,0 +1,72 @@
+[
+  {
+    "transaction_id": "TXN016000",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 118.82,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN016001",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 166.3,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN016002",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 51.52,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN016003",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 176.21,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN016004",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 173.82,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN016005",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 164.26,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN016006",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 76.62,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN016007",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 127.07,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN016008",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 76.65,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN016009",
+    "ground_truth_category": "Personal",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 71.49,
+    "ground_truth_above_threshold": false
+  }
+]

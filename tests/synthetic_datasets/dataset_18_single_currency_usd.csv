@@ -1,0 +1,16 @@
+transaction_id,amount,currency,date,merchant,description
+TXN018000,200.2,USD,2025-10-10,International Store,hotel - unusual location
+TXN018001,187.22,USD,2025-09-14,Target,internet - routine purchase
+TXN018002,136.26,USD,2025-10-16,Walmart,phone bill - routine purchase
+TXN018003,1632.85,USD,2025-09-25,Offshore Vendor,electricity - duplicate charge
+TXN018004,100.59,USD,2025-10-26,Walmart,restaurant - monthly subscription
+TXN018005,142.16,USD,2025-11-08,Amazon,crypto exchange - regular shopping
+TXN018006,268.68,USD,2025-11-04,Unknown Vendor,airline - late night transaction
+TXN018007,464.3,USD,2025-10-16,Unknown Vendor,restaurant - first time purchase
+TXN018008,117.03,USD,2025-10-06,Pharmacy,hotel - monthly subscription
+TXN018009,263.92,USD,2025-09-23,New Merchant,mutual fund - unusual location
+TXN018010,180.35,USD,2025-11-03,Walmart,crypto exchange - routine purchase
+TXN018011,294.35,USD,2025-10-12,Unknown Vendor,books - unusual location
+TXN018012,124.19,USD,2025-10-04,Pharmacy,grocery - regular shopping
+TXN018013,125.32,USD,2025-10-06,Walmart,phone bill - monthly subscription
+TXN018014,1675.7,USD,2025-11-05,Suspicious Store XYZ,phone bill - rapid succession

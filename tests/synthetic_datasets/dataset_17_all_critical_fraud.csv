@@ -1,0 +1,11 @@
+transaction_id,amount,currency,date,merchant,description
+TXN017000,9883.91,CAD,2025-10-12,Unknown Overseas,water - stolen card pattern
+TXN017001,9939.89,GBP,2025-10-10,Unknown Overseas,online course - stolen card pattern
+TXN017002,4576.77,AUD,2025-11-04,Fake Merchant 123,online service - unusual country
+TXN017003,7059.22,CAD,2025-11-04,Unknown Overseas,mutual fund - multiple failed attempts
+TXN017004,8356.79,AUD,2025-11-06,Fake Merchant 123,crypto exchange - multiple failed attempts
+TXN017005,5637.57,EUR,2025-10-17,Scam Corp,electricity - multiple failed attempts
+TXN017006,7078.72,JPY,2025-10-16,Unknown Overseas,grocery - multiple failed attempts
+TXN017007,8598.78,JPY,2025-11-02,Scam Corp,books - multiple failed attempts
+TXN017008,6623.47,CAD,2025-10-29,Unknown Overseas,internet - multiple failed attempts
+TXN017009,7009.44,GBP,2025-11-07,Scam Corp,office supplies - stolen card pattern

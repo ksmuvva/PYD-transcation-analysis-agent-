@@ -1,0 +1,21 @@
+transaction_id,amount,currency,date,merchant,description
+TXN006000,191.16,CAD,2025-09-28,Pharmacy,magazine - routine purchase
+TXN006001,55.5,EUR,2025-08-08,Walmart,stock purchase - monthly subscription
+TXN006002,429.75,CAD,2025-10-22,Unknown Vendor,clothing - late night transaction
+TXN006003,193.23,JPY,2025-06-06,Pharmacy,hotel - monthly subscription
+TXN006004,80.95,AUD,2025-05-21,Pharmacy,electricity - regular shopping
+TXN006005,121.78,GBP,2025-08-14,Walmart,gym membership - monthly subscription
+TXN006006,53.5,GBP,2025-05-31,Amazon,office supplies - regular shopping
+TXN006007,112.45,USD,2025-07-07,Pharmacy,online service - monthly subscription
+TXN006008,228.3,USD,2025-07-27,New Merchant,magazine - first time purchase
+TXN006009,134.16,AUD,2025-10-26,Amazon,tuition - routine purchase
+TXN006010,787.39,USD,2025-10-12,Unknown Inc,clinic - rapid succession
+TXN006011,176.15,USD,2025-07-13,Amazon,university - regular shopping
+TXN006012,490.7,GBP,2025-06-23,Unknown Vendor,consulting - unusual location
+TXN006013,41.28,GBP,2025-07-29,Amazon,mutual fund - regular shopping
+TXN006014,199.13,AUD,2025-05-14,Pharmacy,crypto exchange - monthly subscription
+TXN006015,194.05,USD,2025-08-25,Pharmacy,crypto exchange - monthly subscription
+TXN006016,375.25,GBP,2025-10-25,New Merchant,software subscription - late night transaction
+TXN006017,2548.17,USD,2025-10-19,Fake Merchant 123,software subscription - unusual country
+TXN006018,119.99,USD,2025-06-16,Amazon,university - monthly subscription
+TXN006019,294.91,CAD,2025-06-17,International Store,books - unusual location

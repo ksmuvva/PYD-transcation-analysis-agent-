@@ -1,0 +1,21 @@
+transaction_id,amount,currency,date,merchant,description
+TXN009000,426.27,GBP,2025-05-26,Unknown Vendor,grocery - unusual location
+TXN009001,31.73,AUD,2025-07-10,Walmart,car rental - regular shopping
+TXN009002,146.49,AUD,2025-06-06,Walmart,hospital - regular shopping
+TXN009003,1862.04,AUD,2025-06-14,Offshore Vendor,software subscription - rapid succession
+TXN009004,230.57,USD,2025-06-01,International Store,pharmacy - late night transaction
+TXN009005,304.16,GBP,2025-06-17,International Store,entertainment - late night transaction
+TXN009006,454.87,GBP,2025-08-13,International Store,clothing - unusual location
+TXN009007,245.9,AUD,2025-07-14,Unknown Vendor,medical equipment - late night transaction
+TXN009008,71.24,EUR,2025-06-10,Walmart,mutual fund - routine purchase
+TXN009009,125.96,CAD,2025-07-13,Local Store,stock purchase - regular shopping
+TXN009010,818.18,JPY,2025-09-23,Offshore Vendor,mutual fund - rapid succession
+TXN009011,225.68,USD,2025-06-29,New Merchant,phone bill - first time purchase
+TXN009012,347.25,AUD,2025-05-27,Unknown Vendor,magazine - unusual location
+TXN009013,136.15,EUR,2025-09-07,Target,magazine - regular shopping
+TXN009014,4814.48,EUR,2025-06-21,Scam Corp,books - multiple failed attempts
+TXN009015,32.72,EUR,2025-09-20,Pharmacy,water - monthly subscription
+TXN009016,147.67,EUR,2025-07-08,Pharmacy,magazine - monthly subscription
+TXN009017,1041.32,USD,2025-08-25,Offshore Vendor,pharmacy - unusual amount
+TXN009018,65.51,CAD,2025-10-26,Walmart,travel agency - monthly subscription
+TXN009019,1204.1,EUR,2025-06-15,Offshore Vendor,restaurant - rapid succession

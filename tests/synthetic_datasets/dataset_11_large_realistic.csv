@@ -1,0 +1,51 @@
+transaction_id,amount,currency,date,merchant,description
+TXN011000,144.03,CAD,2025-06-12,Local Store,travel agency - regular shopping
+TXN011001,46.22,JPY,2025-08-26,Pharmacy,gym membership - monthly subscription
+TXN011002,187.51,EUR,2025-04-10,Pharmacy,grocery - regular shopping
+TXN011003,499.67,CAD,2025-01-12,International Store,phone bill - unusual location
+TXN011004,81.67,CAD,2025-01-30,Target,crypto exchange - routine purchase
+TXN011005,18.29,JPY,2025-07-12,Local Store,online service - monthly subscription
+TXN011006,5962.63,USD,2024-12-10,Fake Merchant 123,books - stolen card pattern
+TXN011007,357.79,GBP,2025-03-28,International Store,restaurant - unusual location
+TXN011008,340.85,GBP,2025-08-21,International Store,tuition - first time purchase
+TXN011009,314.0,CAD,2024-11-28,International Store,clothing - late night transaction
+TXN011010,140.04,AUD,2025-07-11,Target,office supplies - routine purchase
+TXN011011,1808.87,AUD,2024-12-19,Offshore Vendor,books - unusual amount
+TXN011012,78.11,EUR,2025-10-11,Local Store,software subscription - routine purchase
+TXN011013,43.26,USD,2025-08-08,Pharmacy,online course - regular shopping
+TXN011014,1191.72,USD,2025-08-27,Offshore Vendor,mutual fund - rapid succession
+TXN011015,403.28,EUR,2025-03-15,Unknown Vendor,consulting - unusual location
+TXN011016,9696.23,AUD,2025-06-08,Unknown Overseas,pharmacy - multiple failed attempts
+TXN011017,30.26,JPY,2025-04-26,Local Store,internet - monthly subscription
+TXN011018,9823.56,GBP,2025-06-10,Unknown Overseas,internet - multiple failed attempts
+TXN011019,194.98,AUD,2024-11-22,Pharmacy,consulting - monthly subscription
+TXN011020,440.58,CAD,2025-07-14,Unknown Vendor,water - late night transaction
+TXN011021,169.28,AUD,2024-12-06,Amazon,electricity - monthly subscription
+TXN011022,309.46,CAD,2025-10-22,Unknown Vendor,internet - unusual location
+TXN011023,239.65,USD,2025-08-11,New Merchant,medical equipment - first time purchase
+TXN011024,151.85,EUR,2025-03-07,Target,travel agency - routine purchase
+TXN011025,147.6,AUD,2025-07-16,Local Store,entertainment - monthly subscription
+TXN011026,360.97,EUR,2025-11-01,International Store,entertainment - first time purchase
+TXN011027,402.45,GBP,2025-05-02,International Store,books - unusual location
+TXN011028,182.78,JPY,2024-12-18,Target,online service - monthly subscription
+TXN011029,199.23,EUR,2025-10-20,Amazon,restaurant - routine purchase
+TXN011030,190.38,AUD,2025-05-03,Pharmacy,taxi - regular shopping
+TXN011031,450.11,GBP,2024-12-08,New Merchant,car rental - first time purchase
+TXN011032,94.49,JPY,2025-07-20,Walmart,office supplies - regular shopping
+TXN011033,21.5,EUR,2024-12-13,Target,hospital - routine purchase
+TXN011034,131.5,AUD,2025-07-23,Amazon,mutual fund - routine purchase
+TXN011035,2548.88,USD,2025-01-23,Unknown Overseas,gym membership - stolen card pattern
+TXN011036,10.54,CAD,2025-08-25,Walmart,magazine - routine purchase
+TXN011037,12.82,USD,2025-10-26,Walmart,car rental - monthly subscription
+TXN011038,150.93,USD,2025-10-13,Pharmacy,office supplies - routine purchase
+TXN011039,122.8,CAD,2025-05-07,Local Store,stock purchase - monthly subscription
+TXN011040,290.49,CAD,2024-12-06,New Merchant,office supplies - unusual location
+TXN011041,232.39,AUD,2025-04-04,New Merchant,stock purchase - first time purchase
+TXN011042,33.98,GBP,2025-08-25,Pharmacy,pharmacy - monthly subscription
+TXN011043,66.03,CAD,2025-01-07,Pharmacy,pharmacy - monthly subscription
+TXN011044,395.27,AUD,2025-09-11,New Merchant,restaurant - late night transaction
+TXN011045,74.4,JPY,2025-07-15,Local Store,tuition - regular shopping
+TXN011046,58.43,AUD,2025-06-01,Walmart,clothing - monthly subscription
+TXN011047,92.06,GBP,2025-09-26,Target,pharmacy - routine purchase
+TXN011048,72.63,CAD,2025-01-25,Amazon,professional services - regular shopping
+TXN011049,380.12,EUR,2025-10-13,International Store,online course - unusual location

@@ -1,0 +1,16 @@
+transaction_id,amount,currency,date,merchant,description
+TXN022000,465.4,AUD,2025-10-27,New Merchant,marketing - unusual location
+TXN022001,78.23,AUD,2025-10-15,Pharmacy,professional services - regular shopping
+TXN022002,253.94,EUR,2025-10-15,International Store,software subscription - late night transaction
+TXN022003,21.13,EUR,2025-09-12,Local Store,professional services - monthly subscription
+TXN022004,57.09,GBP,2025-10-29,Walmart,marketing - regular shopping
+TXN022005,119.38,USD,2025-09-21,Local Store,software subscription - regular shopping
+TXN022006,70.42,CAD,2025-10-24,Target,office supplies - monthly subscription
+TXN022007,242.63,CAD,2025-10-03,Unknown Vendor,marketing - first time purchase
+TXN022008,211.39,JPY,2025-10-28,Unknown Vendor,marketing - unusual location
+TXN022009,100.82,CAD,2025-11-07,Target,software subscription - monthly subscription
+TXN022010,43.72,AUD,2025-10-18,Target,office supplies - routine purchase
+TXN022011,184.27,AUD,2025-10-02,Amazon,professional services - monthly subscription
+TXN022012,188.97,AUD,2025-10-16,Local Store,office supplies - monthly subscription
+TXN022013,240.94,EUR,2025-10-20,Unknown Vendor,consulting - late night transaction
+TXN022014,252.26,EUR,2025-09-28,New Merchant,marketing - late night transaction

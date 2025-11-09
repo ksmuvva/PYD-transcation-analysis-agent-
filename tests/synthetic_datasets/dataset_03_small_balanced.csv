@@ -1,0 +1,6 @@
+transaction_id,amount,currency,date,merchant,description
+TXN003000,62.81,JPY,2025-10-27,Target,professional services - routine purchase
+TXN003001,137.33,USD,2025-09-24,Amazon,restaurant - monthly subscription
+TXN003002,273.44,AUD,2025-09-01,International Store,car rental - first time purchase
+TXN003003,1335.42,AUD,2025-08-19,Unknown Inc,streaming service - rapid succession
+TXN003004,8440.37,GBP,2025-10-10,Scam Corp,electricity - multiple failed attempts

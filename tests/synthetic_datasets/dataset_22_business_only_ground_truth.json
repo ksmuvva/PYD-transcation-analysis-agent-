@@ -1,0 +1,107 @@
+[
+  {
+    "transaction_id": "TXN022000",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 242.01,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN022001",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 40.68,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN022002",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 215.85,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN022003",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 17.96,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN022004",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 57.09,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN022005",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 94.31,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN022006",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 40.84,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN022007",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 140.73,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN022008",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 1.1,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN022009",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 58.48,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN022010",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 22.73,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN022011",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 95.82,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN022012",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "LOW",
+    "ground_truth_gbp_amount": 98.26,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN022013",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 204.8,
+    "ground_truth_above_threshold": false
+  },
+  {
+    "transaction_id": "TXN022014",
+    "ground_truth_category": "Business Expense",
+    "ground_truth_fraud_level": "MEDIUM",
+    "ground_truth_gbp_amount": 214.42,
+    "ground_truth_above_threshold": false
+  }
+]

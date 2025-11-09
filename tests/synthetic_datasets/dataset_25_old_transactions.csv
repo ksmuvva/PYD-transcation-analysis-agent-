@@ -1,0 +1,11 @@
+transaction_id,amount,currency,date,merchant,description
+TXN025000,197.77,GBP,2024-04-07,Local Store,hotel - routine purchase
+TXN025001,316.43,GBP,2024-10-06,International Store,internet - late night transaction
+TXN025002,386.92,AUD,2024-11-03,New Merchant,electricity - first time purchase
+TXN025003,121.71,CAD,2024-08-26,Amazon,university - routine purchase
+TXN025004,314.91,EUR,2024-04-13,International Store,phone bill - late night transaction
+TXN025005,37.33,JPY,2024-06-21,Pharmacy,consulting - monthly subscription
+TXN025006,271.27,AUD,2024-05-24,New Merchant,professional services - first time purchase
+TXN025007,69.08,EUR,2024-05-21,Local Store,hospital - monthly subscription
+TXN025008,94.19,AUD,2024-06-09,Target,online service - regular shopping
+TXN025009,183.55,USD,2024-03-28,Local Store,clothing - monthly subscription

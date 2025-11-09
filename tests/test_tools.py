@@ -75,8 +75,21 @@ def agent_config():
 @pytest.fixture
 def real_mcts_engine(agent_config):
     """Create a real MCTS engine with LLM"""
+    from pydantic_ai import Agent
+
     llm_client = ConfigManager.create_llm_client(agent_config.llm)
-    return MCTSEngine(config=agent_config.mcts, llm_client=llm_client)
+
+    def llm_function(prompt: str) -> str:
+        """Wrapper to call LLM synchronously."""
+        try:
+            # Create a simple agent just for LLM calls
+            simple_agent = Agent(llm_client)
+            result = simple_agent.run_sync(prompt)
+            return result.data
+        except Exception as e:
+            return f"Error: {str(e)}"
+
+    return MCTSEngine(config=agent_config.mcts, llm_function=llm_function)
 
 
 @pytest.fixture
@@ -97,6 +110,16 @@ def agent_deps(sample_dataframe, agent_config, real_mcts_engine, real_llm_client
     )
 
 
+@pytest.fixture
+def mock_ctx(agent_deps):
+    """Create a mock RunContext for tool testing"""
+    class MockRunContext:
+        def __init__(self, deps):
+            self.deps = deps
+
+    return MockRunContext(agent_deps)
+
+
 # ============================================================================
 # TOOL 1: FILTER TRANSACTIONS ABOVE THRESHOLD
 # ============================================================================
@@ -104,9 +127,9 @@ def agent_deps(sample_dataframe, agent_config, real_mcts_engine, real_llm_client
 class TestFilterTransactionsTool:
     """Test the filter_transactions_above_threshold tool"""
 
-    def test_filter_with_default_threshold(self, agent_deps):
+    def test_filter_with_default_threshold(self, mock_ctx):
         """Test filtering with default threshold (250 GBP)"""
-        result = filter_transactions_above_threshold(agent_deps)
+        result = filter_transactions_above_threshold(mock_ctx)
 
         assert isinstance(result, TransactionFilterResult)
         # TX002 (500 USD = 395 GBP), TX003 (1200 GBP), TX005 (10000 GBP) should pass
@@ -115,18 +138,18 @@ class TestFilterTransactionsTool:
         assert result.total_amount > 0
         assert result.average_amount > 0
 
-    def test_filter_with_custom_threshold(self, agent_deps):
+    def test_filter_with_custom_threshold(self, mock_ctx):
         """Test filtering with custom threshold"""
-        result = filter_transactions_above_threshold(agent_deps, threshold=1000.0)
+        result = filter_transactions_above_threshold(mock_ctx, threshold=1000.0)
 
         assert isinstance(result, TransactionFilterResult)
         # Only TX003 (1200) and TX005 (10000) should pass
         assert result.filtered_count >= 1
         assert result.total_amount >= 1200.0
 
-    def test_filter_with_high_threshold(self, agent_deps):
+    def test_filter_with_high_threshold(self, mock_ctx):
         """Test filtering with very high threshold"""
-        result = filter_transactions_above_threshold(agent_deps, threshold=50000.0)
+        result = filter_transactions_above_threshold(mock_ctx, threshold=50000.0)
 
         assert isinstance(result, TransactionFilterResult)
         # No transactions should pass
@@ -134,16 +157,16 @@ class TestFilterTransactionsTool:
         assert result.total_amount == 0.0
         assert result.average_amount == 0.0
 
-    def test_filter_with_zero_threshold(self, agent_deps):
+    def test_filter_with_zero_threshold(self, mock_ctx):
         """Test filtering with zero threshold (all transactions pass)"""
-        result = filter_transactions_above_threshold(agent_deps, threshold=0.0)
+        result = filter_transactions_above_threshold(mock_ctx, threshold=0.0)
 
         assert isinstance(result, TransactionFilterResult)
         # All 5 transactions should pass
         assert result.filtered_count == 5
         assert result.total_amount > 0
 
-    def test_filter_currency_conversion_usd_to_gbp(self, agent_deps):
+    def test_filter_currency_conversion_usd_to_gbp(self, mock_ctx):
         """Test that USD amounts are correctly converted to GBP"""
         # Create a DataFrame with only USD transactions
         data = {
@@ -155,15 +178,15 @@ class TestFilterTransactionsTool:
             'category': ['Test'],
             'description': ['Test']
         }
-        agent_deps.df = pd.DataFrame(data)
+        mock_ctx.deps.df = pd.DataFrame(data)
         agent_deps.config.threshold_amount = 500.0
 
-        result = filter_transactions_above_threshold(agent_deps)
+        result = filter_transactions_above_threshold(mock_ctx)
 
         # 1000 USD * 0.79 = 790 GBP, which is > 500 GBP threshold
         assert result.filtered_count == 1
 
-    def test_filter_currency_conversion_eur_to_gbp(self, agent_deps):
+    def test_filter_currency_conversion_eur_to_gbp(self, mock_ctx):
         """Test that EUR amounts are correctly converted to GBP"""
         data = {
             'transaction_id': ['TX001'],
@@ -174,23 +197,23 @@ class TestFilterTransactionsTool:
             'category': ['Test'],
             'description': ['Test']
         }
-        agent_deps.df = pd.DataFrame(data)
+        mock_ctx.deps.df = pd.DataFrame(data)
         agent_deps.config.threshold_amount = 500.0
 
-        result = filter_transactions_above_threshold(agent_deps)
+        result = filter_transactions_above_threshold(mock_ctx)
 
         # 1000 EUR * 0.86 = 860 GBP, which is > 500 GBP threshold
         assert result.filtered_count == 1
 
-    def test_filter_mixed_currencies(self, agent_deps):
+    def test_filter_mixed_currencies(self, mock_ctx):
         """Test filtering with mixed currencies"""
-        result = filter_transactions_above_threshold(agent_deps, threshold=100.0)
+        result = filter_transactions_above_threshold(mock_ctx, threshold=100.0)
 
         assert isinstance(result, TransactionFilterResult)
         assert result.currency == Currency.GBP
         # Should handle mixed currencies correctly
 
-    def test_filter_custom_currency(self, agent_deps):
+    def test_filter_custom_currency(self, mock_ctx):
         """Test filtering with custom target currency"""
         result = filter_transactions_above_threshold(
             agent_deps,
@@ -201,7 +224,7 @@ class TestFilterTransactionsTool:
         assert isinstance(result, TransactionFilterResult)
         assert result.currency == Currency.USD
 
-    def test_filter_results_stored_in_context(self, agent_deps):
+    def test_filter_results_stored_in_context(self, mock_ctx):
         """Test that filter results are stored in agent dependencies"""
         # Create a proper RunContext mock
         from pydantic_ai import RunContext
@@ -219,21 +242,21 @@ class TestFilterTransactionsTool:
         assert isinstance(filtered_df, pd.DataFrame)
         assert len(filtered_df) == result.filtered_count
 
-    def test_filter_empty_dataframe(self, agent_deps):
+    def test_filter_empty_dataframe(self, mock_ctx):
         """Test filtering with empty DataFrame"""
-        agent_deps.df = pd.DataFrame(columns=['transaction_id', 'amount', 'currency', 'date', 'merchant', 'category', 'description'])
+        mock_ctx.deps.df = pd.DataFrame(columns=['transaction_id', 'amount', 'currency', 'date', 'merchant', 'category', 'description'])
 
-        result = filter_transactions_above_threshold(agent_deps)
+        result = filter_transactions_above_threshold(mock_ctx)
 
         assert result.filtered_count == 0
         assert result.total_amount == 0.0
         assert result.average_amount == 0.0
 
-    def test_filter_negative_threshold_rejected(self, agent_deps):
+    def test_filter_negative_threshold_rejected(self, mock_ctx):
         """Test that negative threshold is handled properly"""
         # Negative threshold should either raise error or treat as 0
         with pytest.raises((ValueError, AssertionError)) or True:
-            result = filter_transactions_above_threshold(agent_deps, threshold=-100.0)
+            result = filter_transactions_above_threshold(mock_ctx, threshold=-100.0)
 
 
 # ============================================================================
@@ -277,47 +300,47 @@ class TestCurrencyConversion:
 
     def test_gbp_to_gbp_conversion(self):
         """Test GBP to GBP conversion (no change)"""
-        from src.csv_processor import convert_to_gbp
+        from src.csv_processor import CSVProcessor
 
-        result = convert_to_gbp(100.0, Currency.GBP)
+        result = CSVProcessor.convert_to_gbp(100.0, Currency.GBP)
         assert result == 100.0
 
     def test_usd_to_gbp_conversion(self):
         """Test USD to GBP conversion"""
-        from src.csv_processor import convert_to_gbp
+        from src.csv_processor import CSVProcessor
 
-        result = convert_to_gbp(100.0, Currency.USD)
+        result = CSVProcessor.convert_to_gbp(100.0, Currency.USD)
         # 100 USD * 0.79 = 79 GBP
         assert result == pytest.approx(79.0, rel=0.01)
 
     def test_eur_to_gbp_conversion(self):
         """Test EUR to GBP conversion"""
-        from src.csv_processor import convert_to_gbp
+        from src.csv_processor import CSVProcessor
 
-        result = convert_to_gbp(100.0, Currency.EUR)
+        result = CSVProcessor.convert_to_gbp(100.0, Currency.EUR)
         # 100 EUR * 0.86 = 86 GBP
         assert result == pytest.approx(86.0, rel=0.01)
 
     def test_jpy_to_gbp_conversion(self):
         """Test JPY to GBP conversion"""
-        from src.csv_processor import convert_to_gbp
+        from src.csv_processor import CSVProcessor
 
-        result = convert_to_gbp(10000.0, Currency.JPY)
+        result = CSVProcessor.convert_to_gbp(10000.0, Currency.JPY)
         # 10000 JPY * 0.0054 = 54 GBP
         assert result == pytest.approx(54.0, rel=0.01)
 
     def test_zero_amount_conversion(self):
         """Test conversion of zero amount"""
-        from src.csv_processor import convert_to_gbp
+        from src.csv_processor import CSVProcessor
 
-        result = convert_to_gbp(0.0, Currency.USD)
+        result = CSVProcessor.convert_to_gbp(0.0, Currency.USD)
         assert result == 0.0
 
     def test_large_amount_conversion(self):
         """Test conversion of very large amount"""
-        from src.csv_processor import convert_to_gbp
+        from src.csv_processor import CSVProcessor
 
-        result = convert_to_gbp(1000000.0, Currency.USD)
+        result = CSVProcessor.convert_to_gbp(1000000.0, Currency.USD)
         assert result == pytest.approx(790000.0, rel=0.01)
 
 

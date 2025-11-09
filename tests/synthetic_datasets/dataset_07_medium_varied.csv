@@ -1,0 +1,21 @@
+transaction_id,amount,currency,date,merchant,description
+TXN007000,132.65,AUD,2025-10-06,Local Store,streaming service - regular shopping
+TXN007001,23.92,GBP,2025-06-17,Walmart,professional services - monthly subscription
+TXN007002,1054.29,USD,2025-10-22,Suspicious Store XYZ,taxi - rapid succession
+TXN007003,202.35,CAD,2025-05-25,New Merchant,electricity - first time purchase
+TXN007004,115.11,AUD,2025-10-12,Target,taxi - regular shopping
+TXN007005,390.27,AUD,2025-09-17,International Store,online service - late night transaction
+TXN007006,1451.43,GBP,2025-10-26,Offshore Vendor,electricity - unusual amount
+TXN007007,248.47,EUR,2025-05-29,International Store,pharmacy - late night transaction
+TXN007008,113.66,USD,2025-05-16,Target,marketing - monthly subscription
+TXN007009,79.28,EUR,2025-10-29,Amazon,hotel - regular shopping
+TXN007010,465.24,CAD,2025-08-10,International Store,gym membership - late night transaction
+TXN007011,537.18,JPY,2025-09-24,Unknown Inc,online service - rapid succession
+TXN007012,82.68,GBP,2025-05-13,Amazon,gym membership - regular shopping
+TXN007013,957.79,EUR,2025-07-14,Suspicious Store XYZ,streaming service - unusual amount
+TXN007014,193.71,GBP,2025-08-29,Target,online service - regular shopping
+TXN007015,767.85,EUR,2025-10-10,Offshore Vendor,hospital - unusual amount
+TXN007016,125.18,JPY,2025-08-20,Pharmacy,tuition - routine purchase
+TXN007017,108.78,GBP,2025-07-20,Pharmacy,gym membership - monthly subscription
+TXN007018,128.4,EUR,2025-05-22,Amazon,medical equipment - monthly subscription
+TXN007019,409.16,JPY,2025-08-17,New Merchant,water - unusual location

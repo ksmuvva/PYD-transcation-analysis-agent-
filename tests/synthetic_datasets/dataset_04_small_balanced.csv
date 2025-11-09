@@ -1,0 +1,6 @@
+transaction_id,amount,currency,date,merchant,description
+TXN004000,176.51,CAD,2025-10-12,Target,consulting - routine purchase
+TXN004001,97.18,AUD,2025-09-19,Target,restaurant - routine purchase
+TXN004002,278.82,CAD,2025-08-29,New Merchant,taxi - first time purchase
+TXN004003,828.98,EUR,2025-09-18,Suspicious Store XYZ,online service - duplicate charge
+TXN004004,8888.82,GBP,2025-10-28,Fake Merchant 123,water - unusual country
