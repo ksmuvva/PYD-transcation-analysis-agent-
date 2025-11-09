@@ -16,6 +16,7 @@ from src.agent import run_analysis
 from src.config import AgentConfig, ConfigManager
 from src.csv_processor import CSVProcessor
 from src.models import ProcessingReport
+from src.telemetry import initialize_telemetry, LogfireConfig
 
 app = typer.Typer(
     name="financial-agent",
@@ -75,6 +76,11 @@ def analyze(
         "-v",
         help="Enable verbose output",
     ),
+    enable_telemetry: bool = typer.Option(
+        True,
+        "--telemetry/--no-telemetry",
+        help="Enable Pydantic Logfire telemetry and observability",
+    ),
 ) -> None:
     """
     Analyze financial transactions for classification and fraud detection.
@@ -90,6 +96,16 @@ def analyze(
     """
     console.print("\n[bold blue]Financial Transaction Analysis Agent[/bold blue]")
     console.print("[dim]Powered by Pydantic AI + MCTS Reasoning[/dim]\n")
+
+    # Initialize Logfire telemetry
+    telemetry = None
+    if enable_telemetry:
+        try:
+            logfire_config = LogfireConfig.from_env()
+            telemetry = initialize_telemetry(logfire_config)
+        except Exception as e:
+            console.print(f"[yellow]Warning: Failed to initialize Logfire telemetry: {e}[/yellow]")
+            console.print("[yellow]Continuing without telemetry...[/yellow]")
 
     try:
         # Step 1: Validate inputs
@@ -220,6 +236,10 @@ def analyze(
     except KeyboardInterrupt:
         console.print("\n[yellow]Analysis interrupted by user[/yellow]")
         raise typer.Exit(1)
+    finally:
+        # Shutdown telemetry
+        if telemetry:
+            telemetry.shutdown()
 
 
 @app.command()
