@@ -42,12 +42,12 @@ class CSVProcessor:
     }
 
     @staticmethod
-    def load_csv(file_path: Path) -> pd.DataFrame:
+    def load_csv(file_path: Path | str) -> pd.DataFrame:
         """
         Load CSV file into DataFrame.
 
         Args:
-            file_path: Path to CSV file
+            file_path: Path to CSV file (Path object or string)
 
         Returns:
             Loaded DataFrame
@@ -56,6 +56,10 @@ class CSVProcessor:
             FileNotFoundError: If file doesn't exist
             ValueError: If CSV is invalid
         """
+        # Convert string to Path if needed
+        if isinstance(file_path, str):
+            file_path = Path(file_path)
+
         if not file_path.exists():
             raise FileNotFoundError(f"CSV file not found: {file_path}")
 

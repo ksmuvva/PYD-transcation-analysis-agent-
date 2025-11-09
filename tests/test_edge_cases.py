@@ -25,7 +25,7 @@ import math
 from src.models import Transaction, Currency, FraudRiskLevel
 from src.config import AgentConfig, LLMConfig, MCTSConfig
 from src.agent import AgentDependencies, filter_transactions_above_threshold
-from src.csv_processor import CSVProcessor, convert_to_gbp
+from src.csv_processor import CSVProcessor
 from src.mcts_engine import MCTSNode
 
 
@@ -673,25 +673,25 @@ class TestCurrencyConversionEdgeCases:
 
     def test_convert_zero_amount(self):
         """Test converting zero amount"""
-        result = convert_to_gbp(0.0, Currency.USD)
+        result = CSVProcessor.convert_to_gbp(0.0, Currency.USD)
         assert result == 0.0
 
     def test_convert_very_large_amount(self):
         """Test converting very large amount"""
-        result = convert_to_gbp(1_000_000_000.0, Currency.USD)
+        result = CSVProcessor.convert_to_gbp(1_000_000_000.0, Currency.USD)
         assert result > 0
         assert result == pytest.approx(790_000_000.0, rel=0.01)
 
     def test_convert_very_small_amount(self):
         """Test converting very small amount"""
-        result = convert_to_gbp(0.01, Currency.JPY)
+        result = CSVProcessor.convert_to_gbp(0.01, Currency.JPY)
         assert result >= 0
 
     def test_gbp_to_gbp_identity(self):
         """Test that GBP to GBP is identity"""
         amounts = [1.0, 100.0, 1000.0, 0.01]
         for amount in amounts:
-            result = convert_to_gbp(amount, Currency.GBP)
+            result = CSVProcessor.convert_to_gbp(amount, Currency.GBP)
             assert result == amount
 
 

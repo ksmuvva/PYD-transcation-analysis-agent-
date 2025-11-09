@@ -38,7 +38,7 @@ class Transaction(BaseModel):
     """
 
     transaction_id: str = Field(..., description="Unique transaction identifier")
-    amount: float = Field(..., gt=0, description="Transaction amount (must be positive)")
+    amount: float = Field(..., ge=0, description="Transaction amount (must be non-negative)")
     currency: Currency = Field(..., description="Currency code")
     date: datetime = Field(..., description="Transaction date")
     merchant: str = Field(..., min_length=1, description="Merchant name")

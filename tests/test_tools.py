@@ -179,7 +179,7 @@ class TestFilterTransactionsTool:
             'description': ['Test']
         }
         mock_ctx.deps.df = pd.DataFrame(data)
-        agent_deps.config.threshold_amount = 500.0
+        mock_ctx.deps.config.threshold_amount = 500.0
 
         result = filter_transactions_above_threshold(mock_ctx)
 
@@ -198,7 +198,7 @@ class TestFilterTransactionsTool:
             'description': ['Test']
         }
         mock_ctx.deps.df = pd.DataFrame(data)
-        agent_deps.config.threshold_amount = 500.0
+        mock_ctx.deps.config.threshold_amount = 500.0
 
         result = filter_transactions_above_threshold(mock_ctx)
 
