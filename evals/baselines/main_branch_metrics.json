@@ -1,0 +1,29 @@
+{
+  "filter.filter_accuracy": 0.98,
+  "filter.conversion_precision": 0.96,
+  "filter.filter_iteration_efficiency": 1.0,
+  "filter_accuracy": 0.98,
+  "classify.classification_accuracy": 0.91,
+  "classify.confidence_calibration": 0.88,
+  "classify.path_diversity": 0.65,
+  "classify_accuracy": 0.91,
+  "fraud.fraud_risk_accuracy": 0.93,
+  "fraud.critical_classification_strictness": 1.0,
+  "fraud.fraud_reward_convergence": 0.96,
+  "fraud.fraud_indicator_coverage": 0.87,
+  "fraud_accuracy": 0.93,
+  "csv.csv_column_completeness": 1.0,
+  "csv.csv_row_count_accuracy": 1.0,
+  "csv.explanation_validity": 0.85,
+  "csv_accuracy": 1.0,
+  "overall_accuracy": 0.955,
+  "mcts_efficiency": 0.82,
+  "cost_per_transaction": 0.008,
+  "fraud_fpr": 0.015,
+  "_metadata": {
+    "updated_at": "2025-01-09T00:00:00",
+    "git_commit": "initial",
+    "dataset_version": "1.0.0",
+    "random_seed": 42
+  }
+}
