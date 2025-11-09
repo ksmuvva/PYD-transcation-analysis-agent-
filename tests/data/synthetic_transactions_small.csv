@@ -1,0 +1,11 @@
+transaction_id,amount,currency,date,merchant,category,description
+TX001,150.50,GBP,2024-01-15,Office Supplies Ltd,Business,Paper and pens for office
+TX002,500.00,USD,2024-01-16,Tech Conference Inc,Business,Annual tech summit registration fee
+TX003,1200.00,GBP,2024-01-17,Luxury Hotel Group,Travel,5-star hotel booking for business trip
+TX004,25.00,EUR,2024-01-18,Coffee & More,Personal,Morning coffee and pastry
+TX005,10000.00,GBP,2024-01-19,Crypto Exchange Ltd,Suspicious,Large cryptocurrency purchase
+TX006,75.25,USD,2024-01-20,Amazon Web Services,Business,Cloud hosting monthly fee
+TX007,350.00,GBP,2024-01-21,British Airways,Travel,Flight ticket London to Paris
+TX008,5000.00,EUR,2024-01-22,Unknown Recipient,Suspicious,Wire transfer to offshore account
+TX009,199.99,GBP,2024-01-23,Software Licenses,Business,Annual software subscription
+TX010,45.00,USD,2024-01-24,Uber Technologies,Travel,Airport ride

@@ -10,17 +10,20 @@ This module tests:
 - MCTS convergence
 - Edge cases (empty trees, single nodes, deep trees)
 - Performance and iteration limits
+
+NOTE: These are unit tests for the MCTS algorithm logic.
+Real LLM integration tests are in integration test files.
+Mock LLMs are used here only to test algorithm behavior.
 """
 
 import pytest
 import math
-from unittest.mock import MagicMock, AsyncMock, patch
 from dataclasses import dataclass
+from datetime import datetime
 
 from src.mcts_engine import MCTSNode, MCTSEngine
 from src.config import MCTSConfig
 from src.models import Transaction, Currency
-from datetime import datetime
 
 
 # ============================================================================

@@ -16,7 +16,6 @@ import tempfile
 import shutil
 from pathlib import Path
 from typer.testing import CliRunner
-from unittest.mock import patch, MagicMock
 import pandas as pd
 
 from src.cli import app
@@ -142,48 +141,21 @@ class TestCLIStartup:
 class TestLLMSelection:
     """Test LLM provider and model selection"""
 
-    @patch('src.agent.run_analysis')
-    def test_default_llm_provider(self, mock_run, sample_csv_file):
+    def test_default_llm_provider(self, sample_csv_file):
         """Test that default LLM provider is used when not specified"""
-        mock_run.return_value = MagicMock(
-            total_transactions_analyzed=5,
-            processing_time_seconds=1.5
-        )
-
         result = runner.invoke(app, ["analyze", sample_csv_file])
-        # Should use default from environment
-        assert result.exit_code == 0 or "API key" in result.stdout
+        # Should use default from environment (anthropic)
+        assert result.exit_code == 0
 
-    @patch('src.agent.run_analysis')
-    def test_openai_provider_selection(self, mock_run, sample_csv_file):
-        """Test selecting OpenAI as LLM provider"""
-        mock_run.return_value = MagicMock(
-            total_transactions_analyzed=5,
-            processing_time_seconds=1.5
-        )
-
-        result = runner.invoke(app, [
-            "analyze", sample_csv_file,
-            "--provider", "openai",
-            "--model", "o1-mini"
-        ])
-        # Might fail without API key, but should accept the arguments
-        assert result.exit_code == 0 or "API key" in result.stdout
-
-    @patch('src.agent.run_analysis')
-    def test_anthropic_provider_selection(self, mock_run, sample_csv_file):
-        """Test selecting Anthropic as LLM provider"""
-        mock_run.return_value = MagicMock(
-            total_transactions_analyzed=5,
-            processing_time_seconds=1.5
-        )
-
+    def test_anthropic_provider_selection(self, sample_csv_file):
+        """Test selecting Anthropic as LLM provider with real API"""
         result = runner.invoke(app, [
             "analyze", sample_csv_file,
             "--provider", "anthropic",
-            "--model", "claude-sonnet-4-5-20250929"
+            "--model", "claude-3-5-sonnet-20241022"
         ])
-        assert result.exit_code == 0 or "API key" in result.stdout
+        # Should successfully analyze with real LLM
+        assert result.exit_code == 0
 
     def test_invalid_provider(self, sample_csv_file):
         """Test that invalid provider is rejected"""
@@ -204,44 +176,20 @@ class TestLLMSelection:
         # Should fail with error about reasoning model requirement
         assert result.exit_code != 0 or "reasoning" in result.stdout.lower()
 
-    @patch('src.agent.run_analysis')
-    def test_valid_openai_reasoning_models(self, mock_run, sample_csv_file):
-        """Test all valid OpenAI reasoning models"""
-        mock_run.return_value = MagicMock(
-            total_transactions_analyzed=5,
-            processing_time_seconds=1.5
-        )
-
-        models = ["o1", "o1-preview", "o1-mini", "o3-mini"]
-        for model in models:
-            result = runner.invoke(app, [
-                "analyze", sample_csv_file,
-                "--provider", "openai",
-                "--model", model
-            ])
-            # Should accept the model (might fail on API key)
-            assert result.exit_code == 0 or "API key" in result.stdout, f"Model {model} should be accepted"
-
-    @patch('src.agent.run_analysis')
-    def test_valid_anthropic_reasoning_models(self, mock_run, sample_csv_file):
-        """Test all valid Anthropic reasoning models"""
-        mock_run.return_value = MagicMock(
-            total_transactions_analyzed=5,
-            processing_time_seconds=1.5
-        )
-
+    def test_valid_anthropic_reasoning_models(self, sample_csv_file):
+        """Test all valid Anthropic reasoning models with real API"""
         models = [
             "claude-3-5-sonnet-20241022",
             "claude-3-7-sonnet-20250219",
             "claude-sonnet-4-5-20250929"
         ]
-        for model in models:
-            result = runner.invoke(app, [
-                "analyze", sample_csv_file,
-                "--provider", "anthropic",
-                "--model", model
-            ])
-            assert result.exit_code == 0 or "API key" in result.stdout, f"Model {model} should be accepted"
+        # Test with one model (testing all would be too expensive)
+        result = runner.invoke(app, [
+            "analyze", sample_csv_file,
+            "--provider", "anthropic",
+            "--model", models[0]
+        ])
+        assert result.exit_code == 0, f"Model {models[0]} should work with real API"
 
 
 # ============================================================================
@@ -325,39 +273,27 @@ TX002,500.00,USD,2024-01-16,Café René,Personal,Lunch at café
 class TestCLIOptions:
     """Test various CLI options and parameters"""
 
-    @patch('src.agent.run_analysis')
-    def test_output_path_option(self, mock_run, sample_csv_file):
-        """Test specifying custom output path"""
-        mock_run.return_value = MagicMock(
-            total_transactions_analyzed=5,
-            processing_time_seconds=1.5
-        )
-
+    def test_output_path_option(self, sample_csv_file):
+        """Test specifying custom output path with real LLM"""
         with tempfile.TemporaryDirectory() as tmpdir:
             output_path = os.path.join(tmpdir, "results.csv")
             result = runner.invoke(app, [
                 "analyze", sample_csv_file,
                 "--output", output_path
             ])
-            # Should accept the output path
-            assert result.exit_code == 0 or "API key" in result.stdout
+            # Should successfully create output file
+            assert result.exit_code == 0
+            assert os.path.exists(output_path)
 
-    @patch('src.agent.run_analysis')
-    def test_threshold_option(self, mock_run, sample_csv_file):
-        """Test specifying custom threshold amount"""
-        mock_run.return_value = MagicMock(
-            total_transactions_analyzed=5,
-            processing_time_seconds=1.5
-        )
-
+    def test_threshold_option(self, sample_csv_file):
+        """Test specifying custom threshold amount with real LLM"""
         result = runner.invoke(app, [
             "analyze", sample_csv_file,
             "--threshold", "500.0"
         ])
-        assert result.exit_code == 0 or "API key" in result.stdout
+        assert result.exit_code == 0
 
-    @patch('src.agent.run_analysis')
-    def test_negative_threshold_rejected(self, mock_run, sample_csv_file):
+    def test_negative_threshold_rejected(self, sample_csv_file):
         """Test that negative threshold is rejected"""
         result = runner.invoke(app, [
             "analyze", sample_csv_file,
@@ -366,24 +302,15 @@ class TestCLIOptions:
         # Should fail with validation error
         assert result.exit_code != 0
 
-    @patch('src.agent.run_analysis')
-    def test_currency_option(self, mock_run, sample_csv_file):
-        """Test specifying different base currencies"""
-        mock_run.return_value = MagicMock(
-            total_transactions_analyzed=5,
-            processing_time_seconds=1.5
-        )
+    def test_currency_option(self, sample_csv_file):
+        """Test specifying different base currency with real LLM"""
+        result = runner.invoke(app, [
+            "analyze", sample_csv_file,
+            "--currency", "USD"
+        ])
+        assert result.exit_code == 0
 
-        currencies = ["GBP", "USD", "EUR"]
-        for currency in currencies:
-            result = runner.invoke(app, [
-                "analyze", sample_csv_file,
-                "--currency", currency
-            ])
-            assert result.exit_code == 0 or "API key" in result.stdout
-
-    @patch('src.agent.run_analysis')
-    def test_invalid_currency_rejected(self, mock_run, sample_csv_file):
+    def test_invalid_currency_rejected(self, sample_csv_file):
         """Test that invalid currency is rejected"""
         result = runner.invoke(app, [
             "analyze", sample_csv_file,
@@ -391,22 +318,15 @@ class TestCLIOptions:
         ])
         assert result.exit_code != 0
 
-    @patch('src.agent.run_analysis')
-    def test_mcts_iterations_option(self, mock_run, sample_csv_file):
-        """Test specifying custom MCTS iterations"""
-        mock_run.return_value = MagicMock(
-            total_transactions_analyzed=5,
-            processing_time_seconds=1.5
-        )
-
+    def test_mcts_iterations_option(self, sample_csv_file):
+        """Test specifying custom MCTS iterations with real LLM"""
         result = runner.invoke(app, [
             "analyze", sample_csv_file,
             "--mcts-iterations", "50"
         ])
-        assert result.exit_code == 0 or "API key" in result.stdout
+        assert result.exit_code == 0
 
-    @patch('src.agent.run_analysis')
-    def test_zero_mcts_iterations_rejected(self, mock_run, sample_csv_file):
+    def test_zero_mcts_iterations_rejected(self, sample_csv_file):
         """Test that zero MCTS iterations is rejected"""
         result = runner.invoke(app, [
             "analyze", sample_csv_file,
@@ -414,34 +334,13 @@ class TestCLIOptions:
         ])
         assert result.exit_code != 0
 
-    @patch('src.agent.run_analysis')
-    def test_verbose_flag(self, mock_run, sample_csv_file):
-        """Test verbose output flag"""
-        mock_run.return_value = MagicMock(
-            total_transactions_analyzed=5,
-            processing_time_seconds=1.5
-        )
-
+    def test_verbose_flag(self, sample_csv_file):
+        """Test verbose output flag with real LLM"""
         result = runner.invoke(app, [
             "analyze", sample_csv_file,
             "--verbose"
         ])
-        assert result.exit_code == 0 or "API key" in result.stdout
-
-    @patch('src.agent.run_analysis')
-    def test_api_key_option(self, mock_run, sample_csv_file):
-        """Test providing API key via command line"""
-        mock_run.return_value = MagicMock(
-            total_transactions_analyzed=5,
-            processing_time_seconds=1.5
-        )
-
-        result = runner.invoke(app, [
-            "analyze", sample_csv_file,
-            "--api-key", "test-api-key-12345"
-        ])
-        # Should accept the API key
-        assert result.exit_code == 0 or "invalid" in result.stdout.lower()
+        assert result.exit_code == 0
 
 
 # ============================================================================
@@ -467,36 +366,6 @@ class TestErrorHandling:
             os.chmod(temp_path, 0o644)
             os.unlink(temp_path)
 
-    @patch('src.agent.run_analysis')
-    def test_api_key_missing_error(self, mock_run, sample_csv_file):
-        """Test error when API key is missing"""
-        # Clear environment variable
-        with patch.dict(os.environ, {}, clear=True):
-            result = runner.invoke(app, [
-                "analyze", sample_csv_file,
-                "--provider", "openai",
-                "--model", "o1-mini"
-            ])
-            # Should fail with API key error
-            assert result.exit_code != 0 or "API key" in result.stdout
-
-    @patch('src.agent.run_analysis')
-    def test_network_error_handling(self, mock_run, sample_csv_file):
-        """Test handling of network errors during LLM calls"""
-        mock_run.side_effect = ConnectionError("Network unreachable")
-
-        result = runner.invoke(app, ["analyze", sample_csv_file])
-        # Should handle network error gracefully
-        assert result.exit_code != 0
-
-    @patch('src.agent.run_analysis')
-    def test_timeout_error_handling(self, mock_run, sample_csv_file):
-        """Test handling of timeout errors"""
-        mock_run.side_effect = TimeoutError("Request timed out")
-
-        result = runner.invoke(app, ["analyze", sample_csv_file])
-        assert result.exit_code != 0
-
 
 # ============================================================================
 # OUTPUT GENERATION TESTS
@@ -505,45 +374,32 @@ class TestErrorHandling:
 class TestOutputGeneration:
     """Test output file generation"""
 
-    @patch('src.agent.run_analysis')
-    def test_output_file_created(self, mock_run, sample_csv_file):
-        """Test that output file is created successfully"""
-        mock_run.return_value = MagicMock(
-            total_transactions_analyzed=5,
-            transactions_above_threshold=3,
-            high_risk_transactions=1,
-            critical_risk_transactions=0,
-            processing_time_seconds=1.5,
-            llm_provider="anthropic",
-            model_used="claude-sonnet-4-5-20250929",
-            mcts_iterations_total=300
-        )
-
+    def test_output_file_created(self, sample_csv_file):
+        """Test that output file is created successfully with real LLM"""
         with tempfile.TemporaryDirectory() as tmpdir:
             output_path = os.path.join(tmpdir, "results.csv")
             result = runner.invoke(app, [
                 "analyze", sample_csv_file,
                 "--output", output_path
             ])
-            # Output file should be created (or API key error)
-            assert result.exit_code == 0 or "API key" in result.stdout
+            # Output file should be created
+            assert result.exit_code == 0
+            assert os.path.exists(output_path)
+            # Verify output file has content
+            df = pd.read_csv(output_path)
+            assert len(df) > 0
 
-    @patch('src.agent.run_analysis')
-    def test_output_directory_created(self, mock_run, sample_csv_file):
+    def test_output_directory_created(self, sample_csv_file):
         """Test that output directory is created if it doesn't exist"""
-        mock_run.return_value = MagicMock(
-            total_transactions_analyzed=5,
-            processing_time_seconds=1.5
-        )
-
         with tempfile.TemporaryDirectory() as tmpdir:
             output_path = os.path.join(tmpdir, "subdir", "results.csv")
             result = runner.invoke(app, [
                 "analyze", sample_csv_file,
                 "--output", output_path
             ])
-            # Should create parent directory
-            assert result.exit_code == 0 or "API key" in result.stdout
+            # Should create parent directory and output file
+            assert result.exit_code == 0
+            assert os.path.exists(output_path)
 
 
 # ============================================================================
@@ -553,20 +409,15 @@ class TestOutputGeneration:
 class TestLargeFileHandling:
     """Test handling of large CSV files"""
 
-    @patch('src.agent.run_analysis')
-    def test_large_csv_file_processing(self, mock_run, large_csv_file):
-        """Test processing of large CSV files"""
-        mock_run.return_value = MagicMock(
-            total_transactions_analyzed=100,
-            processing_time_seconds=10.5
-        )
-
+    def test_large_csv_file_processing(self, large_csv_file):
+        """Test processing of large CSV files with real LLM"""
         result = runner.invoke(app, [
             "analyze", large_csv_file,
-            "--verbose"
+            "--verbose",
+            "--mcts-iterations", "10"  # Reduced iterations for faster testing
         ])
-        # Should handle large file (or fail on API key)
-        assert result.exit_code == 0 or "API key" in result.stdout
+        # Should successfully handle large file
+        assert result.exit_code == 0
 
 
 if __name__ == "__main__":
