@@ -12,8 +12,8 @@ This module tests:
 
 import pytest
 import pandas as pd
+import os
 from datetime import datetime
-from unittest.mock import MagicMock, AsyncMock, patch
 from dataclasses import dataclass
 
 from src.models import (
@@ -30,7 +30,7 @@ from src.agent import (
     classify_single_transaction_mcts,
     detect_fraud_single_transaction_mcts,
 )
-from src.config import AgentConfig, LLMConfig, MCTSConfig
+from src.config import AgentConfig, LLMConfig, MCTSConfig, ConfigManager
 from src.mcts_engine import MCTSEngine
 
 

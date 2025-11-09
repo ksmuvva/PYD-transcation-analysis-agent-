@@ -1,0 +1,31 @@
+transaction_id,amount,currency,date,merchant,category,description
+TX001,125.50,GBP,2024-01-01,Stationery Store,Business,Office supplies purchase
+TX002,450.00,USD,2024-01-02,Conference Organizers,Business,Tech conference registration
+TX003,850.00,GBP,2024-01-03,Premium Hotel,Travel,Hotel accommodation
+TX004,15.50,EUR,2024-01-04,Local Cafe,Personal,Coffee break
+TX005,12000.00,GBP,2024-01-05,Investment Platform,Suspicious,Large investment transfer
+TX006,85.00,USD,2024-01-06,AWS Cloud,Business,Monthly cloud services
+TX007,320.00,GBP,2024-01-07,Airline,Travel,Domestic flight
+TX008,6500.00,EUR,2024-01-08,Unknown Entity,Suspicious,International wire transfer
+TX009,175.00,GBP,2024-01-09,Software Provider,Business,Monthly SaaS subscription
+TX010,35.00,USD,2024-01-10,Ride Share,Travel,City transportation
+TX011,2500.00,GBP,2024-01-11,Equipment Supplier,Business,Computer hardware
+TX012,95.00,EUR,2024-01-12,Restaurant,Personal,Team lunch
+TX013,750.00,USD,2024-01-13,Training Provider,Business,Professional development course
+TX014,15000.00,GBP,2024-01-14,Unknown Merchant,Suspicious,Unusual large payment
+TX015,225.00,GBP,2024-01-15,Marketing Agency,Business,Social media advertising
+TX016,180.00,USD,2024-01-16,Hotel Chain,Travel,Overnight stay
+TX017,45.00,EUR,2024-01-17,Bookstore,Personal,Professional books
+TX018,8000.00,GBP,2024-01-18,Offshore Company,Suspicious,Consulting fees suspicious
+TX019,350.00,USD,2024-01-19,Software Licenses,Business,Annual license renewal
+TX020,125.00,GBP,2024-01-20,Gas Station,Travel,Fuel for business trip
+TX021,550.00,EUR,2024-01-21,Electronics Store,Business,Office equipment
+TX022,18000.00,USD,2024-01-22,High Risk Vendor,Suspicious,Large unusual transaction
+TX023,275.00,GBP,2024-01-23,Telecom Provider,Business,Mobile phone bill
+TX024,65.00,USD,2024-01-24,Parking Services,Travel,Airport parking
+TX025,425.00,EUR,2024-01-25,Office Furniture,Business,Desk and chair purchase
+TX026,22000.00,GBP,2024-01-26,Crypto Platform,Suspicious,Cryptocurrency investment
+TX027,195.00,USD,2024-01-27,Domain Registrar,Business,Website hosting and domain
+TX028,88.00,GBP,2024-01-28,Taxi Service,Travel,Business meeting transport
+TX029,12500.00,EUR,2024-01-29,Shell Company,Suspicious,Suspicious consulting payment
+TX030,165.00,USD,2024-01-30,Cloud Storage,Business,Annual backup service

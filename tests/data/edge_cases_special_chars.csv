@@ -1,0 +1,6 @@
+transaction_id,amount,currency,date,merchant,category,description
+TX001,150.50,GBP,2024-01-15,"O'Reilly Books & Co.",Business,"Books, journals & magazines"
+TX002,500.00,USD,2024-01-16,Café René,Personal,Lunch at café with accented name
+TX003,1200.00,EUR,2024-01-17,Müller & Schmidt GmbH,Business,German supplier with umlaut
+TX004,350.00,GBP,2024-01-18,"Johnson, Smith & Associates",Business,Legal services with commas
+TX005,750.00,USD,2024-01-19,北京科技公司,Suspicious,Chinese company name

@@ -1,0 +1,101 @@
+transaction_id,amount,currency,date,merchant,category,description
+TX001,145.75,GBP,2024-01-01,Office Depot,Business,Monthly office supplies
+TX002,425.00,USD,2024-01-02,Tech Summit 2024,Business,Conference early bird ticket
+TX003,925.50,GBP,2024-01-03,Hilton Hotels,Travel,3-night business hotel stay
+TX004,18.25,EUR,2024-01-04,Starbucks,Personal,Morning coffee and snack
+TX005,15000.00,GBP,2024-01-05,Binance Exchange,Suspicious,Large crypto purchase attempt
+TX006,95.00,USD,2024-01-06,Amazon AWS,Business,Cloud hosting January
+TX007,385.00,GBP,2024-01-07,British Airways,Travel,Return flight Manchester-London
+TX008,7500.00,EUR,2024-01-08,Overseas Holdings LLC,Suspicious,Wire transfer suspicious location
+TX009,225.00,GBP,2024-01-09,Adobe Systems,Business,Creative Cloud annual
+TX010,42.50,USD,2024-01-10,Uber,Travel,Ride to airport
+TX011,2750.00,GBP,2024-01-11,Dell Technologies,Business,Laptop and accessories
+TX012,125.00,EUR,2024-01-12,Italian Restaurant,Personal,Client dinner
+TX013,850.00,USD,2024-01-13,Udemy Business,Business,Team training courses
+TX014,18500.00,GBP,2024-01-14,Anonymous Transfer,Suspicious,High-value unverified transaction
+TX015,265.00,GBP,2024-01-15,Google Ads,Business,Monthly advertising spend
+TX016,195.00,USD,2024-01-16,Marriott,Travel,Hotel one night
+TX017,55.00,EUR,2024-01-17,Waterstones,Personal,Business books purchase
+TX018,9200.00,GBP,2024-01-18,Panama Consulting,Suspicious,Offshore consulting dubious
+TX019,375.00,USD,2024-01-19,Microsoft 365,Business,Enterprise licenses
+TX020,145.00,GBP,2024-01-20,Shell Fuel,Travel,Business trip fuel
+TX021,625.00,EUR,2024-01-21,Best Buy,Business,Monitors and peripherals
+TX022,21000.00,USD,2024-01-22,Dark Web Vendor,Suspicious,Extremely suspicious transaction
+TX023,295.00,GBP,2024-01-23,Vodafone,Business,Corporate mobile plan
+TX024,78.00,USD,2024-01-24,NCP Parking,Travel,Weekly parking pass
+TX025,485.00,EUR,2024-01-25,IKEA Business,Business,Office furniture
+TX026,25000.00,GBP,2024-01-26,Crypto Mining Co,Suspicious,Mining equipment suspicious
+TX027,215.00,USD,2024-01-27,GoDaddy,Business,Domain and SSL certificates
+TX028,92.00,GBP,2024-01-28,Black Cab,Travel,City business transport
+TX029,14500.00,EUR,2024-01-29,Bermuda Corp,Suspicious,Tax haven payment
+TX030,185.00,USD,2024-01-30,Dropbox Business,Business,Team cloud storage
+TX031,335.00,GBP,2024-01-31,LinkedIn Premium,Business,Recruiter licenses
+TX032,525.00,EUR,2024-02-01,Furniture Express,Business,Office chairs
+TX033,11500.00,USD,2024-02-02,Cayman Islands LLC,Suspicious,Offshore entity payment
+TX034,155.00,GBP,2024-02-03,Zoom,Business,Video conferencing pro
+TX035,68.00,EUR,2024-02-04,Restaurant La Mer,Personal,Lunch meeting
+TX036,8750.00,GBP,2024-02-05,Unknown Recipient XX,Suspicious,Unverified wire transfer
+TX037,445.00,USD,2024-02-06,Salesforce,Business,CRM monthly subscription
+TX038,245.00,GBP,2024-02-07,Train Line,Travel,Business rail travel
+TX039,16800.00,EUR,2024-02-08,Shell Company ABC,Suspicious,Consulting fees dubious
+TX040,325.00,USD,2024-02-09,Slack Technologies,Business,Team communication tool
+TX041,135.00,GBP,2024-02-10,Tesco Fuel,Travel,Van fuel business
+TX042,4250.00,EUR,2024-02-11,Computer Warehouse,Business,IT equipment bulk
+TX043,28000.00,USD,2024-02-12,Crypto Hedge Fund,Suspicious,High-risk investment
+TX044,395.00,GBP,2024-02-13,BT Business,Business,Internet and phone
+TX045,105.00,EUR,2024-02-14,Airport Lounge,Travel,Business class lounge
+TX046,575.00,USD,2024-02-15,GitHub Enterprise,Business,Developer tools
+TX047,19500.00,GBP,2024-02-16,Money Laundering Suspect,Suspicious,Flagged by compliance
+TX048,225.00,EUR,2024-02-17,Bookshop Central,Personal,Reference materials
+TX049,285.00,USD,2024-02-18,Heroku,Business,App hosting platform
+TX050,145.00,GBP,2024-02-19,Enterprise Rent-A-Car,Travel,3-day vehicle rental
+TX051,12800.00,EUR,2024-02-20,Cyprus Holdings,Suspicious,EU tax haven entity
+TX052,365.00,USD,2024-02-21,Atlassian,Business,Jira and Confluence
+TX053,495.00,GBP,2024-02-22,HP Supplies,Business,Printer and toner
+TX054,24500.00,USD,2024-02-23,Russian Federation Entity,Suspicious,Sanctioned region payment
+TX055,175.00,EUR,2024-02-24,Vodafone Roaming,Travel,International calls
+TX056,635.00,GBP,2024-02-25,Design Agency,Business,Logo and branding
+TX057,15750.00,USD,2024-02-26,Bitcoin ATM Network,Suspicious,Cash to crypto suspicious
+TX058,255.00,EUR,2024-02-27,Restaurant Group,Personal,Team celebration dinner
+TX059,425.00,GBP,2024-02-28,LinkedIn Sales Nav,Business,Sales prospecting tools
+TX060,13200.00,USD,2024-02-29,NFT Marketplace,Suspicious,Digital assets high risk
+TX061,185.00,EUR,2024-03-01,Stationery Plus,Business,Office supplies bulk
+TX062,545.00,GBP,2024-03-02,Apple Business,Business,MacBook accessories
+TX063,22500.00,USD,2024-03-03,Ransomware Payment,Suspicious,Cybercrime related
+TX064,295.00,EUR,2024-03-04,Event Tickets,Business,Industry conference
+TX065,725.00,GBP,2024-03-05,Legal Services,Business,Contract review
+TX066,17800.00,USD,2024-03-06,Dark Pool Trading,Suspicious,Unregulated trading
+TX067,165.00,EUR,2024-03-07,Cafe Nero,Personal,Coffee meetings
+TX068,385.00,GBP,2024-03-08,Twitter Ads,Business,Social media marketing
+TX069,26000.00,USD,2024-03-09,Ponzi Scheme Suspect,Suspicious,Investment fraud suspected
+TX070,215.00,EUR,2024-03-10,Taxi Services,Travel,Multiple client visits
+TX071,475.00,GBP,2024-03-11,Insurance Premium,Business,Professional liability
+TX072,9850.00,USD,2024-03-12,Venezuela Transfer,Suspicious,High-risk country
+TX073,325.00,EUR,2024-03-13,Office Cleaning,Business,Monthly cleaning service
+TX074,595.00,GBP,2024-03-14,Accountancy Firm,Business,Quarterly bookkeeping
+TX075,31000.00,USD,2024-03-15,Money Mule Network,Suspicious,Laundering pattern detected
+TX076,245.00,EUR,2024-03-16,Hotel Express,Travel,Overnight business stay
+TX077,415.00,GBP,2024-03-17,Printing Services,Business,Marketing materials
+TX078,14300.00,USD,2024-03-18,Darknet Marketplace,Suspicious,Illegal marketplace
+TX079,355.00,EUR,2024-03-19,Car Rental,Travel,Week business rental
+TX080,525.00,GBP,2024-03-20,SEO Services,Business,Website optimization
+TX081,19900.00,USD,2024-03-21,Terrorist Financing Risk,Suspicious,Sanctions list match
+TX082,185.00,EUR,2024-03-22,Restaurant Chain,Personal,Lunch expenses
+TX083,645.00,GBP,2024-03-23,Webinar Platform,Business,Virtual events software
+TX084,27500.00,USD,2024-03-24,North Korea Entity,Suspicious,Sanctioned country
+TX085,275.00,EUR,2024-03-25,Airport Transfer,Travel,Executive car service
+TX086,755.00,GBP,2024-03-26,Recruitment Agency,Business,Contractor placement fee
+TX087,16200.00,USD,2024-03-27,Iranian Bank,Suspicious,Sanctions violation
+TX088,195.00,EUR,2024-03-28,Bookstore Chain,Personal,Industry publications
+TX089,485.00,GBP,2024-03-29,Cloud Backup,Business,Enterprise data backup
+TX090,23800.00,USD,2024-03-30,ISIS-Linked Entity,Suspicious,Terror financing alert
+TX091,335.00,EUR,2024-03-31,Mobile Provider,Business,Fleet mobile plan
+TX092,565.00,GBP,2024-04-01,Photography,Business,Corporate headshots
+TX093,29000.00,USD,2024-04-02,Cartel Front Company,Suspicious,Drug money laundering
+TX094,225.00,EUR,2024-04-03,Gym Membership,Personal,Corporate wellness
+TX095,695.00,GBP,2024-04-04,Video Production,Business,Promotional video
+TX096,18600.00,USD,2024-04-05,Human Trafficking Ring,Suspicious,Criminal enterprise
+TX097,265.00,EUR,2024-04-06,Parking Monthly,Travel,Office parking space
+TX098,825.00,GBP,2024-04-07,Translation Services,Business,Document translation
+TX099,32000.00,USD,2024-04-08,Arms Dealer Network,Suspicious,Weapons trafficking
+TX100,155.00,EUR,2024-04-09,Restaurant Fine Dining,Personal,Board dinner

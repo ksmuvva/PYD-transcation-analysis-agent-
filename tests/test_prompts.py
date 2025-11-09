@@ -11,7 +11,6 @@ This module tests:
 """
 
 import pytest
-from unittest.mock import MagicMock, AsyncMock
 from datetime import datetime
 
 from src.models import Transaction, Currency, FraudRiskLevel
