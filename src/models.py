@@ -156,7 +156,7 @@ class FilterResult(BaseModel):
     amount_gbp: float = Field(..., ge=0, description="Amount in GBP")
     conversion_path_used: str = Field(..., description="Currency conversion path (e.g., 'USD->GBP via ECB')")
     confidence: float = Field(..., ge=0, le=1, description="Confidence in conversion accuracy")
-    mcts_metadata: MCTSMetadata = Field(..., description="MCTS search metadata")
+    mcts_metadata: Optional[MCTSMetadata] = Field(None, description="MCTS search metadata (optional for legacy compatibility)")
 
 
 class TransactionFilterResult(BaseModel):
@@ -192,7 +192,7 @@ class ClassificationResult(BaseModel):
     confidence: float = Field(..., ge=0, le=1, description="Confidence score (0-1)")
     mcts_path: list[str] = Field(default_factory=list, description="MCTS action path taken")
     mcts_iterations: int = Field(..., gt=0, description="Number of MCTS iterations performed")
-    mcts_metadata: MCTSMetadata = Field(..., description="MCTS search metadata")
+    mcts_metadata: Optional[MCTSMetadata] = Field(None, description="MCTS search metadata (optional for legacy compatibility)")
 
     # Legacy compatibility
     primary_classification: Optional[str] = Field(None, description="Legacy: same as category")
@@ -263,7 +263,7 @@ class FraudResult(BaseModel):
     fraud_indicators: list[str] = Field(
         default_factory=list, description="List of fraud indicators detected"
     )
-    mcts_metadata: MCTSMetadata = Field(..., description="MCTS search metadata")
+    mcts_metadata: Optional[MCTSMetadata] = Field(None, description="MCTS search metadata (optional for legacy compatibility)")
 
     # Legacy compatibility
     detected_indicators: Optional[list[str]] = Field(None, description="Legacy: same as fraud_indicators")

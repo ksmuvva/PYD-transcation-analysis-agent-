@@ -66,8 +66,8 @@ def _create_agent() -> Agent:
         from pydantic_ai.models.test import TestModel
         model = TestModel()
     else:
-        # Use default OpenAI model
-        model = "openai:o1-mini"
+        # Use default OpenAI model (without provider prefix per Pydantic AI convention)
+        model = "o1-mini"
 
     return Agent(
         model,

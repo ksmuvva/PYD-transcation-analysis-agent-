@@ -44,12 +44,6 @@ def analyze(
         "-m",
         help="Model name (must be a reasoning model like o1-mini)",
     ),
-    api_key: Optional[str] = typer.Option(
-        None,
-        "--api-key",
-        "-k",
-        help="API key for LLM provider (or set via environment variable)",
-    ),
     threshold: float = typer.Option(
         250.0,
         "--threshold",
@@ -131,7 +125,7 @@ def analyze(
             config = ConfigManager.load_from_env(
                 provider=llm_provider,
                 model=model,
-                api_key=api_key,
+                api_key=None,  # Always use environment variable for security
                 threshold=threshold,
                 currency=currency,
                 mcts_iterations=mcts_iterations,

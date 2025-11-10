@@ -17,6 +17,29 @@ from src.models import (
 )
 
 
+def sanitize_csv_injection(value: str) -> str:
+    """
+    Sanitize string values to prevent CSV injection attacks (SEC-002).
+
+    Cells starting with =, +, -, @ could be executed as formulas in Excel.
+    This function prefixes such cells with a single quote to prevent execution.
+
+    Args:
+        value: String value to sanitize
+
+    Returns:
+        Sanitized string value
+    """
+    if not isinstance(value, str):
+        return value
+
+    # Check if value starts with formula characters
+    if value and value[0] in ('=', '+', '-', '@', '\t', '\r'):
+        return "'" + value  # Prefix with single quote to treat as text
+
+    return value
+
+
 class CSVProcessor:
     """Handles CSV operations for transaction data."""
 
@@ -30,15 +53,21 @@ class CSVProcessor:
         "description",
     ]
 
-    # Exchange rates to GBP (simplified - could use API in production)
+    # Exchange rates to GBP
+    # WARNING: These are static rates as of November 2025 and should be updated regularly
+    # For production use, integrate with a real-time exchange rate API (e.g., exchangerate-api.io, fixer.io)
+    # Last updated: 2025-11-10
     EXCHANGE_RATES = {
         Currency.GBP: 1.0,
-        Currency.USD: 0.79,  # Example rate
-        Currency.EUR: 0.86,
-        Currency.JPY: 0.0054,
-        Currency.CAD: 0.58,
-        Currency.AUD: 0.51,
+        Currency.USD: 0.79,  # 1 USD = 0.79 GBP (approximate)
+        Currency.EUR: 0.86,  # 1 EUR = 0.86 GBP (approximate)
+        Currency.JPY: 0.0054,  # 1 JPY = 0.0054 GBP (approximate)
+        Currency.CAD: 0.58,  # 1 CAD = 0.58 GBP (approximate)
+        Currency.AUD: 0.51,  # 1 AUD = 0.51 GBP (approximate)
     }
+
+    # Date of last exchange rate update
+    EXCHANGE_RATES_LAST_UPDATED = "2025-11-10"
 
     @staticmethod
     def load_csv(file_path: Path | str) -> pd.DataFrame:
@@ -110,8 +139,18 @@ class CSVProcessor:
         if "amount" in df.columns:
             if not pd.api.types.is_numeric_dtype(df["amount"]):
                 errors.append("Column 'amount' must be numeric")
-            elif (df["amount"] <= 0).any():
-                errors.append("Column 'amount' must contain only positive values")
+            else:
+                # Check for NaN, Inf, and negative values (HIGH-006)
+                if df["amount"].isna().any():
+                    errors.append("Column 'amount' contains NaN (missing) values")
+                if (df["amount"] == float('inf')).any() or (df["amount"] == float('-inf')).any():
+                    errors.append("Column 'amount' contains infinite values")
+                if (df["amount"] <= 0).any():
+                    errors.append("Column 'amount' must contain only positive values")
+                # Add reasonable upper bound check
+                MAX_TRANSACTION_AMOUNT = 1_000_000_000  # 1 billion GBP
+                if (df["amount"] > MAX_TRANSACTION_AMOUNT).any():
+                    errors.append(f"Column 'amount' contains unreasonably large values (max: {MAX_TRANSACTION_AMOUNT:,})")
 
         # Validate currency column
         if "currency" in df.columns:
@@ -123,10 +162,17 @@ class CSVProcessor:
                     f"Valid: {valid_currencies}"
                 )
 
-        # Validate transaction_id uniqueness
+        # Validate transaction_id uniqueness and format
         if "transaction_id" in df.columns:
             if df["transaction_id"].duplicated().any():
                 errors.append("Column 'transaction_id' contains duplicates")
+            # Check for empty or null transaction IDs
+            if df["transaction_id"].isna().any() or (df["transaction_id"] == "").any():
+                errors.append("Column 'transaction_id' contains empty or missing values")
+            # Check for reasonable length (MED-004)
+            MAX_ID_LENGTH = 255
+            if (df["transaction_id"].str.len() > MAX_ID_LENGTH).any():
+                errors.append(f"Column 'transaction_id' contains values exceeding {MAX_ID_LENGTH} characters")
 
         return errors
 
@@ -345,6 +391,11 @@ class CSVProcessor:
                 tid, classification_map.get(str(tid)), fraud_map.get(str(tid)), mcts_explanations
             )
         )
+
+        # Sanitize string columns to prevent CSV injection (SEC-002)
+        string_columns = enhanced_df.select_dtypes(include=['object']).columns
+        for col in string_columns:
+            enhanced_df[col] = enhanced_df[col].apply(sanitize_csv_injection)
 
         # Save to CSV
         output_path.parent.mkdir(parents=True, exist_ok=True)
