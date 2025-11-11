@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PYD Transaction Analysis Agent - Architecture Diagram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #1f4788;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .diagram-container {
+            width: 100%;
+            overflow-x: auto;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        svg {
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .layer {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2;
+            stroke-dasharray: 5,5;
+        }
+        
+        .component {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .component:hover rect {
+            filter: brightness(1.1);
+        }
+        
+        .component:hover {
+            transform: translateY(-2px);
+        }
+        
+        .arrow {
+            fill: none;
+            stroke-width: 2;
+            marker-end: url(#arrowhead);
+        }
+        
+        .arrow-data {
+            stroke: #4CAF50;
+        }
+        
+        .arrow-control {
+            stroke: #2196F3;
+        }
+        
+        .arrow-telemetry {
+            stroke: #FF9800;
+            stroke-dasharray: 4,4;
+        }
+        
+        .component-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .component-desc {
+            font-size: 11px;
+            fill: #555;
+        }
+        
+        .layer-label {
+            font-size: 16px;
+            font-weight: 600;
+            fill: #333;
+        }
+        
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-line {
+            width: 40px;
+            height: 3px;
+        }
+        
+        .legend-text {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .info-panel {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .info-panel.active {
+            display: block;
+        }
+        
+        .info-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1976D2;
+            margin-bottom: 10px;
+        }
+        
+        .info-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PYD Transaction Analysis Agent</h1>
+        <div class="subtitle">Component Interaction Architecture Diagram</div>
+        
+        <div class="diagram-container">
+            <svg width="1300" height="900" viewBox="0 0 1300 900">
+                <defs>
+                    <!-- Arrow markers -->
+                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="currentColor" />
+                    </marker>
+                    
+                    <!-- Gradients -->
+                    <linearGradient id="cliGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                    </linearGradient>
+                    
+                    <linearGradient id="agentGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#388E3C;stop-opacity:1" />
+                    </linearGradient>
+                    
+                    <linearGradient id="toolGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#2196F3;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#1976D2;stop-opacity:1" />
+                    </linearGradient>
+                    
+                    <linearGradient id="mctsGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FF9800;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#F57C00;stop-opacity:1" />
+                    </linearGradient>
+                    
+                    <linearGradient id="dataGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#9C27B0;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#7B1FA2;stop-opacity:1" />
+                    </linearGradient>
+                    
+                    <linearGradient id="observeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#E91E63;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#C2185B;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                
+                <!-- Layer Labels -->
+                <text x="30" y="80" class="layer-label">Presentation Layer</text>
+                <text x="30" y="190" class="layer-label">Orchestration Layer</text>
+                <text x="30" y="360" class="layer-label">Tool Layer</text>
+                <text x="30" y="580" class="layer-label">Reasoning Layer</text>
+                <text x="30" y="720" class="layer-label">Data Layer</text>
+                <text x="1000" y="190" class="layer-label">Observability</text>
+                <text x="850" y="360" class="layer-label">LLM Providers</text>
+                
+                <!-- CLI Component -->
+                <g class="component" data-component="cli">
+                    <rect x="200" y="50" width="300" height="70" rx="8" fill="url(#cliGrad)" />
+                    <text x="350" y="75" text-anchor="middle" fill="white" class="component-title">CLI Interface</text>
+                    <text x="350" y="95" text-anchor="middle" fill="white" class="component-desc">Typer + Rich</text>
+                    <text x="350" y="110" text-anchor="middle" fill="white" class="component-desc">User Commands & Progress</text>
+                </g>
+                
+                <!-- Pydantic AI Agent -->
+                <g class="component" data-component="agent">
+                    <rect x="200" y="160" width="300" height="90" rx="8" fill="url(#agentGrad)" />
+                    <text x="350" y="185" text-anchor="middle" fill="white" class="component-title">Pydantic AI Agent</text>
+                    <text x="350" y="205" text-anchor="middle" fill="white" class="component-desc">Orchestration & State Management</text>
+                    <text x="350" y="220" text-anchor="middle" fill="white" class="component-desc">Type-Safe Operations</text>
+                    <text x="350" y="235" text-anchor="middle" fill="white" class="component-desc">Tool Coordination</text>
+                </g>
+                
+                <!-- Tools -->
+                <g class="component" data-component="tool1">
+                    <rect x="150" y="330" width="180" height="80" rx="8" fill="url(#toolGrad)" />
+                    <text x="240" y="355" text-anchor="middle" fill="white" class="component-title">Tool 1</text>
+                    <text x="240" y="370" text-anchor="middle" fill="white" class="component-desc" font-size="10px">Filter Transactions</text>
+                    <text x="240" y="385" text-anchor="middle" fill="white" class="component-desc" font-size="10px">Above Threshold</text>
+                    <text x="240" y="400" text-anchor="middle" fill="white" class="component-desc" font-size="10px">Currency Conversion</text>
+                </g>
+                
+                <g class="component" data-component="tool2">
+                    <rect x="360" y="330" width="180" height="80" rx="8" fill="url(#toolGrad)" />
+                    <text x="450" y="355" text-anchor="middle" fill="white" class="component-title">Tool 2</text>
+                    <text x="450" y="370" text-anchor="middle" fill="white" class="component-desc" font-size="10px">Classify Transactions</text>
+                    <text x="450" y="385" text-anchor="middle" fill="white" class="component-desc" font-size="10px">MCTS Reasoning</text>
+                    <text x="450" y="400" text-anchor="middle" fill="white" class="component-desc" font-size="10px">Confidence Scoring</text>
+                </g>
+                
+                <g class="component" data-component="tool3">
+                    <rect x="150" y="440" width="180" height="80" rx="8" fill="url(#toolGrad)" />
+                    <text x="240" y="465" text-anchor="middle" fill="white" class="component-title">Tool 3</text>
+                    <text x="240" y="480" text-anchor="middle" fill="white" class="component-desc" font-size="10px">Fraud Detection</text>
+                    <text x="240" y="495" text-anchor="middle" fill="white" class="component-desc" font-size="10px">Risk Assessment</text>
+                    <text x="240" y="510" text-anchor="middle" fill="white" class="component-desc" font-size="10px">MCTS Analysis</text>
+                </g>
+                
+                <g class="component" data-component="tool4">
+                    <rect x="360" y="440" width="180" height="80" rx="8" fill="url(#toolGrad)" />
+                    <text x="450" y="465" text-anchor="middle" fill="white" class="component-title">Tool 4</text>
+                    <text x="450" y="480" text-anchor="middle" fill="white" class="component-desc" font-size="10px">Generate CSV</text>
+                    <text x="450" y="495" text-anchor="middle" fill="white" class="component-desc" font-size="10px">Enhanced Report</text>
+                    <text x="450" y="510" text-anchor="middle" fill="white" class="component-desc" font-size="10px">All Analysis Results</text>
+                </g>
+                
+                <!-- MCTS Engine -->
+                <g class="component" data-component="mcts">
+                    <rect x="200" y="550" width="340" height="90" rx="8" fill="url(#mctsGrad)" />
+                    <text x="370" y="575" text-anchor="middle" fill="white" class="component-title">MCTS Reasoning Engine</text>
+                    <text x="370" y="595" text-anchor="middle" fill="white" class="component-desc">Selection → Expansion → Simulation → Backpropagation</text>
+                    <text x="370" y="610" text-anchor="middle" fill="white" class="component-desc">Exploration-Exploitation Balance</text>
+                    <text x="370" y="625" text-anchor="middle" fill="white" class="component-desc">Decision Tree Building</text>
+                </g>
+                
+                <!-- Data Layer -->
+                <g class="component" data-component="pandas">
+                    <rect x="200" y="690" width="340" height="70" rx="8" fill="url(#dataGrad)" />
+                    <text x="370" y="715" text-anchor="middle" fill="white" class="component-title">Data Processing Layer</text>
+                    <text x="370" y="735" text-anchor="middle" fill="white" class="component-desc">Pandas DataFrames • CSV I/O • Data Transformation</text>
+                    <text x="370" y="750" text-anchor="middle" fill="white" class="component-desc">Memory-Optimized Operations</text>
+                </g>
+                
+                <!-- LLM Providers -->
+                <g class="component" data-component="openai">
+                    <rect x="850" y="330" width="180" height="70" rx="8" fill="#10a37f" />
+                    <text x="940" y="355" text-anchor="middle" fill="white" class="component-title">OpenAI</text>
+                    <text x="940" y="375" text-anchor="middle" fill="white" class="component-desc" font-size="10px">o1-mini, o1, o3-mini</text>
+                    <text x="940" y="390" text-anchor="middle" fill="white" class="component-desc" font-size="10px">Advanced Reasoning</text>
+                </g>
+                
+                <g class="component" data-component="anthropic">
+                    <rect x="850" y="420" width="180" height="70" rx="8" fill="#d4a373" />
+                    <text x="940" y="445" text-anchor="middle" fill="white" class="component-title">Anthropic Claude</text>
+                    <text x="940" y="465" text-anchor="middle" fill="white" class="component-desc" font-size="10px">Sonnet, Opus</text>
+                    <text x="940" y="480" text-anchor="middle" fill="white" class="component-desc" font-size="10px">Contextual Analysis</text>
+                </g>
+                
+                <!-- Observability -->
+                <g class="component" data-component="logfire">
+                    <rect x="1000" y="160" width="250" height="120" rx="8" fill="url(#observeGrad)" />
+                    <text x="1125" y="190" text-anchor="middle" fill="white" class="component-title">Pydantic Logfire</text>
+                    <text x="1125" y="210" text-anchor="middle" fill="white" class="component-desc" font-size="11px">• LLM Call Tracing</text>
+                    <text x="1125" y="225" text-anchor="middle" fill="white" class="component-desc" font-size="11px">• Agent Operation Tracking</text>
+                    <text x="1125" y="240" text-anchor="middle" fill="white" class="component-desc" font-size="11px">• MCTS Details</text>
+                    <text x="1125" y="255" text-anchor="middle" fill="white" class="component-desc" font-size="11px">• Performance Metrics</text>
+                    <text x="1125" y="270" text-anchor="middle" fill="white" class="component-desc" font-size="11px">• Cost Analysis</text>
+                </g>
+                
+                <!-- Arrows - User Flow -->
+                <path class="arrow arrow-control" d="M 350 120 L 350 160" />
+                <text x="365" y="145" fill="#2196F3" font-size="11px">User Input</text>
+                
+                <!-- Arrows - Agent to Tools -->
+                <path class="arrow arrow-control" d="M 250 250 L 240 330" />
+                <path class="arrow arrow-control" d="M 350 250 L 450 330" />
+                <path class="arrow arrow-control" d="M 300 250 L 240 440" />
+                <path class="arrow arrow-control" d="M 400 250 L 450 440" />
+                
+                <!-- Arrows - Tools to MCTS -->
+                <path class="arrow arrow-data" d="M 330 410 L 330 550" />
+                <path class="arrow arrow-data" d="M 450 410 L 410 550" />
+                <path class="arrow arrow-data" d="M 330 520 L 330 550" />
+                
+                <!-- Arrows - MCTS to LLM -->
+                <path class="arrow arrow-control" d="M 540 580 L 850 365" />
+                <path class="arrow arrow-control" d="M 540 600 L 850 455" />
+                <text x="670" y="490" fill="#2196F3" font-size="11px">Reasoning</text>
+                <text x="670" y="505" fill="#2196F3" font-size="11px">Requests</text>
+                
+                <!-- Arrows - LLM to MCTS (Response) -->
+                <path class="arrow arrow-data" d="M 850 380 L 540 600" stroke-dasharray="5,5" />
+                <path class="arrow arrow-data" d="M 850 470 L 540 620" stroke-dasharray="5,5" />
+                <text x="670" y="560" fill="#4CAF50" font-size="11px">LLM</text>
+                <text x="670" y="575" fill="#4CAF50" font-size="11px">Responses</text>
+                
+                <!-- Arrows - MCTS to Data Layer -->
+                <path class="arrow arrow-data" d="M 370 640 L 370 690" />
+                
+                <!-- Arrows - Data Layer to Tools -->
+                <path class="arrow arrow-data" d="M 240 690 L 240 520" stroke-dasharray="5,5" />
+                <path class="arrow arrow-data" d="M 450 690 L 450 520" stroke-dasharray="5,5" />
+                
+                <!-- Arrows - Tools to Agent (Results) -->
+                <path class="arrow arrow-data" d="M 240 330 L 280 250" stroke-dasharray="5,5" />
+                <path class="arrow arrow-data" d="M 450 330 L 420 250" stroke-dasharray="5,5" />
+                <path class="arrow arrow-data" d="M 240 440 L 320 250" stroke-dasharray="5,5" />
+                <path class="arrow arrow-data" d="M 450 440 L 380 250" stroke-dasharray="5,5" />
+                
+                <!-- Arrows - Agent to CLI (Output) -->
+                <path class="arrow arrow-data" d="M 350 160 L 350 120" stroke-dasharray="5,5" />
+                <text x="370" y="145" fill="#4CAF50" font-size="11px">Results</text>
+                
+                <!-- Arrows - Observability (Telemetry) -->
+                <path class="arrow arrow-telemetry" d="M 500 205 L 1000 220" />
+                <path class="arrow arrow-telemetry" d="M 540 370 L 850 240" />
+                <path class="arrow arrow-telemetry" d="M 540 480 L 900 270" />
+                <path class="arrow arrow-telemetry" d="M 540 595 L 950 270" />
+                <text x="720" y="210" fill="#FF9800" font-size="11px">Telemetry</text>
+                
+                <!-- Data Flow Annotations -->
+                <text x="600" y="640" fill="#333" font-size="12px" font-style="italic">1. Load CSV Data</text>
+                <text x="600" y="660" fill="#333" font-size="12px" font-style="italic">2. Process Transactions</text>
+                <text x="600" y="680" fill="#333" font-size="12px" font-style="italic">3. Generate Enhanced CSV</text>
+                
+                <!-- Workflow Numbers -->
+                <circle cx="350" cy="140" r="12" fill="#FF5722" />
+                <text x="350" y="145" text-anchor="middle" fill="white" font-size="12px" font-weight="bold">1</text>
+                
+                <circle cx="350" cy="210" r="12" fill="#FF5722" />
+                <text x="350" y="215" text-anchor="middle" fill="white" font-size="12px" font-weight="bold">2</text>
+                
+                <circle cx="370" cy="370" r="12" fill="#FF5722" />
+                <text x="370" y="375" text-anchor="middle" fill="white" font-size="12px" font-weight="bold">3</text>
+                
+                <circle cx="370" cy="595" r="12" fill="#FF5722" />
+                <text x="370" y="600" text-anchor="middle" fill="white" font-size="12px" font-weight="bold">4</text>
+                
+                <circle cx="370" cy="725" r="12" fill="#FF5722" />
+                <text x="370" y="730" text-anchor="middle" fill="white" font-size="12px" font-weight="bold">5</text>
+            </svg>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-line" style="background: #2196F3;"></div>
+                <span class="legend-text">Control Flow</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line" style="background: #4CAF50;"></div>
+                <span class="legend-text">Data Flow</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line" style="background: #FF9800; background-image: repeating-linear-gradient(90deg, #FF9800, #FF9800 4px, transparent 4px, transparent 8px);"></div>
+                <span class="legend-text">Telemetry</span>
+            </div>
+        </div>
+        
+        <div class="info-panel" id="infoPanel">
+            <div class="info-title" id="infoTitle">Select a component to learn more</div>
+            <div class="info-content" id="infoContent">
+                Click on any component in the diagram to see detailed information about its role and functionality.
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const componentInfo = {
+            cli: {
+                title: "CLI Interface (Presentation Layer)",
+                content: `
+                    <p><strong>Technology:</strong> Typer + Rich libraries</p>
+                    <p><strong>Responsibilities:</strong></p>
+                    <ul>
+                        <li>Parse command-line arguments and validate user input</li>
+                        <li>Display progress bars and status updates</li>
+                        <li>Format output with colors and tables</li>
+                        <li>Handle user errors and provide helpful messages</li>
+                    </ul>
+                    <p><strong>Inputs:</strong> CSV file path, LLM provider, model name, threshold, currency</p>
+                    <p><strong>Outputs:</strong> Enhanced CSV file with analysis results</p>
+                `
+            },
+            agent: {
+                title: "Pydantic AI Agent (Orchestration Layer)",
+                content: `
+                    <p><strong>Technology:</strong> Pydantic AI Framework</p>
+                    <p><strong>Responsibilities:</strong></p>
+                    <ul>
+                        <li>Coordinate tool execution in the correct sequence</li>
+                        <li>Manage agent state and dependencies throughout workflow</li>
+                        <li>Validate all data using Pydantic models</li>
+                        <li>Handle errors and implement retry logic</li>
+                        <li>Interface with LLM providers (OpenAI/Anthropic)</li>
+                    </ul>
+                    <p><strong>Key Feature:</strong> Type-safe operations with automatic validation at every step</p>
+                `
+            },
+            tool1: {
+                title: "Tool 1: Filter Transactions Above Threshold",
+                content: `
+                    <p><strong>Purpose:</strong> Identify transactions exceeding monetary threshold</p>
+                    <p><strong>Process:</strong></p>
+                    <ul>
+                        <li>Load transaction data from CSV file</li>
+                        <li>Convert all amounts to target currency (e.g., GBP)</li>
+                        <li>Compare converted amounts against threshold</li>
+                        <li>Add boolean flag column (above_250_gbp)</li>
+                    </ul>
+                    <p><strong>Output:</strong> DataFrame with threshold flag column</p>
+                `
+            },
+            tool2: {
+                title: "Tool 2: Classify Transactions",
+                content: `
+                    <p><strong>Purpose:</strong> Categorize transactions using MCTS reasoning</p>
+                    <p><strong>Categories:</strong> Business, Personal, Gambling, Investment, Uncategorized</p>
+                    <p><strong>Process:</strong></p>
+                    <ul>
+                        <li>Analyze merchant name, amount, date, description</li>
+                        <li>Use MCTS engine to explore classification possibilities</li>
+                        <li>Build decision tree with multiple iterations</li>
+                        <li>Select classification with highest confidence</li>
+                    </ul>
+                    <p><strong>Output:</strong> Classification category + confidence score + iteration count</p>
+                `
+            },
+            tool3: {
+                title: "Tool 3: Detect Fraudulent Transactions",
+                content: `
+                    <p><strong>Purpose:</strong> Identify potentially fraudulent transactions</p>
+                    <p><strong>Risk Levels:</strong> LOW, MEDIUM, HIGH, CRITICAL</p>
+                    <p><strong>Fraud Indicators:</strong></p>
+                    <ul>
+                        <li>Unusual transaction amounts for merchant type</li>
+                        <li>Suspicious merchant names or locations</li>
+                        <li>Abnormal timing or frequency patterns</li>
+                        <li>Geographic inconsistencies</li>
+                        <li>Known fraud-associated categories</li>
+                    </ul>
+                    <p><strong>Output:</strong> Risk level + confidence score + detailed reasoning explanation</p>
+                `
+            },
+            tool4: {
+                title: "Tool 4: Generate Enhanced CSV",
+                content: `
+                    <p><strong>Purpose:</strong> Create comprehensive output with all analysis results</p>
+                    <p><strong>Enhanced Columns:</strong></p>
+                    <ul>
+                        <li>above_250_gbp - Threshold flag</li>
+                        <li>classification - Transaction category</li>
+                        <li>classification_confidence - Confidence score (0-1)</li>
+                        <li>fraud_risk - Risk level (LOW/MEDIUM/HIGH/CRITICAL)</li>
+                        <li>fraud_confidence - Fraud detection confidence (0-1)</li>
+                        <li>fraud_reasoning - Detailed explanation</li>
+                        <li>mcts_iterations - Processing iterations count</li>
+                    </ul>
+                    <p><strong>Format:</strong> CSV file with all original columns plus analysis columns</p>
+                `
+            },
+            mcts: {
+                title: "MCTS Reasoning Engine (Reasoning Layer)",
+                content: `
+                    <p><strong>Technology:</strong> Custom Monte Carlo Tree Search implementation</p>
+                    <p><strong>Algorithm Phases:</strong></p>
+                    <ul>
+                        <li><strong>Selection:</strong> Use UCB formula to select promising nodes</li>
+                        <li><strong>Expansion:</strong> Create new child nodes for possibilities</li>
+                        <li><strong>Simulation:</strong> Rollouts to estimate classification quality</li>
+                        <li><strong>Backpropagation:</strong> Update statistics along path to root</li>
+                    </ul>
+                    <p><strong>Benefits:</strong> Balanced exploration-exploitation, explainable reasoning, high confidence scores</p>
+                    <p><strong>Integration:</strong> Works with LLMs for guided reasoning and evaluation</p>
+                `
+            },
+            pandas: {
+                title: "Data Processing Layer",
+                content: `
+                    <p><strong>Technology:</strong> Pandas DataFrames</p>
+                    <p><strong>Responsibilities:</strong></p>
+                    <ul>
+                        <li>Efficient CSV file reading and writing</li>
+                        <li>Data transformation and manipulation</li>
+                        <li>Memory-optimized operations for large datasets</li>
+                        <li>Column addition and modification</li>
+                        <li>Data validation and type conversion</li>
+                    </ul>
+                    <p><strong>Performance:</strong> Optimized for handling thousands of transactions efficiently</p>
+                `
+            },
+            openai: {
+                title: "OpenAI LLM Provider",
+                content: `
+                    <p><strong>Supported Models:</strong> o1-mini, o1, o3-mini</p>
+                    <p><strong>Strengths:</strong></p>
+                    <ul>
+                        <li>Advanced reasoning capabilities</li>
+                        <li>Strong performance on complex analysis tasks</li>
+                        <li>Optimized for structured output</li>
+                        <li>Fast response times</li>
+                    </ul>
+                    <p><strong>Usage:</strong> Provides reasoning for MCTS simulations, classification decisions, and fraud detection analysis</p>
+                `
+            },
+            anthropic: {
+                title: "Anthropic Claude LLM Provider",
+                content: `
+                    <p><strong>Supported Models:</strong> Claude Sonnet, Claude Opus</p>
+                    <p><strong>Strengths:</strong></p>
+                    <ul>
+                        <li>Excellent contextual understanding</li>
+                        <li>High accuracy on nuanced tasks</li>
+                        <li>Strong natural language capabilities</li>
+                        <li>Detailed reasoning explanations</li>
+                    </ul>
+                    <p><strong>Usage:</strong> Alternative LLM provider for reasoning, classification, and fraud analysis</p>
+                `
+            },
+            logfire: {
+                title: "Pydantic Logfire (Observability Layer)",
+                content: `
+                    <p><strong>Technology:</strong> Pydantic Logfire Platform</p>
+                    <p><strong>Telemetry Coverage:</strong></p>
+                    <ul>
+                        <li><strong>LLM Calls:</strong> Prompts, responses, tokens, latency, costs</li>
+                        <li><strong>Agent Operations:</strong> Tool calls, reasoning steps, dependencies</li>
+                        <li><strong>MCTS Details:</strong> Iterations, node exploration, convergence</li>
+                        <li><strong>Transaction Analysis:</strong> Classifications, fraud detection, confidence scores</li>
+                        <li><strong>Performance:</strong> Processing time, memory usage, error rates</li>
+                    </ul>
+                    <p><strong>Features:</strong> Real-time dashboard, trace exploration, cost analysis, debugging tools</p>
+                    <p><strong>Configuration:</strong> Enabled by default, cloud integration with LOGFIRE_TOKEN</p>
+                `
+            }
+        };
+        
+        // Add click handlers to components
+        document.querySelectorAll('.component').forEach(component => {
+            component.addEventListener('click', function() {
+                const componentId = this.getAttribute('data-component');
+                const info = componentInfo[componentId];
+                
+                if (info) {
+                    document.getElementById('infoTitle').textContent = info.title;
+                    document.getElementById('infoContent').innerHTML = info.content;
+                    document.getElementById('infoPanel').classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
