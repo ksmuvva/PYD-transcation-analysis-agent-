@@ -12,6 +12,7 @@ from src.models import (
     Currency,
     FraudDetectionResult,
     FraudRiskLevel,
+    MCTSMetadata,
     Transaction,
     TransactionFilterResult,
 )
@@ -65,16 +66,29 @@ def test_transaction_date_parsing():
 
 def test_classification_result():
     """Test classification result model."""
+    mcts_metadata = MCTSMetadata(
+        root_node_visits=100,
+        best_action_path=["classify_business"],
+        average_reward=0.92,
+        exploration_constant_used=1.414,
+        final_reward_variance=0.05,
+        total_nodes_explored=150,
+        max_depth_reached=5
+    )
+
     result = ClassificationResult(
         transaction_id="TX001",
-        primary_classification="Business Expense - Office Supplies",
+        category="Business",  # Must be one of the 4 valid literals
         confidence=0.92,
         mcts_iterations=100,
+        mcts_metadata=mcts_metadata,  # Required field
         reasoning_trace="High confidence classification",
     )
 
     assert result.confidence == 0.92
     assert 0.0 <= result.confidence <= 1.0
+    assert result.category == "Business"
+    assert result.transaction_id == "TX001"
 
 
 def test_fraud_detection_result():
