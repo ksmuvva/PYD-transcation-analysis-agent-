@@ -30,6 +30,8 @@ from src.models import (
 from src.session_context import SessionContext, create_session_context
 from src.telemetry import get_telemetry
 
+# Backward compatibility alias for tests
+AgentDependencies = SessionContext
 
 # Create the agent with conditional model initialization
 # Use a test model if no API key is available (for testing)

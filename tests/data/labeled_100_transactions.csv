@@ -1,0 +1,101 @@
+transaction_id,amount,currency,date,merchant,description,category,fraud_risk
+BUS_000,300,GBP,2025-01-01,Office Supplies Ltd,Business expense: Office Supplies Ltd,Business,LOW
+BUS_001,310,GBP,2025-01-02,Tech Corp Inc,Business expense: Tech Corp Inc,Business,LOW
+BUS_002,320,GBP,2025-01-03,Consulting Services,Business expense: Consulting Services,Business,LOW
+BUS_003,330,GBP,2025-01-04,Software Licensing,Business expense: Software Licensing,Business,LOW
+BUS_004,340,GBP,2025-01-05,Cloud Services Inc,Business expense: Cloud Services Inc,Business,LOW
+BUS_005,350,GBP,2025-01-06,IT Equipment,Business expense: IT Equipment,Business,LOW
+BUS_006,360,GBP,2025-01-07,Business Insurance,Business expense: Business Insurance,Business,LOW
+BUS_007,370,GBP,2025-01-08,Corporate Travel,Business expense: Corporate Travel,Business,LOW
+BUS_008,380,GBP,2025-01-09,Office Rent,Business expense: Office Rent,Business,LOW
+BUS_009,390,GBP,2025-01-10,Professional Services,Business expense: Professional Services,Business,LOW
+BUS_010,400,GBP,2025-01-11,Marketing Agency,Business expense: Marketing Agency,Business,LOW
+BUS_011,410,GBP,2025-01-12,Legal Services Ltd,Business expense: Legal Services Ltd,Business,LOW
+BUS_012,420,GBP,2025-01-13,Accounting Firm,Business expense: Accounting Firm,Business,LOW
+BUS_013,430,GBP,2025-01-14,Business Software,Business expense: Business Software,Business,LOW
+BUS_014,440,GBP,2025-01-15,Corporate Catering,Business expense: Corporate Catering,Business,LOW
+BUS_015,450,GBP,2025-01-16,Conference Registration,Business expense: Conference Registration,Business,LOW
+BUS_016,460,GBP,2025-01-17,Office Furniture,Business expense: Office Furniture,Business,LOW
+BUS_017,470,GBP,2025-01-18,Printing Services,Business expense: Printing Services,Business,LOW
+BUS_018,480,GBP,2025-01-19,Business Utilities,Business expense: Business Utilities,Business,LOW
+BUS_019,490,GBP,2025-01-20,Company Vehicle,Business expense: Company Vehicle,Business,LOW
+BUS_020,500,GBP,2025-01-21,Employee Benefits,Business expense: Employee Benefits,Business,MEDIUM
+BUS_021,510,GBP,2025-01-22,Training Provider,Business expense: Training Provider,Business,MEDIUM
+BUS_022,520,GBP,2025-01-23,Business Consulting,Business expense: Business Consulting,Business,MEDIUM
+BUS_023,530,GBP,2025-01-24,Corporate Gifts,Business expense: Corporate Gifts,Business,MEDIUM
+BUS_024,540,GBP,2025-01-25,Office Maintenance,Business expense: Office Maintenance,Business,MEDIUM
+PER_000,260,GBP,2025-01-01,Amazon UK,Personal purchase: Amazon UK,Personal,LOW
+PER_001,268,USD,2025-01-02,Tesco Supermarket,Personal purchase: Tesco Supermarket,Personal,LOW
+PER_002,276,GBP,2025-01-03,Sainsbury's,Personal purchase: Sainsbury's,Personal,LOW
+PER_003,284,USD,2025-01-04,ASDA,Personal purchase: ASDA,Personal,LOW
+PER_004,292,GBP,2025-01-05,Marks & Spencer,Personal purchase: Marks & Spencer,Personal,LOW
+PER_005,300,USD,2025-01-06,John Lewis,Personal purchase: John Lewis,Personal,LOW
+PER_006,308,GBP,2025-01-07,Next,Personal purchase: Next,Personal,LOW
+PER_007,316,USD,2025-01-08,Zara,Personal purchase: Zara,Personal,LOW
+PER_008,324,GBP,2025-01-09,H&M,Personal purchase: H&M,Personal,LOW
+PER_009,332,USD,2025-01-10,Sports Direct,Personal purchase: Sports Direct,Personal,LOW
+PER_010,340,GBP,2025-01-11,Boots Pharmacy,Personal purchase: Boots Pharmacy,Personal,LOW
+PER_011,348,USD,2025-01-12,Waterstones,Personal purchase: Waterstones,Personal,LOW
+PER_012,356,GBP,2025-01-13,Cinema Vue,Personal purchase: Cinema Vue,Personal,LOW
+PER_013,364,USD,2025-01-14,Restaurant Nando's,Personal purchase: Restaurant Nando's,Personal,LOW
+PER_014,372,GBP,2025-01-15,Pizza Express,Personal purchase: Pizza Express,Personal,LOW
+PER_015,380,USD,2025-01-16,Gym Membership,Personal purchase: Gym Membership,Personal,LOW
+PER_016,388,GBP,2025-01-17,Haircut Salon,Personal purchase: Haircut Salon,Personal,LOW
+PER_017,396,USD,2025-01-18,Pet Store,Personal purchase: Pet Store,Personal,LOW
+PER_018,404,GBP,2025-01-19,Garden Center,Personal purchase: Garden Center,Personal,LOW
+PER_019,412,USD,2025-01-20,DIY Store,Personal purchase: DIY Store,Personal,LOW
+PER_020,420,GBP,2025-01-21,Electronics Shop,Personal purchase: Electronics Shop,Personal,LOW
+PER_021,428,USD,2025-01-22,Music Store,Personal purchase: Music Store,Personal,LOW
+PER_022,436,GBP,2025-01-23,Book Shop,Personal purchase: Book Shop,Personal,LOW
+PER_023,444,USD,2025-01-24,Coffee Shop,Personal purchase: Coffee Shop,Personal,LOW
+PER_024,452,GBP,2025-01-25,Grocery Store,Personal purchase: Grocery Store,Personal,LOW
+INV_000,500,GBP,2025-01-01,Vanguard Investments,Investment: Vanguard Investments,Investment,LOW
+INV_001,520,EUR,2025-01-02,Fidelity Funds,Investment: Fidelity Funds,Investment,LOW
+INV_002,540,EUR,2025-01-03,Charles Schwab,Investment: Charles Schwab,Investment,LOW
+INV_003,560,GBP,2025-01-04,Trading Platform,Investment: Trading Platform,Investment,LOW
+INV_004,580,EUR,2025-01-05,Stock Broker Inc,Investment: Stock Broker Inc,Investment,LOW
+INV_005,600,EUR,2025-01-06,Investment Fund,Investment: Investment Fund,Investment,LOW
+INV_006,620,GBP,2025-01-07,Pension Provider,Investment: Pension Provider,Investment,LOW
+INV_007,640,EUR,2025-01-08,ISA Account,Investment: ISA Account,Investment,LOW
+INV_008,660,EUR,2025-01-09,Crypto Exchange,Investment: Crypto Exchange,Investment,LOW
+INV_009,680,GBP,2025-01-10,Bond Investment,Investment: Bond Investment,Investment,LOW
+INV_010,700,EUR,2025-01-11,Real Estate Fund,Investment: Real Estate Fund,Investment,LOW
+INV_011,720,EUR,2025-01-12,Mutual Fund,Investment: Mutual Fund,Investment,LOW
+INV_012,740,GBP,2025-01-13,ETF Provider,Investment: ETF Provider,Investment,LOW
+INV_013,760,EUR,2025-01-14,Index Fund,Investment: Index Fund,Investment,LOW
+INV_014,780,EUR,2025-01-15,Dividend Portfolio,Investment: Dividend Portfolio,Investment,LOW
+INV_015,800,GBP,2025-01-16,Retirement Account,Investment: Retirement Account,Investment,MEDIUM
+INV_016,820,EUR,2025-01-17,Savings Plan,Investment: Savings Plan,Investment,MEDIUM
+INV_017,840,EUR,2025-01-18,Investment Trust,Investment: Investment Trust,Investment,MEDIUM
+INV_018,860,GBP,2025-01-19,Asset Management,Investment: Asset Management,Investment,MEDIUM
+INV_019,880,EUR,2025-01-20,Wealth Manager,Investment: Wealth Manager,Investment,MEDIUM
+INV_020,900,EUR,2025-01-21,Portfolio Service,Investment: Portfolio Service,Investment,MEDIUM
+INV_021,920,GBP,2025-01-22,Investment Advisory,Investment: Investment Advisory,Investment,MEDIUM
+INV_022,940,EUR,2025-01-23,Fund Manager,Investment: Fund Manager,Investment,MEDIUM
+INV_023,960,EUR,2025-01-24,Stock Purchase,Investment: Stock Purchase,Investment,MEDIUM
+INV_024,980,GBP,2025-01-25,Securities Account,Investment: Securities Account,Investment,MEDIUM
+GAM_000,280,GBP,2025-01-01,Bet365,Gambling: Bet365,Gambling,MEDIUM
+GAM_001,295,GBP,2025-01-02,William Hill,Gambling: William Hill,Gambling,MEDIUM
+GAM_002,310,GBP,2025-01-03,Ladbrokes,Gambling: Ladbrokes,Gambling,MEDIUM
+GAM_003,325,GBP,2025-01-04,Coral,Gambling: Coral,Gambling,MEDIUM
+GAM_004,340,GBP,2025-01-05,Paddy Power,Gambling: Paddy Power,Gambling,MEDIUM
+GAM_005,355,GBP,2025-01-06,Sky Bet,Gambling: Sky Bet,Gambling,MEDIUM
+GAM_006,370,GBP,2025-01-07,Betfair,Gambling: Betfair,Gambling,MEDIUM
+GAM_007,385,GBP,2025-01-08,888 Casino,Gambling: 888 Casino,Gambling,MEDIUM
+GAM_008,400,GBP,2025-01-09,PokerStars,Gambling: PokerStars,Gambling,MEDIUM
+GAM_009,415,GBP,2025-01-10,Betway,Gambling: Betway,Gambling,MEDIUM
+GAM_010,430,GBP,2025-01-11,Unibet,Gambling: Unibet,Gambling,MEDIUM
+GAM_011,445,GBP,2025-01-12,10Bet,Gambling: 10Bet,Gambling,MEDIUM
+GAM_012,460,GBP,2025-01-13,Bwin,Gambling: Bwin,Gambling,MEDIUM
+GAM_013,475,GBP,2025-01-14,Mr Green,Gambling: Mr Green,Gambling,MEDIUM
+GAM_014,490,GBP,2025-01-15,LeoVegas,Gambling: LeoVegas,Gambling,MEDIUM
+GAM_015,505,GBP,2025-01-16,Casumo,Gambling: Casumo,Gambling,MEDIUM
+GAM_016,520,GBP,2025-01-17,Grosvenor Casino,Gambling: Grosvenor Casino,Gambling,MEDIUM
+GAM_017,535,GBP,2025-01-18,Gala Bingo,Gambling: Gala Bingo,Gambling,MEDIUM
+GAM_018,550,GBP,2025-01-19,Slots Ltd,Gambling: Slots Ltd,Gambling,MEDIUM
+GAM_019,565,GBP,2025-01-20,Online Casino,Gambling: Online Casino,Gambling,MEDIUM
+GAM_020,580,GBP,2025-01-21,Sports Betting,Gambling: Sports Betting,Gambling,HIGH
+GAM_021,595,GBP,2025-01-22,Poker Room,Gambling: Poker Room,Gambling,HIGH
+GAM_022,610,GBP,2025-01-23,Casino Royale,Gambling: Casino Royale,Gambling,HIGH
+GAM_023,625,GBP,2025-01-24,Lucky Games,Gambling: Lucky Games,Gambling,HIGH
+GAM_024,640,GBP,2025-01-25,Jackpot City,Gambling: Jackpot City,Gambling,HIGH

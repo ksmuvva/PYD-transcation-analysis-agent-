@@ -1,0 +1,75 @@
+[run]
+# Source code directory to measure
+source = src
+
+# Branch coverage in addition to statement coverage
+branch = True
+
+# Omit certain files from coverage
+omit =
+    */tests/*
+    */test_*.py
+    */__pycache__/*
+    */site-packages/*
+    */dist-packages/*
+    */venv/*
+    */virtualenv/*
+    setup.py
+    conftest.py
+
+# Run coverage in parallel mode for multiprocessing
+parallel = False
+
+[report]
+# Precision for coverage reporting
+precision = 2
+
+# Show lines that weren't executed
+show_missing = True
+
+# Skip files with no executable code
+skip_empty = True
+
+# Fail if coverage is below this threshold (can adjust)
+fail_under = 70.0
+
+# Exclude lines from coverage
+exclude_lines =
+    # Standard pragma
+    pragma: no cover
+
+    # Don't complain about missing debug code
+    def __repr__
+
+    # Don't complain if tests don't hit defensive assertion code
+    raise AssertionError
+    raise NotImplementedError
+
+    # Don't complain if non-runnable code isn't run
+    if __name__ == .__main__.:
+    if TYPE_CHECKING:
+    if typing.TYPE_CHECKING:
+
+    # Don't complain about abstract methods
+    @abstract
+    @abc.abstractmethod
+    @abc.abstractproperty
+
+    # Don't complain about protocol methods
+    \.\.\.
+    pass
+
+    # Don't complain about overload signatures
+    @overload
+
+[html]
+# Directory for HTML report
+directory = htmlcov
+
+[xml]
+# XML report file
+output = coverage.xml
+
+[json]
+# JSON report file
+output = coverage.json
