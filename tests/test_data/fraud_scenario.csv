@@ -1,0 +1,16 @@
+transaction_id,amount,currency,date,merchant,category,description,expected_fraud_risk,expected_classification
+TX001020,55857.37,GBP,2025-11-05,Wire Transfer Service,Suspicious,Large transfer,CRITICAL,Suspicious
+TX001021,12920.79,GBP,2025-09-23,Unknown Merchant,Suspicious,Large transfer,HIGH,Suspicious
+TX001022,57620.29,GBP,2025-09-07,Anonymous Payment Gateway,Suspicious,Large transfer,CRITICAL,Suspicious
+TX001023,6115.52,GBP,2025-09-22,Gift Card Vendor,Suspicious,Crypto purchase,HIGH,Suspicious
+TX001024,97469.93,GBP,2025-10-25,Crypto Exchange XYZ,Suspicious,Large transfer,CRITICAL,Suspicious
+TX001025,43652.25,GBP,2025-10-27,Wire Transfer Service,Suspicious,Large transfer,CRITICAL,Suspicious
+TX001026,20068.1,GBP,2025-10-01,Unregistered Business,Suspicious,Unknown payment,CRITICAL,Suspicious
+TX001027,13780.1,GBP,2025-11-06,Crypto Exchange XYZ,Suspicious,Large transfer,HIGH,Suspicious
+TX001028,21555.23,GBP,2025-09-17,Offshore Payment Processor,Suspicious,Crypto purchase,CRITICAL,Suspicious
+TX001029,93602.21,GBP,2025-08-20,Anonymous Payment Gateway,Suspicious,Crypto purchase,CRITICAL,Suspicious
+TX001030,100.0,GBP,2025-08-23,Gift Card Vendor,Suspicious,Unknown payment,MEDIUM,Suspicious
+TX001031,500.0,GBP,2025-09-20,Unregistered Business,Suspicious,Large transfer,MEDIUM,Suspicious
+TX001032,1000.0,GBP,2025-10-04,Wire Transfer Service,Suspicious,Large transfer,MEDIUM,Suspicious
+TX001033,5000.0,GBP,2025-11-16,Wire Transfer Service,Suspicious,Large transfer,HIGH,Suspicious
+TX001034,10000.0,GBP,2025-11-12,Crypto Exchange XYZ,Suspicious,Unknown payment,HIGH,Suspicious

@@ -1,0 +1,6 @@
+transaction_id,amount,currency,date,merchant,category,description,expected_fraud_risk,expected_classification
+TX001035,249.74,GBP,2025-09-08,LinkedIn Premium,Business,Software subscription,LOW,Business
+TX001036,250.0,GBP,2025-09-17,Airbnb,Travel,Train ticket,LOW,Travel
+TX001037,250.18,GBP,2025-09-25,Staples,Business,Business travel,LOW,Business
+TX001038,249.99,GBP,2025-11-04,Vanguard,Investment,Stock purchase,LOW,Investment
+TX001039,250.01,GBP,2025-10-23,Spotify,Personal,Shopping,LOW,Personal

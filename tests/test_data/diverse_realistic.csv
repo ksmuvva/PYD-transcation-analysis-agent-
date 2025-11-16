@@ -1,0 +1,61 @@
+transaction_id,amount,currency,date,merchant,category,description
+TX001040,462.63,GBP,2025-11-07,Waitrose,Personal,Dining
+TX001041,3608.58,GBP,2025-09-08,Odeon,Entertainment,Movie tickets
+TX001042,9064.14,GBP,2025-09-16,Wire Transfer Service,Suspicious,Crypto purchase
+TX001043,1008.62,GBP,2025-09-28,Charles Schwab,Investment,Trading fee
+TX001044,696.59,GBP,2025-09-06,Sky Bet,Gambling,Lottery
+TX001045,747.98,GBP,2025-11-09,Office Depot,Business,Office supplies
+TX001046,56.88,GBP,2025-09-12,Restaurant,Personal,Groceries
+TX001047,403.78,GBP,2025-09-05,Fidelity,Investment,Fund investment
+TX001048,657.37,GBP,2025-09-05,Sainsbury's,Personal,Monthly subscription
+TX001049,265.61,GBP,2025-10-31,888 Casino,Gambling,Online poker
+TX001050,9582.86,GBP,2025-09-05,Sainsbury's,Personal,Groceries
+TX001051,933.26,GBP,2025-11-08,Salesforce,Business,Software subscription
+TX001052,611.68,GBP,2025-08-25,Restaurant,Personal,Groceries
+TX001053,938.93,GBP,2025-10-30,Booking.com,Travel,Car rental
+TX001054,272.35,GBP,2025-08-31,WeWork,Business,Software subscription
+TX001055,505.41,GBP,2025-10-15,Booking.com,Travel,Hotel booking
+TX001056,3.55,GBP,2025-10-31,Salesforce,Business,Conference fee
+TX001057,560.91,GBP,2025-11-02,Conference Registration,Business,Office supplies
+TX001058,834.6,GBP,2025-09-03,Ladbrokes,Gambling,Casino gaming
+TX001059,898.92,GBP,2025-10-21,Spotify,Personal,Shopping
+TX001060,973.84,GBP,2025-10-28,Holiday Inn,Travel,Flight ticket
+TX001061,5247.86,GBP,2025-10-05,Charles Schwab,Investment,Portfolio rebalance
+TX001062,1636.79,GBP,2025-08-19,Apple Music,Entertainment,Movie tickets
+TX001063,199.57,GBP,2025-09-19,Haircut,Personal,Monthly subscription
+TX001064,23.66,GBP,2025-10-23,Marks & Spencer,Personal,Dining
+TX001065,3565.93,GBP,2025-09-26,Netflix,Personal,Monthly subscription
+TX001066,580.59,GBP,2025-10-14,Sky Bet,Gambling,Sports bet
+TX001067,436.39,GBP,2025-09-12,Conference Registration,Business,Office supplies
+TX001068,708.79,GBP,2025-11-16,Netflix,Personal,Shopping
+TX001069,623.16,GBP,2025-08-24,Cinema,Personal,Groceries
+TX001070,326.18,GBP,2025-08-19,Uber,Travel,Car rental
+TX001071,677.32,GBP,2025-10-25,Cinema,Personal,Monthly subscription
+TX001072,1840.73,GBP,2025-09-03,Netflix,Personal,Monthly subscription
+TX001073,793.74,GBP,2025-10-26,Marks & Spencer,Personal,Groceries
+TX001074,93.39,GBP,2025-10-17,FedEx Office,Business,Conference fee
+TX001075,244.84,GBP,2025-09-17,Office Depot,Business,Office supplies
+TX001076,3873.38,GBP,2025-09-28,Coffee Shop,Personal,Dining
+TX001077,892.66,GBP,2025-11-03,Pharmacy,Personal,Dining
+TX001078,1200.87,GBP,2025-10-16,Conference Registration,Business,Office supplies
+TX001079,4800.16,GBP,2025-09-21,Cinema,Personal,Dining
+TX001080,450.07,GBP,2025-10-16,Spotify Premium,Entertainment,Gaming
+TX001081,274.6,GBP,2025-11-07,Concert Tickets,Entertainment,Gaming
+TX001082,138.37,GBP,2025-10-18,WeWork,Business,Business travel
+TX001083,407.6,GBP,2025-09-08,Hilton Hotels,Travel,Train ticket
+TX001084,904.84,GBP,2025-09-03,Gym Membership,Personal,Groceries
+TX001085,5.9,GBP,2025-10-02,eToro,Investment,Trading fee
+TX001086,2952.92,GBP,2025-10-13,Nintendo eShop,Entertainment,Concert
+TX001087,724.18,GBP,2025-09-18,Cinema,Personal,Shopping
+TX001088,83.95,GBP,2025-09-23,Anonymous Payment Gateway,Suspicious,Crypto purchase
+TX001089,327.35,GBP,2025-09-19,Hargreaves Lansdown,Investment,Trading fee
+TX001090,0.08,GBP,2025-09-29,Spotify,Personal,Monthly subscription
+TX001091,62613.58,GBP,2025-11-06,Anonymous Payment Gateway,Suspicious,Wire transfer
+TX001092,250.0,GBP,2025-11-10,Office Depot,Business,Conference fee
+TX001093,249.99,GBP,2025-08-25,Marks & Spencer,Personal,Groceries
+TX001094,250.01,GBP,2025-10-22,Office Depot,Business,Office supplies
+TX001095,238.54,USD,2025-09-17,Airbnb,Travel,Hotel booking
+TX001096,465.03,EUR,2025-10-15,Airbnb,Travel,Car rental
+TX001097,777.79,JPY,2025-10-27,Premier Inn,Travel,Car rental
+TX001098,33.15,GBP,2025-10-08,William Hill,Gambling,Lottery
+TX001099,19414.71,GBP,2025-10-22,eToro,Investment,Stock purchase

@@ -1,0 +1,11 @@
+transaction_id,amount,currency,date,merchant,category,description,expected_fraud_risk,expected_classification
+TX001100,0.07,GBP,2025-08-28,Coffee Shop,Personal,Shopping,LOW,Personal
+TX001101,84859.65,GBP,2025-10-09,Offshore Payment Processor,Suspicious,Large transfer,CRITICAL,Suspicious
+TX001102,250.0,GBP,2025-10-03,FedEx Office,Business,Business travel,LOW,Business
+TX001103,249.99,GBP,2025-09-13,Cinema,Personal,Monthly subscription,LOW,Personal
+TX001104,250.01,GBP,2025-09-15,Office Depot,Business,Office supplies,LOW,Business
+TX001105,635.59,USD,2025-09-19,National Express,Travel,Flight ticket,LOW,Travel
+TX001106,733.8,EUR,2025-08-25,National Express,Travel,Car rental,LOW,Travel
+TX001107,464.87,JPY,2025-09-02,Airbnb,Travel,Car rental,LOW,Travel
+TX001108,44.07,GBP,2025-11-05,888 Casino,Gambling,Online poker,MEDIUM,Gambling
+TX001109,12438.63,GBP,2025-09-18,Nutmeg,Investment,Portfolio rebalance,LOW,Investment
